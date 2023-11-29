@@ -59,8 +59,8 @@
     </div>
    
     <div class="col-12 p-0">
-        <hr class="m-0 mb-3">
-        <h6>{{__('Login Details')}}</h6>
+        <hr class="m-0 mb-3" style="height:2px">
+        <h6 style="margin-left: 14px;">{{__('Login Details')}}</h6>
     </div>
     <div class="col-6">
         <div class="form-group">
@@ -82,7 +82,7 @@
     </div>
     <div class="col-2">
         <div class="form-group">
-            {{Form::label('name',__('Is Active'),['class'=>'form-label']) }}
+            {{Form::label('name',__('Active'),['class'=>'form-label']) }}
             <div>
                 <input type="checkbox" class="form-check-input" name="is_active" checked>
             </div>
@@ -90,7 +90,7 @@
     </div>
     <div class="col-12 p-0">
         <hr class="m-0 mb-3">
-        <h6>{{__('Avatar')}}</h6>
+        <h6 style="margin-left: 14px;">{{__('Avatar')}}</h6>
     </div>
     <div class="col-12 mb-3 field" data-name="avatar">
         <div class="attachment-upload">

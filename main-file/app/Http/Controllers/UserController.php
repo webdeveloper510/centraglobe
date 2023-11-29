@@ -133,7 +133,7 @@ class UserController extends Controller
                             })
                         ],
                         'password' => 'required|min:6',
-                        'avatar' => 'image',
+                        'avatar' => ['image', 'mimes:jpeg,png,jpg'],
                     ]
                 );
                 if ($validator->fails()) {
@@ -233,7 +233,7 @@ class UserController extends Controller
                         }
                     }
                     if (\Auth::user()) {
-                        return redirect()->back()->with('success', __('user successfully created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')).((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : ''));
+                        return redirect()->back()->with('success', __('user created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')).((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : ''));
                     } else {
                         return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
                     }
@@ -243,7 +243,7 @@ class UserController extends Controller
                     ];
 
 
-                    return redirect()->back()->with('success', __('User Successfully Inserted.'. ((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : '')));
+                    return redirect()->back()->with('success', __('User  Inserted.'. ((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : '')));
                 } else {
                     return redirect()->back()->with('error', __('Your user limit is over, Please upgrade plan.'));
                 }

@@ -157,7 +157,7 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            {{ Form::label('name', __('Is Active'), ['class' => 'form-label']) }}
+                                            {{ Form::label('name', __('Active'), ['class' => 'form-label']) }}
                                             <div>
                                                 <input type="checkbox" class="form-check-input" name="is_active"
                                                     {{ $user->is_active == 1 ? 'checked' : '' }}>

@@ -70,12 +70,12 @@
                                 <div class="col-md-5">
                                     <span class="text-md">{{ $user->type }}</span>
                                 </div>
-                                <div class="col-md-4">
+                                <!-- <div class="col-md-4">
                                     <small class="h6 text-md mb-3 mb-md-0">{{__('Is Active')}}</small>
                                 </div>
                                 <div class="col-md-5">
                                     <input type="checkbox" class="form-check-input" disabled name="is_active" {{($user->is_active == 1)? 'checked': ''}}>
-                                </div>
+                                </div> -->
                                 <div class="col-md-4">
                                     <small class="h6 text-md mb-3 mb-md-0">{{__('Roles')}}</small>
                                 </div>

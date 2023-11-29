@@ -22,7 +22,7 @@
     @endif -->
     @can('Create User')
         <a href="#" data-url="{{ route('user.create') }}" data-size="md" data-ajax-popup="true" data-bs-toggle="tooltip"
-            title="{{ __('Create') }}"data-title="{{ __('Create New User') }}" class="btn btn-sm btn-primary btn-icon">
+            title="{{ __('Create') }}"data-title="{{ __('Create Staff') }}" class="btn btn-sm btn-primary btn-icon">
             <i class="ti ti-plus"></i>
         </a>
     @endcan

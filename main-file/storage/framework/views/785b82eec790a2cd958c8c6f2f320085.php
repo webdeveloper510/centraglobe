@@ -23,7 +23,7 @@
     <?php endif; ?> -->
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create User')): ?>
         <a href="#" data-url="<?php echo e(route('user.create')); ?>" data-size="md" data-ajax-popup="true" data-bs-toggle="tooltip"
-            title="<?php echo e(__('Create')); ?>"data-title="<?php echo e(__('Create New User')); ?>" class="btn btn-sm btn-primary btn-icon">
+            title="<?php echo e(__('Create')); ?>"data-title="<?php echo e(__('Create Staff')); ?>" class="btn btn-sm btn-primary btn-icon">
             <i class="ti ti-plus"></i>
         </a>
     <?php endif; ?>
