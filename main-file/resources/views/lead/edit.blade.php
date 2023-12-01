@@ -11,7 +11,7 @@
     </div>
 @endsection
 @section('action-btn')
-    @if ($lead->is_converted != 0)
+    <!-- @if ($lead->is_converted != 0)
         <a href="#" data-url="{{ route('account.show', $lead->is_converted) }}" data-title="{{ __('Account Details') }}"
             data-size="md" data-ajax-popup="true" data-bs-toggle="tooltip" title="{{ __('Already Convert To Account') }}"
             class="btn btn-sm btn-primary btn-icon m-1">
@@ -24,9 +24,9 @@
             <i class="ti ti-exchange">
             </i>
         </a>
-    @endif
+    @endif -->
 
-    <div class="btn-group" role="group">
+    <!-- <div class="btn-group" role="group">
         @if (!empty($previous))
             <div class="action-btn  ms-2">
                 <a href="{{ route('lead.edit', $previous) }}" class="btn btn-sm btn-primary btn-icon m-1"
@@ -57,7 +57,7 @@
                 </a>
             </div>
         @endif
-    </div>
+    </div> -->
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
@@ -75,12 +75,12 @@
                             <a href="#useradd-1"
                                 class="list-group-item list-group-item-action border-0">{{ __('Overview') }} <div
                                     class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            <a href="#useradd-2"
+                            <!-- <a href="#useradd-2"
                                 class="list-group-item list-group-item-action border-0">{{ __('Stream') }} <div
                                     class="float-end"><i class="ti ti-chevron-right"></i></div></a>
                             <a href="#useradd-3"
                                 class="list-group-item list-group-item-action border-0">{{ __('Tasks') }} <div
-                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a> -->
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                     <div id="useradd-1" class="card">
                         {{ Form::model($lead, ['route' => ['lead.update', $lead->id], 'method' => 'PUT']) }}
                         <div class="card-header">
-                            @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
+                            <!-- @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
                                 <div class="float-end">
                                     <a href="#" data-size="md" class="btn btn-sm btn-primary "
                                         data-ajax-popup-over="true" data-size="md"
@@ -99,7 +99,7 @@
                                                 class="robot">{{ __('Generate With AI') }}</span></i>
                                     </a>
                                 </div>
-                            @endif
+                            @endif -->
                             <h5>{{ __('Overview') }}</h5>
                             <small class="text-muted">{{ __('Edit About Your Lead Information') }}</small>
                         </div>
@@ -322,7 +322,7 @@
                         {{ Form::close() }}
                     </div>
 
-                    <div id="useradd-2" class="card">
+                    <!-- <div id="useradd-2" class="card">
                         {{ Form::open(['route' => ['streamstore', ['lead', $lead->name, $lead->id]], 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
                         <div class="card-header">
                             <h5>{{ __('Stream') }}</h5>
@@ -528,7 +528,7 @@
                             </div>
                         </div>
 
-                    </div>
+                    </div> -->
                 </div>
             </div>
             <!-- [ sample-page ] end -->

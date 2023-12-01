@@ -78,7 +78,7 @@
     </div>
     <div class="ms-auto">
         <ul class="list-unstyled">
-            <?php if(\Auth::user()->type != 'super admin'): ?>
+            <!-- <?php if(\Auth::user()->type != 'super admin'): ?>
                 <li class="dash-h-item">
                     <a href="<?php echo e(url('chats')); ?>" class="dash-head-link me-0">
                         <i class="ti ti-message-circle " style="font-size: 21px"></i>
@@ -88,7 +88,7 @@
                         </span>
                     </a>
                 </li>
-            <?php endif; ?>
+            <?php endif; ?> -->
             <li class="dropdown dash-h-item drp-language">
                 <a class="dash-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">

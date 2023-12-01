@@ -29,8 +29,20 @@
                                                 <i class="ti ti-user"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total User') }}</h6>
+                                            <h6 class="mb-3">{{ __('Number of Staff') }}</h6>
                                             <h3 class="mb-0">{{ $data['totalUser'] }} </h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="theme-avtar bg-info">
+                                                <i class="fas fa-address-card"></i>
+                                            </div>
+                                            <p class="text-muted text-sm mt-4 mb-2"></p>
+                                            <h6 class="mb-3">{{ __('Total Lead') }}</h6>
+                                            <h3 class="mb-0">{{ $data['totalLead'] }}</h3>
                                         </div>
                                     </div>
                                 </div>
@@ -58,18 +70,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="theme-avtar bg-info">
-                                                <i class="fas fa-address-card"></i>
-                                            </div>
-                                            <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Lead') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalLead'] }}</h3>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                                <!--  <div class="col-lg-3 col-6">
                                     <div class="card">
                                         <div class="card-body">

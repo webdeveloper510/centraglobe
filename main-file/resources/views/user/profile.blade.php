@@ -159,15 +159,15 @@ $profile = asset(Storage::url('upload/profile/'));
                                         <div class=" bg-primary company_logo_update"> <i
                                             class="ti ti-upload px-1"></i>{{ __('Choose file here') }}
                                         </div>
-                                        <input type="file"name="profile"id="file-1" class="form-control file mb-3" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" data-multiple-caption="{count} files selected" multiple/>
-                                        <img id="blah" width="25%"  />
-
+                                        <input type="file"name="profile"id="file-1" class="form-control file mb-3" onchange="document.getElementById('profpic').src = window.URL.createObjectURL(this.files[0])" data-multiple-caption="{count} files selected" multiple/>
+                                        <img alt="Image placeholder" id="profpic" src="{{(!empty($userDetail->avatar))? $profile.'/'.$userDetail->avatar : $profile.'/avatar.png'}}">
+                                        <!-- <img id="blah" width="25%"  /> -->
                                         {{-- <input type="file" name="profile" id="file-1" class="form-control file" data-multiple-caption="{count} files selected" multiple/> --}}
 
 
                                     </label>
                                 </div>
-                                {{-- <div class="choose-file mt-1">
+                               {{--<div class="choose-file mt-1">
                                     <label for="logo_blue">
                                         <img alt="Image placeholder" src="{{(!empty($userDetail->avatar))? $profile.'/'.$userDetail->avatar : $profile.'/avatar.png'}}">
 
@@ -251,15 +251,17 @@ $profile = asset(Storage::url('upload/profile/'));
 
 </div>
 
-
+<style>
+    .choose-files img {
+    width: 85px;
+}
+</style>
     <!-- [ Main Content ] start -->
 
 
         </div>
         <!-- [ Main Content ] end -->
     @endsection
-
-
     @push('script-page')
     <script>
         var scrollSpy = new bootstrap.ScrollSpy(document.body, {

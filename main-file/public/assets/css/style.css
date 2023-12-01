@@ -110,7 +110,7 @@ body {
 
 hr {
     margin: 1rem 0;
-    color: #f1f1f1;
+    color: #e3e1e1 !important;
     border: 0;
     border-top: 1px solid;
     opacity: 1;
@@ -29483,6 +29483,9 @@ table.dataTable tbody > tr.selected th.select-checkbox:after {
 .ps__rail-y:focus > .ps__thumb-y,
 .ps__rail-y:hover > .ps__thumb-y {
     background: #a9b5e6;
+}
+.col-12.p-0.modaltitle {
+    border-bottom: var(--bs-modal-header-border-width) solid #e3e1e1 !important;
 }
 
 /**====== End Sidebar scroll css  ======**/

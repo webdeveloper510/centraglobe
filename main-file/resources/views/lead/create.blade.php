@@ -3,15 +3,6 @@
 @endphp
 {{Form::open(array('url'=>'lead','method'=>'post','enctype'=>'multipart/form-data'))}}
 <div class="row">
-    @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
-    <div class="text-end">
-        <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true" data-size="md"
-            data-title="{{ __('Generate content with AI') }}" data-url="{{ route('generate', ['lead']) }}"
-            data-toggle="tooltip" title="{{ __('Generate') }}">
-            <i class="fas fa-robot"></span><span class="robot">{{ __('Generate With AI') }}</span></i>
-        </a>
-    </div>
-    @endif
     <div class="col-6">
         <div class="form-group">
             {{Form::label('name',__('Name'),['class'=>'form-label']) }}
@@ -72,15 +63,15 @@
             {{Form::text('lead_postalcode',null,array('class'=>'form-control','placeholder'=>__('Postal Code'),'required'=>'required'))}}
         </div>
     </div>
-    <div class="col-6">
+    <div class="col-12">
         <div class="form-group">
             {{Form::label('lead_country',__('Country'),['class'=>'form-label']) }}
             {{Form::text('lead_country',null,array('class'=>'form-control','placeholder'=>__('Country'),'required'=>'required'))}}
         </div>
     </div>
-    <div class="col-12">
-        <hr class="mt-2 mb-2">
-        <h6>{{__('Details')}}</h6>
+     <div class="col-12 p-0 modaltitle pb-3 mb-3" >
+        <hr class="mt-2">
+        <h5 style="margin-left: 20px; "class="mt-2" >{{__('Details')}}</h5>
     </div>
     <div class="col-6">
         <div class="form-group">
@@ -91,13 +82,13 @@
     <div class="col-6">
         <div class="form-group">
             {{Form::label('source',__('Source'),['class'=>'form-label']) }}
-            {!! Form::select('source', $leadsource, null,array('class' => 'form-control','required'=>'required')) !!}
+            {!! Form::select('source', $leadsource, null,array('class' => 'form-control')) !!}
         </div>
     </div>
     <div class="col-6">
         <div class="form-group">
             {{Form::label('opportunity_amount',__('Opportunity Amount'),['class'=>'form-label']) }}
-            {!! Form::number('opportunity_amount', null,array('class' => 'form-control','required'=>'required')) !!}
+            {!! Form::number('opportunity_amount', null,array('class' => 'form-control')) !!}
         </div>
     </div>
     @if($type == 'campaign')
@@ -118,13 +109,13 @@
     <div class="col-6">
         <div class="form-group">
             {{Form::label('industry',__('Industry'),['class'=>'form-label']) }}
-            {!! Form::select('industry', $industry, null,array('class' => 'form-control','required'=>'required')) !!}
+            {!! Form::select('industry', $industry, null,array('class' => 'form-control')) !!}
         </div>
     </div>
     <div class="col-6">
         <div class="form-group">
             {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}
-            {!! Form::select('user', $user, null,array('class' => 'form-control','required' => 'required')) !!}
+            {!! Form::select('user', $user, null,array('class' => 'form-control')) !!}
         </div>
     </div>
     <div class="col-12">
@@ -132,7 +123,7 @@
             {{Form::label('Description',__('Description'),['class'=>'form-label']) }}
             {{Form::textarea('description',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Description')))}}
         </div>
-    </div>
+    </div> 
 
 </div>
 <div class="modal-footer">

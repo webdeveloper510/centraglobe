@@ -16,6 +16,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
+
 class UserController extends Controller
 {
     public function index()
@@ -76,7 +77,6 @@ class UserController extends Controller
                 );
                 if ($validator->fails()) {
                     $messages = $validator->getMessageBag();
-
                     return redirect()->back()->with('error', $messages->first());
                 }
                 $user               = new User();
@@ -119,7 +119,7 @@ class UserController extends Controller
 
                 $resp = Utility::sendEmailTemplate('new_user', [$user->id => $user->email], $uArr);
 
-                return redirect()->back()->with('success', __('User Successfully Inserted.'));
+                return redirect()->back()->with('success', __('Staff Inserted.'));
             } else {
                 $validator = \Validator::make(
                     $request->all(),
@@ -134,11 +134,12 @@ class UserController extends Controller
                         ],
                         'password' => 'required|min:6',
                         'avatar' => ['image', 'mimes:jpeg,png,jpg'],
+                        'phone'=>'required|numeric',
+                        'user_roles'=>'required'
                     ]
                 );
                 if ($validator->fails()) {
                     $messages = $validator->getMessageBag();
-
                     return redirect()->back()->with('error', $messages->first());
                 }
                 $setting  = Utility::settingsById(\Auth::user()->id);
@@ -161,7 +162,6 @@ class UserController extends Controller
                     $user['type']       = $role_r->name;
                     $user['user_roles'] = $role_r->id;
                     $user['password']   = Hash::make($request->password);
-
                     if (!empty($request->avatar))
                     {
                         $image_size = $request->file('avatar')->getSize();
@@ -186,7 +186,7 @@ class UserController extends Controller
                     }
                     $user['created_by'] = \Auth::user()->creatorId();
                     $user->save();
-
+                    $userstatus = User::where('email',$request->email)->get();
                     $user->assignRole($role_r);
 
                     Stream::create(
@@ -208,19 +208,20 @@ class UserController extends Controller
                         'email' => $user->email,
                         'password' => $request->password,
                     ];
-                    $resp = Utility::sendEmailTemplate('new_user', [$user->id => $user->email], $uArr);
-                    $setting  = Utility::settings(\Auth::user()->creatorId());
-                    if (isset($setting['twilio_user_create']) && $setting['twilio_user_create'] == 1) {
-                        $uArr = [
-                            'email' => $user->email,
-                            'password' => $user->password,
-                            'user_name'  => \Auth::user()->name,
-                            'app_name' => env('APP_NAME'),
-                            // 'app_url' => url('/'),
-                        ];
-                        Utility::send_twilio_msg($user->phone, 'new_user', $uArr);
+                    if($userstatus[0]['is_active'] == 1){
+                        $resp = Utility::sendEmailTemplate('new_user', [$user->id => $user->email], $uArr);
+                        $setting  = Utility::settings(\Auth::user()->creatorId());
+                        if (isset($setting['twilio_user_create']) && $setting['twilio_user_create'] == 1) {
+                            $uArr = [
+                                'email' => $user->email,
+                                'password' => $user->password,
+                                'user_name'  => \Auth::user()->name,
+                                'app_name' => env('APP_NAME'),
+                                // 'app_url' => url('/'),
+                            ];
+                            Utility::send_twilio_msg($user->phone, 'new_user', $uArr);
+                        }
                     }
-
                     //webhook
                     $module = 'New User';
                     $webhook =  Utility::webhookSetting($module, $user->created_by);
@@ -233,7 +234,7 @@ class UserController extends Controller
                         }
                     }
                     if (\Auth::user()) {
-                        return redirect()->back()->with('success', __('user created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')).((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : ''));
+                        return redirect()->back()->with('success', __('Staff created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')).((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : ''));
                     } else {
                         return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
                     }
@@ -243,9 +244,9 @@ class UserController extends Controller
                     ];
 
 
-                    return redirect()->back()->with('success', __('User  Inserted.'. ((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : '')));
+                    return redirect()->back()->with('success', __('Staff  Inserted.'. ((isset($result) && $result!=1) ? '<br> <span class="text-danger">' . $result . '</span>' : '')));
                 } else {
-                    return redirect()->back()->with('error', __('Your user limit is over, Please upgrade plan.'));
+                    return redirect()->back()->with('error', __('Your staff limit is over, Please upgrade plan.'));
                 }
             }
         } else {
@@ -319,7 +320,7 @@ class UserController extends Controller
             $user['type']       = $role_r->name;
             $user['user_roles'] = $role_r->id;
             $user->update();
-
+            
             $user->assignRole($role_r);
             Stream::create(
                 [
@@ -337,7 +338,7 @@ class UserController extends Controller
                 ]
             );
 
-            return redirect()->back()->with('success', __('User Successfully Updated.'));
+            return redirect()->back()->with('success', __('Staff  Updated.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -352,7 +353,7 @@ class UserController extends Controller
             $result = Utility::changeStorageLimit(\Auth::user()->creatorId(), $file_path);
             $user->delete();
 
-            return redirect()->back()->with('success', __('User Successfully Deleted.'));
+            return redirect()->back()->with('success', __('Staff  Deleted.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -430,7 +431,7 @@ class UserController extends Controller
         $user['email'] = $request['email'];
         $user->save();
 
-        return redirect()->back()->with('success', 'Profile successfully updated.');
+        return redirect()->back()->with('success', 'Profile  updated.');
     }
 
     public function updatePassword(Request $request)
@@ -452,7 +453,7 @@ class UserController extends Controller
                 $obj_user->password = Hash::make($request_data['new_password']);;
                 $obj_user->save();
 
-                return redirect()->route('profile', $objUser->id)->with('success', __('Password successfully updated.'));
+                return redirect()->route('profile', $objUser->id)->with('success', __('Password  updated.'));
             } else {
                 return redirect()->route('profile', $objUser->id)->with('error', __('Please enter correct current password.'));
             }
@@ -510,7 +511,7 @@ class UserController extends Controller
                 ]
             );
 
-            return redirect()->route('user.index')->with('success', 'Plan successfully upgraded.');
+            return redirect()->route('user.index')->with('success', 'Plan  upgraded.');
         } else {
             return redirect()->back()->with('error', 'Plan fail to upgrade.');
         }
@@ -549,7 +550,7 @@ class UserController extends Controller
 
         return redirect()->route('user.index')->with(
             'success',
-            'User Password successfully updated.'
+            'Staff Password  updated.'
         );
     }
 }

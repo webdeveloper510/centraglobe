@@ -260,15 +260,15 @@ unset($__errorArgs, $__bag); ?>
                                             class="ti ti-upload px-1"></i><?php echo e(__('Choose file here')); ?>
 
                                         </div>
-                                        <input type="file"name="profile"id="file-1" class="form-control file mb-3" onchange="document.getElementById('blah').src = window.URL.createObjectURL(this.files[0])" data-multiple-caption="{count} files selected" multiple/>
-                                        <img id="blah" width="25%"  />
-
+                                        <input type="file"name="profile"id="file-1" class="form-control file mb-3" onchange="document.getElementById('profpic').src = window.URL.createObjectURL(this.files[0])" data-multiple-caption="{count} files selected" multiple/>
+                                        <img alt="Image placeholder" id="profpic" src="<?php echo e((!empty($userDetail->avatar))? $profile.'/'.$userDetail->avatar : $profile.'/avatar.png'); ?>">
+                                        <!-- <img id="blah" width="25%"  /> -->
                                         
 
 
                                     </label>
                                 </div>
-                                
+                               
                                <?php endif; ?>
                                 <div class="text-end">
                                     <?php echo e(Form::submit(__('Save Changes'),array('class'=>'btn-submit btn btn-primary'))); ?>
@@ -377,15 +377,17 @@ unset($__errorArgs, $__bag); ?>
 
 </div>
 
-
+<style>
+    .choose-files img {
+    width: 85px;
+}
+</style>
     <!-- [ Main Content ] start -->
 
 
         </div>
         <!-- [ Main Content ] end -->
     <?php $__env->stopSection(); ?>
-
-
     <?php $__env->startPush('script-page'); ?>
     <script>
         var scrollSpy = new bootstrap.ScrollSpy(document.body, {

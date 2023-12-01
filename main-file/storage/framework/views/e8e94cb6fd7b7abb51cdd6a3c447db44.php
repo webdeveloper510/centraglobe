@@ -215,7 +215,7 @@ unset($__errorArgs, $__bag); ?>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <?php echo e(Form::label('name', __('Is Active'), ['class' => 'form-label'])); ?>
+                                            <?php echo e(Form::label('name', __('Active'), ['class' => 'form-label'])); ?>
 
                                             <div>
                                                 <input type="checkbox" class="form-check-input" name="is_active"

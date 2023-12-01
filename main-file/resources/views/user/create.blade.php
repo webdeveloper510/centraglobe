@@ -28,9 +28,12 @@
 <div class="row">
     <div class="col-6">
         <div class="form-group">
-            {{Form::label('name',__('User Name'),['class'=>'form-label']) }}
-            {{Form::text('username',null,array('class'=>'form-control','placeholder'=>__('Enter User Name'),'required'=>'required'))}}
+            {{Form::label('name',__('Username'),['class'=>'form-label']) }}
+            {{Form::text('username',null,array('class'=>'form-control','placeholder'=>__('Enter Username'),'required'=>'required'))}}
         </div>
+        @error('username')
+        <div class="error">{{ $message }}</div>
+        @enderror
     </div>
     <div class="col-6">
         <div class="form-group">
@@ -48,7 +51,10 @@
     <div class="col-6">
         <div class="form-group">
             {{Form::label('name',__('Phone'),['class'=>'form-label']) }}
-            {{Form::text('phone',null,array('class'=>'form-control','placeholder'=>__('Enter Phone'),'required'=>'required'))}}
+            <div class="intl-tel-input">
+            <input type="tel" id="phone-input" class="phone-input form-control" placeholder="Enter Phone">
+        </div>
+            <!-- {{Form::text('phone',null,array('class'=>'form-control','placeholder'=>__('Enter Phone'),'required'=>'required'))}} -->
         </div>
     </div>
     <div class="col-6">
@@ -57,10 +63,12 @@
             {!! Form::select('gender', $gender, null,array('class' => 'form-control','required'=>'required')) !!}
         </div>
     </div>
-   
-    <div class="col-12 p-0">
-        <hr class="m-0 mb-3" style="height:2px">
-        <h6 style="margin-left: 14px;">{{__('Login Details')}}</h6>
+    <!-- <hr class ="mb-4"> -->
+    <hr>
+    <div class="col-12 p-0 modaltitle pb-3 mb-3">
+        <!-- <hr> -->
+        <h5 style="margin-left: 14px;">{{__('Login Details')}}</h5>
+        <!-- <hr class ="mt-3"> -->
     </div>
     <div class="col-6">
         <div class="form-group">
@@ -74,24 +82,24 @@
             {{Form::password('password',array('class'=>'form-control','placeholder'=>__('Enter Password'),'required'=>'required'))}}
         </div>
     </div>
-    <div class="col-8">
+    <div class="col-6">
         <div class="form-group">
             {{Form::label('user_roles',__('Roles'),['class'=>'form-label']) }}
             {!! Form::select('user_roles', $roles, null,array('class' => 'form-control ','required'=>'required')) !!}
         </div>
     </div>
-    <div class="col-2">
-        <div class="form-group">
+    <div class="col-6">
+        <div class="form-group" style="margin-top: 35px;">
             {{Form::label('name',__('Active'),['class'=>'form-label']) }}
-            <div>
                 <input type="checkbox" class="form-check-input" name="is_active" checked>
-            </div>
         </div>
     </div>
-    <div class="col-12 p-0">
-        <hr class="m-0 mb-3">
-        <h6 style="margin-left: 14px;">{{__('Avatar')}}</h6>
+    <hr>
+    <div class="col-12 p-0 modaltitle pb-3 mb-3">
+        <h5 style="margin-left: 14px;">{{__('Avatar')}}</h5>
+        <!-- <hr class ="mb-4"> -->
     </div>
+    
     <div class="col-12 mb-3 field" data-name="avatar">
         <div class="attachment-upload">
             <div class="attachment-button">
@@ -105,10 +113,24 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn  btn-light"
+        <button type="button" class="btn btn-light"
             data-bs-dismiss="modal">Close</button>
-                {{Form::submit(__('Save'),array('class'=>'btn  btn-primary  '))}}{{Form::close()}}
+                {{Form::submit(__('Save'),array('class'=>'btn  btn-primary  '))}}
     </div>
 </div>
 {{Form::close()}}
+                        <script>
+                        $(document).ready(function() {
+      var input = document.querySelector("#phone-input");
+      var iti = window.intlTelInput(input, {
+        separateDialCode: true,
+      });
+
+      var indiaCountryCode = iti.getSelectedCountryData().iso2;
+      if (indiaCountryCode !== 'us') {
+        iti.setCountry('us');
+      }
+    });
+    </script>
+
 @endif

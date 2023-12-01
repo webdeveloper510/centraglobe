@@ -94,7 +94,7 @@ class LeadController extends Controller
                     'lead_postalcode' => 'required',
                     'opportunity_amount' => 'required|numeric',
                     'status' => 'required',
-                    'source' => 'required',
+                    // 'source' => 'required',
                 ]
             );
             if ($validator->fails()) {
