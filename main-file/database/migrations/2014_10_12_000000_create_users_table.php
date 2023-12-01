@@ -36,6 +36,7 @@ class CreateUsersTable extends Migration
             $table->integer('requested_plan')->default(0);
             $table->integer('created_by')->default(0);
             $table->boolean('active_status')->default(0);
+            $table->integer('email_sent')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -162,6 +162,7 @@ class UserController extends Controller
                     $user['type']       = $role_r->name;
                     $user['user_roles'] = $role_r->id;
                     $user['password']   = Hash::make($request->password);
+                    // if($user['is_active'] == 0){$user['email_sent'] = false;}
                     if (!empty($request->avatar))
                     {
                         $image_size = $request->file('avatar')->getSize();
@@ -319,6 +320,9 @@ class UserController extends Controller
             $user['is_active']  = ($request->is_active == 'on') ? 1 : 0;
             $user['type']       = $role_r->name;
             $user['user_roles'] = $role_r->id;
+            // if($user['is_active'] == 1){
+            //     $user['email_sent'] == true; 
+            // }
             $user->update();
             
             $user->assignRole($role_r);
@@ -337,7 +341,9 @@ class UserController extends Controller
                     ),
                 ]
             );
-
+            // if($userstatus->email_sent == ){
+            //     $resp = Utility::sendEmailTemplate('new_user', [$user->id => $user->email], $uArr);
+            // }
             return redirect()->back()->with('success', __('Staff  Updated.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');

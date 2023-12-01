@@ -110,7 +110,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('name', __('Name'), ['class' => 'form-label']) }}
-                                            {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Name'), 'required' => 'required']) }}
+                                            {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Name')]) }}
                                             @error('name')
                                                 <span class="invalid-name" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -133,7 +133,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('email', __('Email'), ['class' => 'form-label']) }}
-                                            {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => __('Enter Email'), 'required' => 'required']) }}
+                                            {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => __('Enter Email')]) }}
                                             @error('email')
                                                 <span class="invalid-email" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -144,7 +144,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('phone', __('Phone'), ['class' => 'form-label']) }}
-                                            {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => __('Enter Phone'), 'required' => 'required']) }}
+                                            {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => __('Enter Phone')]) }}
                                             @error('phone')
                                                 <span class="invalid-phone" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -155,7 +155,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('title', __('Title'), ['class' => 'form-label']) }}
-                                            {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => __('Enter Title'), 'required' => 'required']) }}
+                                            {{ Form::text('title', null, ['class' => 'form-control', 'placeholder' => __('Enter Title')]) }}
                                             @error('title')
                                                 <span class="invalid-phone" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -166,7 +166,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('website', __('Website'), ['class' => 'form-label']) }}
-                                            {{ Form::text('website', null, ['class' => 'form-control', 'placeholder' => __('Enter Website'), 'required' => 'required']) }}
+                                            {{ Form::text('website', null, ['class' => 'form-control', 'placeholder' => __('Enter Website')]) }}
                                             @error('website')
                                                 <span class="invalid-website" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -177,7 +177,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('lead_address', __('Lead Address'), ['class' => 'form-label']) }}
-                                            {{ Form::text('lead_address', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Address'), 'required' => 'required']) }}
+                                            {{ Form::text('lead_address', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Address')]) }}
                                             @error('lead_address')
                                                 <span class="invalid-lead_address" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -189,7 +189,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('lead_city', __('Lead City'), ['class' => 'form-label']) }}
-                                            {{ Form::text('lead_city', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing City'), 'required' => 'required']) }}
+                                            {{ Form::text('lead_city', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing City')]) }}
                                             @error('lead_city')
                                                 <span class="invalid-lead_city" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -201,7 +201,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             {{ Form::label('lead_state', __('Lead State'), ['class' => 'form-label']) }}
-                                            {{ Form::text('lead_state', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing State'), 'required' => 'required']) }}
+                                            {{ Form::text('lead_state', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing State')]) }}
                                             @error('lead_state')
                                                 <span class="invalid-lead_state" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -212,7 +212,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             {{ Form::label('lead_postalcode', __('Lead Postal Code'), ['class' => 'form-label']) }}
-                                            {{ Form::number('lead_postalcode', null, ['class' => 'form-control', 'placeholder' => __('Enter Postal Code'), 'required' => 'required']) }}
+                                            {{ Form::number('lead_postalcode', null, ['class' => 'form-control', 'placeholder' => __('Enter Postal Code')]) }}
                                             @error('lead_postalcode')
                                                 <span class="invalid-lead_postalcode" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -223,7 +223,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             {{ Form::label('lead_country', __('Lead Country'), ['class' => 'form-label']) }}
-                                            {{ Form::text('lead_country', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Country'), 'required' => 'required']) }}
+                                            {{ Form::text('lead_country', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Country')]) }}
                                             @error('lead_country')
                                                 <span class="invalid-lead_country" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -234,7 +234,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('status', __('Status'), ['class' => 'form-label']) }}
-                                            {!! Form::select('status', $status, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                            {!! Form::select('status', $status, null, ['class' => 'form-control']) !!}
                                             @error('status')
                                                 <span class="invalid-status" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -245,7 +245,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('source', __('Source'), ['class' => 'form-label']) }}
-                                            {!! Form::select('source', $source, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                            {!! Form::select('source', $source, null, ['class' => 'form-control']) !!}
                                             @error('source')
                                                 <span class="invalid-source" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -256,7 +256,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('opportunity_amount', __('Opportunity Amount'), ['class' => 'form-label']) }}
-                                            {!! Form::number('opportunity_amount', null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                            {!! Form::number('opportunity_amount', null, ['class' => 'form-control']) !!}
                                             @error('source')
                                                 <span class="invalid-opportunity_amount" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -278,7 +278,7 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('industry', __('Industry'), ['class' => 'form-label']) }}
-                                            {!! Form::select('industry', $industry, null, ['class' => 'form-control', 'required' => 'required']) !!}
+                                            {!! Form::select('industry', $industry, null, ['class' => 'form-control']) !!}
                                             @error('industry')
                                                 <span class="invalid-industry" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -300,7 +300,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             {{ Form::label('description', __('Description'), ['class' => 'form-label']) }}
-                                            {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3, 'required' => 'required']) !!}
+                                            {!! Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3]) !!}
                                             @error('description')
                                                 <span class="invalid-description" role="alert">
                                                     <strong class="text-danger">{{ $message }}</strong>
@@ -334,7 +334,7 @@
                                     <div class="col-12">
                                         <div class="form-group">
                                             {{ Form::label('stream', __('Stream'), ['class' => 'form-label']) }}
-                                            {{ Form::text('stream_comment', null, ['class' => 'form-control', 'placeholder' => __('Enter Stream Comment'), 'required' => 'required']) }}
+                                            {{ Form::text('stream_comment', null, ['class' => 'form-control', 'placeholder' => __('Enter Stream Comment')]) }}
                                         </div>
                                     </div>
                                     <input type="hidden" name="log_type" value="lead comment">

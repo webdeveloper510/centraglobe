@@ -1,25 +1,27 @@
-@extends('layouts.admin')
-@section('breadcrumb')
-@endsection
-@section('page-title')
-    {{ __('Home') }}
-@endsection
-@section('title')
-    {{ __('Dashboard') }}
 
-@endsection
+<?php $__env->startSection('breadcrumb'); ?>
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('page-title'); ?>
+    <?php echo e(__('Home')); ?>
 
-@section('action-btn')
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('title'); ?>
+    <?php echo e(__('Dashboard')); ?>
 
-@endsection
 
-@section('content')
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('action-btn'); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
 <div class="row">
 
     <!-- [ sample-page ] start -->
         <div class="col-sm-12">
             <div class="row">
-                @if (\Auth::user()->type == 'owner')
+                <?php if(\Auth::user()->type == 'owner'): ?>
                 <div class="col-xxl-12">
                     <div class="row">
                         <div class="col-lg-3 col-6">
@@ -29,8 +31,8 @@
                                                 <i class="ti ti-user"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('No. of Staff') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalUser'] }} </h3>
+                                            <h6 class="mb-3"><?php echo e(__('No. of Staff')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalUser']); ?> </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -41,8 +43,8 @@
                                                 <i class="fas fa-address-card"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Lead') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalLead'] }}</h3>
+                                            <h6 class="mb-3"><?php echo e(__('Total Lead')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalLead']); ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -53,8 +55,8 @@
                                                 <i class="ti ti-building"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Account') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalAccount'] }}</h3>
+                                            <h6 class="mb-3"><?php echo e(__('Total Account')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalAccount']); ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -65,8 +67,8 @@
                                                 <i class="fas fa-id-badge"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Contact') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalContact'] }} </h3>
+                                            <h6 class="mb-3"><?php echo e(__('Total Contact')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalContact']); ?> </h3>
                                         </div>
                                     </div>
                                 </div>
@@ -78,8 +80,8 @@
                                                 <i class="ti ti-currency-dollar-singapore"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Opportunities') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalOpportunities'] }}</h3>
+                                            <h6 class="mb-3"><?php echo e(__('Total Opportunities')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalOpportunities']); ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -90,8 +92,8 @@
                                                 <i class="ti ti-receipt"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Invoices') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalInvoice'] }}</h3>
+                                            <h6 class="mb-3"><?php echo e(__('Total Invoices')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalInvoice']); ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -102,8 +104,8 @@
                                                 <i class="ti ti-file-invoice"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Salesorder') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalSalesorder'] }}</h3>
+                                            <h6 class="mb-3"><?php echo e(__('Total Salesorder')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalSalesorder']); ?></h3>
                                         </div>
                                     </div>
                                 </div>
@@ -114,39 +116,39 @@
                                                 <i class="ti ti-brand-producthunt"></i>
                                             </div>
                                             <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('Total Product') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalProduct'] }}</h3>
+                                            <h6 class="mb-3"><?php echo e(__('Total Product')); ?></h6>
+                                            <h3 class="mb-0"><?php echo e($data['totalProduct']); ?></h3>
                                         </div>
                                     </div>
                                 </div>  -->
                     </div>
                 </div>
-                @endif
+                <?php endif; ?>
 
-                <!-- @if (\Auth::user()->type == 'owner')
+                <!-- <?php if(\Auth::user()->type == 'owner'): ?>
                  <div class="col-xxl-5">
                     <div class="card">
                         <div class="card-header">
-                            <h5>{{__('Invoice'.' '.'&'.' '.'Quote'.' '.'&'.' '.'Sales Order')}}</h5>
+                            <h5><?php echo e(__('Invoice'.' '.'&'.' '.'Quote'.' '.'&'.' '.'Sales Order')); ?></h5>
                         </div>
                         <div class="card-body adj_card">
                             <div id="traffic-chart"></div>
                         </div>
                     </div>
                 </div>
-                @endif
-                @if (\Auth::user()->type != 'owner')
+                <?php endif; ?>
+                <?php if(\Auth::user()->type != 'owner'): ?>
                 <div class="col-xxl-12">
                     <div class="card">
                         <div class="card-header">
-                            <h5>{{__('Invoice'.' '.'&'.' '.'Quote'.' '.'&'.' '.'Sales Order')}}</h5>
+                            <h5><?php echo e(__('Invoice'.' '.'&'.' '.'Quote'.' '.'&'.' '.'Sales Order')); ?></h5>
                         </div>
                         <div class="card-body">
                             <div id="traffic-chart"></div>
                         </div>
                     </div>
                 </div>
-                @endif -->
+                <?php endif; ?> -->
                 <!-- <div class="col-xxl-12">
                     <div class="row">
                         <div class="col-md-12">
@@ -154,25 +156,25 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card" style="min-height:205px;">
                                         <div class="card-header">
-                                            <h5>{{__('Invoice Overview')}}</h5>
+                                            <h5><?php echo e(__('Invoice Overview')); ?></h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="progress">
-                                                @foreach($data['invoice'] as $invoice)
-                                                    <div class="progress-bar bg-{{$data['invoiceColor'][$invoice['status']]}}" role="progressbar" style="width: {{$invoice['percentage']}}%" aria-valuenow="{{$invoice['percentage']}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                @endforeach
+                                                <?php $__currentLoopData = $data['invoice']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <div class="progress-bar bg-<?php echo e($data['invoiceColor'][$invoice['status']]); ?>" role="progressbar" style="width: <?php echo e($invoice['percentage']); ?>%" aria-valuenow="<?php echo e($invoice['percentage']); ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                             <div class="row mt-3">
-                                                @forelse($data['invoice'] as $invoice)
+                                                <?php $__empty_1 = true; $__currentLoopData = $data['invoice']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $invoice): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                     <div class="col-md-6 text-justify">
-                                                        <span class="text-sm text-{{$data['invoiceColor'][$invoice['status']]}}">●</span>
-                                                        <small>{{$invoice['data'].' '.__($invoice['status'])}} (<a href="#" class="text-sm text-muted">{{number_format($invoice['percentage'],'2')}}%</a>)</small>
+                                                        <span class="text-sm text-<?php echo e($data['invoiceColor'][$invoice['status']]); ?>">●</span>
+                                                        <small><?php echo e($invoice['data'].' '.__($invoice['status'])); ?> (<a href="#" class="text-sm text-muted"><?php echo e(number_format($invoice['percentage'],'2')); ?>%</a>)</small>
                                                     </div>
-                                                @empty
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                     <div class="col-md-12 text-center mt-3">
-                                                        <h6>{{__('Invoice record not found')}}</h6>
+                                                        <h6><?php echo e(__('Invoice record not found')); ?></h6>
                                                     </div>
-                                                @endforelse
+                                                <?php endif; ?>
                                             </div>
 
                                         </div>
@@ -181,26 +183,26 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card" style="min-height:205px;">
                                         <div class="card-header">
-                                            <h5>{{__('Quote Overview')}}</h5>
+                                            <h5><?php echo e(__('Quote Overview')); ?></h5>
                                         </div>
                                         <div class="card-body">
 
                                             <div class="progress">
-                                                @foreach($data['quote'] as $quote)
-                                                    <div class="progress-bar bg-{{$data['invoiceColor'][$quote['status']]}}" role="progressbar" style="width: {{$quote['percentage']}}%" aria-valuenow="{{$quote['percentage']}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                @endforeach
+                                                <?php $__currentLoopData = $data['quote']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $quote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <div class="progress-bar bg-<?php echo e($data['invoiceColor'][$quote['status']]); ?>" role="progressbar" style="width: <?php echo e($quote['percentage']); ?>%" aria-valuenow="<?php echo e($quote['percentage']); ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                             <div class="row mt-3">
-                                                @forelse($data['quote'] as $quote)
+                                                <?php $__empty_1 = true; $__currentLoopData = $data['quote']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $quote): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                     <div class="col-md-6 text-justify">
-                                                        <span class="text-sm text-{{$data['invoiceColor'][$quote['status']]}}">●</span>
-                                                        <small>{{$quote['data'].' '.__($quote['status'])}} (<a href="#" class="text-sm text-muted">{{number_format($quote['percentage'],'2')}}%</a>)</small>
+                                                        <span class="text-sm text-<?php echo e($data['invoiceColor'][$quote['status']]); ?>">●</span>
+                                                        <small><?php echo e($quote['data'].' '.__($quote['status'])); ?> (<a href="#" class="text-sm text-muted"><?php echo e(number_format($quote['percentage'],'2')); ?>%</a>)</small>
                                                     </div>
-                                                @empty
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                     <div class="col-md-12 text-center mt-3">
-                                                        <h6>{{__('Quote record not found')}}</h6>
+                                                        <h6><?php echo e(__('Quote record not found')); ?></h6>
                                                     </div>
-                                                @endforelse
+                                                <?php endif; ?>
                                             </div>
 
                                         </div>
@@ -209,34 +211,34 @@
                                 <div class="col-xl-6 col-md-6">
                                     <div class="card" style="min-height:281px;">
                                         <div class="card-header">
-                                            <h5>{{__('Sales Order Overview')}}</h5>
+                                            <h5><?php echo e(__('Sales Order Overview')); ?></h5>
                                         </div>
                                         <div class="card-body">
                                             <div class="progress">
-                                                @foreach($data['salesOrder'] as $salesOrder)
-                                                    <div class="progress-bar bg-{{$data['invoiceColor'][$salesOrder['status']]}}" role="progressbar" style="width: {{$salesOrder['percentage']}}%" aria-valuenow="{{$salesOrder['percentage']}}" aria-valuemin="0" aria-valuemax="100"></div>
-                                                @endforeach
+                                                <?php $__currentLoopData = $data['salesOrder']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $salesOrder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                    <div class="progress-bar bg-<?php echo e($data['invoiceColor'][$salesOrder['status']]); ?>" role="progressbar" style="width: <?php echo e($salesOrder['percentage']); ?>%" aria-valuenow="<?php echo e($salesOrder['percentage']); ?>" aria-valuemin="0" aria-valuemax="100"></div>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                             <div class="row mt-3">
-                                                @forelse($data['salesOrder'] as $salesOrder)
+                                                <?php $__empty_1 = true; $__currentLoopData = $data['salesOrder']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $salesOrder): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                                     <div class="col-md-6 text-justify">
-                                                        <span class="text-sm text-{{$data['invoiceColor'][$salesOrder['status']]}}">●</span>
-                                                        <small>{{$salesOrder['data'].' '.__($salesOrder['status'])}} (<a href="#" class="text-sm text-muted">{{number_format($salesOrder['percentage'],'2')}}%</a>)</small>
+                                                        <span class="text-sm text-<?php echo e($data['invoiceColor'][$salesOrder['status']]); ?>">●</span>
+                                                        <small><?php echo e($salesOrder['data'].' '.__($salesOrder['status'])); ?> (<a href="#" class="text-sm text-muted"><?php echo e(number_format($salesOrder['percentage'],'2')); ?>%</a>)</small>
                                                     </div>
-                                                @empty
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                                     <div class="col-md-12 text-center mt-3">
-                                                        <h6>{{__('Invoice record not found')}}</h6>
+                                                        <h6><?php echo e(__('Invoice record not found')); ?></h6>
                                                     </div>
-                                                @endforelse
+                                                <?php endif; ?>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                @if(\Auth::user()->type == 'owner')
+                                <?php if(\Auth::user()->type == 'owner'): ?>
                                 <div class="col-lg-6">
                                     <div class="card" style="min-height:205px;">
                                         <div class="card-header">
-                                            <h4 >{{ __('Storage Status') }} <small>({{ $users->storage_limit . 'MB' }} / {{ $plan->storage_limit . 'MB' }})</small></h4>
+                                            <h4 ><?php echo e(__('Storage Status')); ?> <small>(<?php echo e($users->storage_limit . 'MB'); ?> / <?php echo e($plan->storage_limit . 'MB'); ?>)</small></h4>
                                         </div>
                                     <div class="card shadow-none mb-0">
                                         <div class="card-body border rounded  p-3">
@@ -245,7 +247,7 @@
                                     </div>
                                     </div>
                                 </div>
-                                @endif
+                                <?php endif; ?>
                             </div>
                         </div>
 
@@ -256,30 +258,30 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h5 class="mb-0">{{__('Meeting Schedule')}}</h5>
+                                    <h5 class="mb-0"><?php echo e(__('Meeting Schedule')); ?></h5>
                                 </div>
                             </div>
                         </div>
                         <div class="list-group overflow-auto list-group-flush dashboard-box">
-                            @forelse($data['topMeeting'] as $meeting)
+                            <?php $__empty_1 = true; $__currentLoopData = $data['topMeeting']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <div class="list-group-item">
                                     <div class="row align-items-center">
                                         <div class="col ml-n2">
-                                            <a href="#!" class=" h6 mb-0">{{$meeting->name}}</a>
+                                            <a href="#!" class=" h6 mb-0"><?php echo e($meeting->name); ?></a>
                                             <div>
-                                                <small>{{$meeting->description}}</small>
+                                                <small><?php echo e($meeting->description); ?></small>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <span data-toggle="tooltip" data-title="{{__('Meetign Date')}}">{{$meeting->start_date}}</span>
+                                            <span data-toggle="tooltip" data-title="<?php echo e(__('Meetign Date')); ?>"><?php echo e($meeting->start_date); ?></span>
                                         </div>
                                     </div>
                                 </div>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                 <div class="col-md-12 text-center">
-                                    <h6 class="m-3">{{__('Meeting schedule not found')}}</h6>
+                                    <h6 class="m-3"><?php echo e(__('Meeting schedule not found')); ?></h6>
                                 </div>
-                            @endforelse
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -289,56 +291,56 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <div>
-                                    <h5 class="mb-0">{{__('Top Due Task')}}</h5>
+                                    <h5 class="mb-0"><?php echo e(__('Top Due Task')); ?></h5>
                                 </div>
                             </div>
                         </div>
                         <div class="list-group overflow-auto list-group-flush dashboard-box">
-                            @forelse($data['topDueTask'] as $topDueTask)
+                            <?php $__empty_1 = true; $__currentLoopData = $data['topDueTask']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $topDueTask): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                                 <div class="list-group-item">
                                     <div class="row align-items-center">
                                         <div class="col ml-n2">
-                                            <a href="#!" class=" h6 mb-0">{{$topDueTask->name}}</a>
+                                            <a href="#!" class=" h6 mb-0"><?php echo e($topDueTask->name); ?></a>
                                             <div>
-                                                <small>{{__('Assign to')}} {{!empty($topDueTask->assign_user)?$topDueTask->assign_user->name  :''}}</small>
+                                                <small><?php echo e(__('Assign to')); ?> <?php echo e(!empty($topDueTask->assign_user)?$topDueTask->assign_user->name  :''); ?></small>
                                             </div>
                                         </div>
                                         <div class="col">
-                                            <span data-toggle="tooltip" data-title="{{__('Project Title')}}">{{$topDueTask->description}}</span>
+                                            <span data-toggle="tooltip" data-title="<?php echo e(__('Project Title')); ?>"><?php echo e($topDueTask->description); ?></span>
                                         </div>
                                         <div class="col-auto">
-                                            <span data-toggle="tooltip" data-title="{{__('Due Date')}}">{{\Auth::user()->dateFormat($topDueTask->due_date)}}</span>
+                                            <span data-toggle="tooltip" data-title="<?php echo e(__('Due Date')); ?>"><?php echo e(\Auth::user()->dateFormat($topDueTask->due_date)); ?></span>
                                         </div>
                                     </div>
                                 </div>
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                                 <div class="col-md-12 text-center">
-                                    <h6 class="m-3">{{__('Task record not found')}}</h6>
+                                    <h6 class="m-3"><?php echo e(__('Task record not found')); ?></h6>
                                 </div>
-                            @endforelse
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div> -->
-                @php
+                <?php
 
                 $setting = App\Models\Utility::settings();
 
-                @endphp
+                ?>
                 <!-- <div class="row"> -->
                     <!-- [ sample-page ] start -->
                     <!-- <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
 
-                                @if (isset($setting['is_enabled']) && $setting['is_enabled'] == 'on')
-                                {{-- onchange="get_data()" --}}
+                                <?php if(isset($setting['is_enabled']) && $setting['is_enabled'] == 'on'): ?>
+                                
                                 <select class="form-control" name="calender_type" id="calender_type"
                                     style="float: right;width: 150px;">
-                                    <option value="goggle_calender">{{ __('Google Calender') }}</option>
-                                    <option value="local_calender" selected="true">{{ __('Local Calender') }}</option>
+                                    <option value="goggle_calender"><?php echo e(__('Google Calender')); ?></option>
+                                    <option value="local_calender" selected="true"><?php echo e(__('Local Calender')); ?></option>
                                 </select>
-                                @endif
-                                <input type="hidden" id="path_admin" value="{{ url('/') }}">
+                                <?php endif; ?>
+                                <input type="hidden" id="path_admin" value="<?php echo e(url('/')); ?>">
 
                             </div>
 
@@ -362,14 +364,14 @@
 
 
 
-@endsection
+<?php $__env->stopSection(); ?>
 
-@push('script-page')
+<?php $__env->startPush('script-page'); ?>
 <script>
 
 (function () {
         var options = {
-            series: [{{ $storage_limit }}],
+            series: [<?php echo e($storage_limit); ?>],
             chart: {
                 height: 350,
                 type: 'radialBar',
@@ -454,23 +456,26 @@
             },
             series: [
                 {
-                name: "{{__('Quote')}}",
-                data:  {!! json_encode($data['lineChartData']['quoteAmount']) !!}
+                name: "<?php echo e(__('Quote')); ?>",
+                data:  <?php echo json_encode($data['lineChartData']['quoteAmount']); ?>
+
                 // data: [20, 50, 30, 60, 40, 50, 40]
             }, {
-                name: "{{__('Invoice')}}",
-                data: {!! json_encode($data['lineChartData']['invoiceAmount']) !!}
+                name: "<?php echo e(__('Invoice')); ?>",
+                data: <?php echo json_encode($data['lineChartData']['invoiceAmount']); ?>
+
                 // data: [40, 20, 60, 15, 50, 65, 20]
             }, {
-                name: "{{__('Sales Order')}}",
-                 data: {!! json_encode($data['lineChartData']['salesorderAmount']) !!}
+                name: "<?php echo e(__('Sales Order')); ?>",
+                 data: <?php echo json_encode($data['lineChartData']['salesorderAmount']); ?>
+
                 // data: [50, 65, 50, 40, 30, 45, 60]
             }
             ],
             xaxis: {
-                categories: {!! json_encode($data['lineChartData']['day']) !!},
+                categories: <?php echo json_encode($data['lineChartData']['day']); ?>,
                 title: {
-                    text: "{{__('Days')}}"
+                    text: "<?php echo e(__('Days')); ?>"
                 }
                 // categories: ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
             },
@@ -489,7 +494,7 @@
                 min: 10,
                 max: 70,
                 title: {
-                    text: '{{__('Amount')}}'
+                    text: '<?php echo e(__('Amount')); ?>'
                 },
             }
         };
@@ -551,9 +556,9 @@
         chart.render();
     })();
 
-    @php
+    <?php
     $segment=Request::segment(2);
-    @endphp
+    ?>
 
     $(document).ready(function()
     {
@@ -562,7 +567,7 @@
 
     function get_data()
     {
-        var segment="{{$segment}}";
+        var segment="<?php echo e($segment); ?>";
         if(segment=='call'){
             var urls=$("#path_admin").val()+"/call/get_call_data";
         }
@@ -588,7 +593,7 @@
         $.ajax({
             url: urls ,
             method:"POST",
-            data: {"_token": "{{ csrf_token() }}",'calender_type':calender_type},
+            data: {"_token": "<?php echo e(csrf_token()); ?>",'calender_type':calender_type},
             success: function(data) {
                 // console.log(data);
                 (function() {
@@ -602,9 +607,9 @@
                             right: 'dayGridMonth,timeGridWeek,timeGridDay'
                         },
                         buttonText: {
-                            timeGridDay: "{{ __('Day') }}",
-                            timeGridWeek: "{{ __('Week') }}",
-                            dayGridMonth: "{{ __('Month') }}"
+                            timeGridDay: "<?php echo e(__('Day')); ?>",
+                            timeGridWeek: "<?php echo e(__('Week')); ?>",
+                            dayGridMonth: "<?php echo e(__('Month')); ?>"
                         },
                         slotLabelFormat: {
                                     hour: '2-digit',
@@ -644,16 +649,19 @@
         var options = {
             series: [
                 {
-                    name: "{{__('Quote')}}",
-                    data:  {!! json_encode($data['lineChartData']['quoteAmount']) !!}
+                    name: "<?php echo e(__('Quote')); ?>",
+                    data:  <?php echo json_encode($data['lineChartData']['quoteAmount']); ?>
+
                 },
                 {
-                    name: "{{__('Invoice')}}",
-                    data: {!! json_encode($data['lineChartData']['invoiceAmount']) !!}
+                    name: "<?php echo e(__('Invoice')); ?>",
+                    data: <?php echo json_encode($data['lineChartData']['invoiceAmount']); ?>
+
                 },
                 {
-                    name: "{{__('Sales Order')}}",
-                    data: {!! json_encode($data['lineChartData']['salesorderAmount']) !!}
+                    name: "<?php echo e(__('Sales Order')); ?>",
+                    data: <?php echo json_encode($data['lineChartData']['salesorderAmount']); ?>
+
                 }
             ],
             chart: {
@@ -696,14 +704,14 @@
                 size: 1
             },
             xaxis: {
-                categories: {!! json_encode($data['lineChartData']['day']) !!},
+                categories: <?php echo json_encode($data['lineChartData']['day']); ?>,
                 title: {
-                    text: "{{__('Days')}}"
+                    text: "<?php echo e(__('Days')); ?>"
                 }
             },
             yaxis: {
                 title: {
-                    text: '{{__('Amount')}}'
+                    text: '<?php echo e(__('Amount')); ?>'
                 },
             },
             legend: {
@@ -721,4 +729,6 @@
 
 
     </script> 
-@endpush
+<?php $__env->stopPush(); ?>
+
+<?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\centraglobe\centraglobe\main-file\resources\views/home.blade.php ENDPATH**/ ?>

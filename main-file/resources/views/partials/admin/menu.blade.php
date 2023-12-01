@@ -26,11 +26,12 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
         </div>
         <div class="navbar-content">
             <ul class="dash-navbar">
-               
+           
                 <li class="dash-item {{ \Request::route()->getName() == 'dashboard' ? ' active' : '' }}">
                     <a href="{{ route('dashboard') }}" class="dash-link">
                         <span class="dash-micon"><i class="ti ti-home-2"></i></span><span class="dash-mtext">{{ __('Dashboard') }}</span></a>
                 </li>
+                @if (\Auth::user()->type == 'owner')
                 @can('Manage User')
                     <li class="dash-item {{ \Request::route()->getName() == 'user' || \Request::route()->getName() == 'user.edit' ? ' active' : '' }}">
                         {{-- <a class="dash-link" href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('user')) ? route(\Auth::user()->getDefualtViewRouteByModule('user')) : route('user.index') }}"> --}}
@@ -38,6 +39,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <span class="dash-micon"><i class="ti ti-user"></i></span><span class="dash-mtext">{{ __('Staff') }}</span></a>
                     </li>
                 @endcan
+                @endif
               <!--@can('Manage Role')
                     <li class="dash-item {{ \Request::route()->getName() == 'role' ? ' active' : '' }}">
                         <a href="{{ route('role.index') }}" class="dash-link"><span class="dash-micon">
@@ -88,6 +90,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 @endcan -->
+               
                 @can('Manage Lead')
                     <li class="dash-item {{ \Request::route()->getName() == 'lead' || \Request::route()->getName() == 'lead.edit' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('lead')) ? route(\Auth::user()->getDefualtViewRouteByModule('lead')) : route('lead.index') }}" class="dash-link">

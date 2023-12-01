@@ -38,7 +38,7 @@ class LeadController extends Controller
                 User::userDefualtView($defualtView);
                 }
                 else{
-                    $leads = Lead::with('accounts','assign_user')->where('user_id', \Auth::user()->id)->get();
+                $leads = Lead::with('accounts','assign_user')->where('user_id', \Auth::user()->id)->get();
                 $defualtView         = new UserDefualtView();
                 $defualtView->route  = \Request::route()->getName();
                 $defualtView->module = 'lead';
@@ -104,7 +104,7 @@ class LeadController extends Controller
             }
 
             $lead                       = new Lead();
-            $lead['user_id']            = $request->user;
+            $lead['user_id']            = Auth::user()->id;
             $lead['name']               = $request->name;
             $lead['account']            = $request->account;
             $lead['email']              = $request->email;
@@ -124,7 +124,6 @@ class LeadController extends Controller
             $lead['description']        = $request->description;
             $lead['created_by']         = \Auth::user()->creatorId();
             $lead->save();
-
             Stream::create(
                 [
                     'user_id' => \Auth::user()->id, 'created_by' => \Auth::user()->creatorId(),
@@ -158,7 +157,7 @@ class LeadController extends Controller
                 }
             }
             if (Auth::user()) {
-                return redirect()->back()->with('success', __('Lead successfully created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
+                return redirect()->back()->with('success', __('Lead created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
             } else {
                 return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
             }
@@ -185,7 +184,7 @@ class LeadController extends Controller
                 Utility::send_twilio_msg($Assign_user_phone->phone, 'new_lead',$uArr);
             }
 
-            return redirect()->back()->with('success', __('Lead Successfully Created.'));
+            return redirect()->back()->with('success', __('Lead Created.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
