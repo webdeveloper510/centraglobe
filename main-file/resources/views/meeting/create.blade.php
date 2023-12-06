@@ -6,7 +6,7 @@
 
 {{ Form::open(['url' => 'meeting', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
 <div class="row">
-    @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
+    <!-- @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
         <div class="text-end">
             <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true" data-size="md"
                 data-title="{{ __('Generate content with AI') }}" data-url="{{ route('generate', ['meeting']) }}"
@@ -14,7 +14,7 @@
                 <i class="fas fa-robot"></span><span class="robot">{{ __('Generate With AI') }}</span></i>
             </a>
         </div>
-    @endif
+    @endif -->
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('name', __('Name'), ['class' => 'form-label']) }}
@@ -57,7 +57,7 @@
 
             </select>
         </div>
-    </div>
+    </div> 
 
     <div class="col-12">
         <div class="form-group">
@@ -71,7 +71,6 @@
                 {{ Form::label('account', __('Account Name'), ['class' => 'form-label']) }}
                 {!! Form::select('account', $account_name, $id, [
                     'class' => 'form-control',
-                    'required' => 'required',
                     'placeholder' => 'Select Account',
                 ]) !!}
             </div>
@@ -82,7 +81,6 @@
                 {{ Form::label('account', __('Account'), ['class' => 'form-label']) }}
                 {!! Form::select('account', $account_name, null, [
                     'class' => 'form-control',
-                    'required' => 'required',
                     'placeholder' => 'Select Account',
                 ]) !!}
             </div>
@@ -94,7 +92,7 @@
             {!! Form::select('user', $user, null, ['class' => 'form-control ', 'required' => 'required']) !!}
         </div>
     </div>
-    <div class="col-12">
+     <div class="col-12">
         <hr class="mt-2 mb-2">
         <h6>{{ __('Attendees') }}</h6>
     </div>
@@ -116,7 +114,7 @@
             {{ Form::label('attendees_lead', __('Attendees Lead'), ['class' => 'form-label']) }}
             {!! Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control ']) !!}
         </div>
-    </div>
+    </div> 
     @if (isset($setting['is_enabled']) && $setting['is_enabled'] == 'on')
         <div class="form-group col-md-6">
             <label>{{ __('Synchronize in Google Calendar') }}</label>

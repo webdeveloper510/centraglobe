@@ -59,7 +59,7 @@
 
 {{ Form::open(['url' => 'call', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
 <div class="row">
-    @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
+    <!-- @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
         <div class="text-end">
             <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true" data-size="md"
                 data-title="{{ __('Generate content with AI') }}" data-url="{{ route('generate', ['call']) }}"
@@ -67,7 +67,7 @@
                 <i class="fas fa-robot"></span><span class="robot">{{ __('Generate With AI') }}</span></i>
             </a>
         </div>
-    @endif
+    @endif -->
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('name', __('Name'), ['class' => 'form-label']) }}
@@ -92,12 +92,12 @@
             {!! Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
     </div>
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             {{ Form::label('direction', __('Direction'), ['class' => 'form-label']) }}
             {!! Form::select('direction', $direction, null, ['class' => 'form-control ', 'required' => 'required']) !!}
         </div>
-    </div>
+    </div> -->
     <div class="col-6" data-name="parent">
         <div class="form-group">
             {{ Form::label('parent', __('Parent'), ['class' => 'form-label']) }}
@@ -109,7 +109,7 @@
             ]) !!}
         </div>
     </div>
-    <div class="col-6" data-name="parent">
+    <!-- <div class="col-6" data-name="parent">
         <div class="form-group">
             {{ Form::label('parent_id', __('Parent User'), ['class' => 'form-label']) }}
             <select class="form-control" name="parent_id" id="parent_id">
@@ -178,8 +178,8 @@
             {!! Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control ']) !!}
 
         </div>
-    </div>
-    @if (isset($setting['is_enabled']) && $setting['is_enabled'] == 'on')
+    </div> -->
+    <!-- @if (isset($setting['is_enabled']) && $setting['is_enabled'] == 'on')
         <div class="form-group col-md-6">
             <label>{{ __('Synchronize in Google Calendar') }}</label>
             <div class="form-check form-switch pt-2">
@@ -187,13 +187,13 @@
                 <label class="form-check-label" for="switch-shadow"></label>
             </div>
         </div>
-    @endif
+    @endif -->
     {{-- <div class="form-group">
             <label>Synchroniz in Google Calendar ?</label>
             <div class="switch__container">
                 <input id="switch-shadow" class="switch switch--shadow" value="1" name="is_check"
                     type="checkbox">
-                <label for="switch-shadow"></label>
+                <label for="switch-shadow"></label> 
             </div>
         </div> --}}
     <div class="modal-footer">

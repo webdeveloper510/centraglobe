@@ -1,4 +1,4 @@
-<?php
+<?php 
     $settings = App\Models\Utility::settings();
 
     // $logo = asset(Storage::url('uploads/logo/'));

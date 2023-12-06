@@ -78,7 +78,7 @@ unset($__errorArgs, $__bag); ?>
             <?php echo e(Form::label('name',__('Phone'),['class'=>'form-label'])); ?>
 
             <div class="intl-tel-input">
-            <input type="tel" id="phone-input" class="phone-input form-control" placeholder="Enter Phone">
+            <input type="tel" id="phone-input" name="phone" class="phone-input form-control" placeholder="Enter Phone">
         </div>
             <!-- <?php echo e(Form::text('phone',null,array('class'=>'form-control','placeholder'=>__('Enter Phone'),'required'=>'required'))); ?> -->
         </div>

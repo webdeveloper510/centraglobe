@@ -7,7 +7,7 @@
 <?php echo e(Form::open(['url' => 'task', 'method' => 'post', 'enctype' => 'multipart/form-data'])); ?>
 
 <div class="row">
-    <?php if(isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on'): ?>
+    <!-- <?php if(isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on'): ?>
         <div class="text-end">
             <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true" data-size="md"
                 data-title="<?php echo e(__('Generate content with AI')); ?>" data-url="<?php echo e(route('generate', ['task'])); ?>"
@@ -15,7 +15,7 @@
                 <i class="fas fa-robot"></span><span class="robot"><?php echo e(__('Generate With AI')); ?></span></i>
             </a>
         </div>
-    <?php endif; ?>
+    <?php endif; ?> -->
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('name', __('Name'), ['class' => 'form-label'])); ?>

@@ -1,4 +1,5 @@
 {{Form::model($role,array('route' => array('role.update', $role->id), 'method' => 'PUT')) }}
+<!-- $modules=['Role','User','Account','Contact','Lead','Opportunities','CommonCase','Meeting','Call','Task','Document','Campaign','Quote','SalesOrder','Invoice','Payment','Invoice Payment','Product','AccountType','AccountIndustry','LeadSource','OpportunitiesStage','CaseType','DocumentFolder','DocumentType','TargetList','CampaignType','ProductCategory','ProductBrand','ProductTax','ShippingProvider','TaskStage','Form Builder','Contract','ContractType']; -->
 
 <div class="row">
     <div class="col-md-12">
@@ -28,7 +29,7 @@
                     </thead>
                     <tbody>
                     @php
-                        $modules=['Role','User','Account','Contact','Lead','Opportunities','CommonCase','Meeting','Call','Task','Document','Campaign','Quote','SalesOrder','Invoice','Payment','Invoice Payment','Product','AccountType','AccountIndustry','LeadSource','OpportunitiesStage','CaseType','DocumentFolder','DocumentType','TargetList','CampaignType','ProductCategory','ProductBrand','ProductTax','ShippingProvider','TaskStage','Form Builder','Contract','ContractType'];
+                    $modules=['Role','User','Lead','Meeting','Call','Task'];
                     @endphp
                     @foreach($modules as $module)
                         <tr>

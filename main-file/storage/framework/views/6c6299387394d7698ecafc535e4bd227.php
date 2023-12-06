@@ -19,7 +19,6 @@
             </a>
     <?php endif; ?>
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Meeting')): ?>
-
             <a href="#" data-size="lg" data-url="<?php echo e(route('meeting.create',['meeting',0])); ?>" data-ajax-popup="true" data-title="<?php echo e(__('Create New Meeting')); ?>" class="btn btn-sm btn-info">
                 <?php echo e(__('Add Meeting')); ?>
 

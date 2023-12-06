@@ -94,7 +94,7 @@ class LeadController extends Controller
                     'lead_postalcode' => 'required',
                     'opportunity_amount' => 'required|numeric',
                     'status' => 'required',
-                    // 'source' => 'required',
+                    // ' source' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -102,7 +102,6 @@ class LeadController extends Controller
 
                 return redirect()->back()->with('error', $messages->first());
             }
-
             $lead                       = new Lead();
             $lead['user_id']            = Auth::user()->id;
             $lead['name']               = $request->name;
@@ -156,11 +155,11 @@ class LeadController extends Controller
                     $msg = "Webhook call failed.";
                 }
             }
-            if (Auth::user()) {
-                return redirect()->back()->with('success', __('Lead created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
-            } else {
-                return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
-            }
+            // if (Auth::user()) {
+            //     return redirect()->back()->with('success', __('Lead created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
+            // } else {
+            //     return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
+            // }
             $Assign_user_phone = User::where('id', $request->user)->first();
             $setting  = Utility::settings(\Auth::user()->creatorId());
             $uArr = [
@@ -168,22 +167,16 @@ class LeadController extends Controller
                 'lead_email' => $lead->email,
                 // 'lead_assign_user' => $Assign_user_phone->name,
             ];
-
             // $resp = Utility::sendEmailTemplate('lead_assigned', [$lead->id => $Assign_user_phone->email], $uArr);
-
-
-
             if (isset($setting['twilio_lead_create']) && $setting['twilio_lead_create'] == 1) {
-                // $msg = __("New Lead created by") . ' ' . \Auth::user()->name . '.';
-
+                //$msg = __("New Lead created by") . ' ' . \Auth::user()->name . '.';
                 $uArr = [
                     // 'company_name'  => $lead->name,
                     'lead_email' => $lead->email,
                     'lead_name' => $lead->name
                 ];
-                Utility::send_twilio_msg($Assign_user_phone->phone, 'new_lead',$uArr);
+                Utility::send_twilio_msg('+919882240722', 'new_lead', $uArr);
             }
-
             return redirect()->back()->with('success', __('Lead Created.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');

@@ -261,8 +261,7 @@ Route::group(['middleware' => ['verified']], function () {
                 'XSS',
             ],
         ],
-        function () {
-
+        function(){
             Route::get('change-language/{lang}', [LanguageController::class, 'changeLanquage'])->name('change.language')->middleware(['auth', 'XSS']);
             Route::get('manage-language/{lang}', [LanguageController::class, 'manageLanguage'])->name('manage.language')->middleware(['auth', 'XSS']);
             Route::post('store-language-data/{lang}', [LanguageController::class, 'storeLanguageData'])->name('store.language.data')->middleware(['auth', 'XSS']);
@@ -271,7 +270,7 @@ Route::group(['middleware' => ['verified']], function () {
             Route::delete('/lang/{lang}', [LanguageController::class, 'destroyLang'])->name('lang.destroy')->middleware(['auth', 'XSS']);
         }
     );
-
+    
     Route::group(
         [
             'middleware' => [

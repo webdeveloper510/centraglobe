@@ -61,7 +61,7 @@
                                     class="drp-text hide-mob text-primary"><?php echo e(__('Template: ')); ?><?php echo e($notification_template->name); ?></span>
                                 <i class="ti ti-chevron-down drp-arrow nocolor"></i>
                             </a>
-                            <?php if(isset($settings['enable_chatgpt']) && $settings['enable_chatgpt'] == 'on'): ?>
+                            <!-- <?php if(isset($settings['enable_chatgpt']) && $settings['enable_chatgpt'] == 'on'): ?>
                                 <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true"
                                     data-size="md" data-title="<?php echo e(__('Generate content with AI')); ?>"
                                     data-url="<?php echo e(route('generate', ['notification template'])); ?>" data-toggle="tooltip"
@@ -69,7 +69,7 @@
                                     <i class="fas fa-robot"></span><span
                                             class="robot"><?php echo e(__('Generate With AI')); ?></span></i>
                                 </a>
-                            <?php endif; ?>
+                            <?php endif; ?> -->
                             <div class="dropdown-menu dash-h-dropdown dropdown-menu-end" aria-labelledby="dropdownLanguage">
                                 <?php $__currentLoopData = $notification_templates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $notification_template): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <a href="<?php echo e(route('notification_templates.index', [$notification_template->id, Request::segment(3) ? Request::segment(3) : \Auth::user()->lang])); ?>"

@@ -13,15 +13,14 @@
     <li class="breadcrumb-item">{{__('Lead')}}</li>
 @endsection
 @section('action-btn')
-<!-- <a href="{{ route('lead.grid') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="{{ __('Kanban View') }}">
+<!--  <a href="{{ route('lead.grid') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="{{ __('Kanban View') }}">
     <i class="ti ti-layout-kanban"></i>
-</a> -->
-
-    @can('Create Lead')
-        <a href="#" data-url="{{ route('lead.create',['lead',0]) }}" data-size="lg" data-ajax-popup="true" data-bs-toggle="tooltip" data-title="{{__('Create New Lead')}}"title="{{__('Create')}}" class="btn btn-sm btn-primary btn-icon m-1">
-            <i class="ti ti-plus"></i>
-        </a>
-    @endcan
+</a>-->
+@can('Create Lead')
+    <a href="#" data-url="{{ route('lead.create',['lead',0]) }}" data-size="lg" data-ajax-popup="true" data-bs-toggle="tooltip" data-title="{{__('Create New Lead')}}"title="{{__('Create')}}" class="btn btn-sm btn-primary btn-icon m-1">
+        <i class="ti ti-plus"></i>
+    </a>
+@endcan
 @endsection
 @section('filter')
 @endsection

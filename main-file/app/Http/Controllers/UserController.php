@@ -187,7 +187,7 @@ class UserController extends Controller
                     }
                     $user['created_by'] = \Auth::user()->creatorId();
                     $user->save();
-                    $userstatus = User::where('email',$request->email)->get();
+                    // $userstatus = User::where('email',$request->email)->get();
                     $user->assignRole($role_r);
 
                     Stream::create(
@@ -209,7 +209,7 @@ class UserController extends Controller
                         'email' => $user->email,
                         'password' => $request->password,
                     ];
-                    if($userstatus[0]['is_active'] == 1){
+                    // if($userstatus[0]['is_active'] == 1){
                         $resp = Utility::sendEmailTemplate('new_user', [$user->id => $user->email], $uArr);
                         $setting  = Utility::settings(\Auth::user()->creatorId());
                         if (isset($setting['twilio_user_create']) && $setting['twilio_user_create'] == 1) {
@@ -220,9 +220,11 @@ class UserController extends Controller
                                 'app_name' => env('APP_NAME'),
                                 // 'app_url' => url('/'),
                             ];
-                            Utility::send_twilio_msg($user->phone, 'new_user', $uArr);
+                            Utility::send_twilio_msg('+919882240722', 'new_user', $uArr);
+
+                            // Utility::send_twilio_msg($user->phone, 'new_user', $uArr);
                         }
-                    }
+                    // }
                     //webhook
                     $module = 'New User';
                     $webhook =  Utility::webhookSetting($module, $user->created_by);

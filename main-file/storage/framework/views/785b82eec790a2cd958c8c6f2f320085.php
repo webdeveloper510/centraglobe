@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title'); ?>
     <?php echo e(__('User')); ?>
 
@@ -13,14 +14,14 @@
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('action-btn'); ?>
-    <!-- <?php if(\Auth::user()->type == 'owner' || \Auth::user()->type == 'Manager'): ?>
+    <?php if(\Auth::user()->type == 'owner' || \Auth::user()->type == 'Manager'): ?>
         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage User')): ?>
             <a href="<?php echo e(route('user.grid')); ?>" class="btn btn-sm btn-primary btn-icon m-1"
                 data-bs-toggle="tooltip"title="<?php echo e(__('Grid View')); ?>">
                 <i class="ti ti-layout-grid text-white"></i>
             </a>
         <?php endif; ?>
-    <?php endif; ?> -->
+    <?php endif; ?>
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create User')): ?>
         <a href="#" data-url="<?php echo e(route('user.create')); ?>" data-size="md" data-ajax-popup="true" data-bs-toggle="tooltip"
             title="<?php echo e(__('Create')); ?>"data-title="<?php echo e(__('Create Staff')); ?>" class="btn btn-sm btn-primary btn-icon">

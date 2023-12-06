@@ -102,8 +102,8 @@ class Utility extends Model
             "color" => "theme-3",
             "cust_theme_bg" => "on",
             "cust_darklayout" => "off",
-            "dark_logo" => "logo-dark.png",
-            "light_logo" => "logo-light.png",
+            "dark_logo" => "logo.png",
+            "light_logo" => "logo.png",
             "company_logo_light" => "logo.png",
             "company_logo_dark" => "logo.png",
             "SITE_RTL" => "off",
@@ -236,10 +236,10 @@ class Utility extends Model
             "twilio_sid" => "",
             "twilio_token" => "",
             "twilio_from" => "",
-            "dark_logo" => "logo-dark.png",
-            "light_logo" => "logo-light.png",
-            "company_logo_light" => "logo-light.png",
-            "company_logo_dark" => "logo-dark.png",
+            "dark_logo" => "logo.png",
+            "light_logo" => "logo.png",
+            "company_logo_light" => "logo.png",
+            "company_logo_dark" => "logo.png",
             "company_favicon" => "",
             "SITE_RTL" => "off",
             "owner_signature" => "",
@@ -913,9 +913,7 @@ class Utility extends Model
 
     public static function send_twilio_msg($to, $slug, $obj, $user_id = null)
     {
-
         $notification_template = NotificationTemplates::where('slug', $slug)->first();
-
         if (!empty($notification_template) && !empty($obj)) {
             if (!empty($user_id)) {
                 $user = User::find($user_id);
@@ -939,6 +937,7 @@ class Utility extends Model
             $account_sid = $settings['twilio_sid'];
             $auth_token = $settings['twilio_token'];
             $twilio_number = $settings['twilio_from'];
+
             try {
                 $client = new Client($account_sid, $auth_token);
                 $client->messages->create($to, [
@@ -946,6 +945,7 @@ class Utility extends Model
                     'body' => $msg,
                 ]);
             } catch (\Exception $e) {
+             return $e;
             }
         }
     }

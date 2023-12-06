@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title'); ?>
     <?php echo e(__('Lead Edit')); ?>
 
@@ -113,7 +114,7 @@
                                         <div class="form-group">
                                             <?php echo e(Form::label('name', __('Name'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Name'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Name')])); ?>
 
                                             <?php $__errorArgs = ['name'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -154,7 +155,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('email', __('Email'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('email', null, ['class' => 'form-control', 'placeholder' => __('Enter Email'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('email', null, ['class' => 'form-control', 'placeholder' => __('Enter Email')])); ?>
 
                                             <?php $__errorArgs = ['email'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -174,7 +175,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('phone', __('Phone'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('phone', null, ['class' => 'form-control', 'placeholder' => __('Enter Phone'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('phone', null, ['class' => 'form-control', 'placeholder' => __('Enter Phone')])); ?>
 
                                             <?php $__errorArgs = ['phone'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -194,7 +195,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('title', __('Title'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('title', null, ['class' => 'form-control', 'placeholder' => __('Enter Title'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('title', null, ['class' => 'form-control', 'placeholder' => __('Enter Title')])); ?>
 
                                             <?php $__errorArgs = ['title'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -214,7 +215,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('website', __('Website'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('website', null, ['class' => 'form-control', 'placeholder' => __('Enter Website'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('website', null, ['class' => 'form-control', 'placeholder' => __('Enter Website')])); ?>
 
                                             <?php $__errorArgs = ['website'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -234,7 +235,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('lead_address', __('Lead Address'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('lead_address', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Address'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('lead_address', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Address')])); ?>
 
                                             <?php $__errorArgs = ['lead_address'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -255,7 +256,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('lead_city', __('Lead City'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('lead_city', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing City'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('lead_city', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing City')])); ?>
 
                                             <?php $__errorArgs = ['lead_city'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -276,7 +277,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('lead_state', __('Lead State'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('lead_state', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing State'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('lead_state', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing State')])); ?>
 
                                             <?php $__errorArgs = ['lead_state'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -296,7 +297,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('lead_postalcode', __('Lead Postal Code'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::number('lead_postalcode', null, ['class' => 'form-control', 'placeholder' => __('Enter Postal Code'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::number('lead_postalcode', null, ['class' => 'form-control', 'placeholder' => __('Enter Postal Code')])); ?>
 
                                             <?php $__errorArgs = ['lead_postalcode'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -316,7 +317,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('lead_country', __('Lead Country'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('lead_country', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Country'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('lead_country', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Country')])); ?>
 
                                             <?php $__errorArgs = ['lead_country'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -336,7 +337,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('status', __('Status'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo Form::select('status', $status, null, ['class' => 'form-control', 'required' => 'required']); ?>
+                                            <?php echo Form::select('status', $status, null, ['class' => 'form-control']); ?>
 
                                             <?php $__errorArgs = ['status'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -356,7 +357,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('source', __('Source'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo Form::select('source', $source, null, ['class' => 'form-control', 'required' => 'required']); ?>
+                                            <?php echo Form::select('source', $source, null, ['class' => 'form-control']); ?>
 
                                             <?php $__errorArgs = ['source'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -376,7 +377,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('opportunity_amount', __('Opportunity Amount'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo Form::number('opportunity_amount', null, ['class' => 'form-control', 'required' => 'required']); ?>
+                                            <?php echo Form::number('opportunity_amount', null, ['class' => 'form-control']); ?>
 
                                             <?php $__errorArgs = ['source'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -416,7 +417,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('industry', __('Industry'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo Form::select('industry', $industry, null, ['class' => 'form-control', 'required' => 'required']); ?>
+                                            <?php echo Form::select('industry', $industry, null, ['class' => 'form-control']); ?>
 
                                             <?php $__errorArgs = ['industry'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -456,7 +457,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('description', __('Description'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3, 'required' => 'required']); ?>
+                                            <?php echo Form::textarea('description', null, ['class' => 'form-control', 'rows' => 3]); ?>
 
                                             <?php $__errorArgs = ['description'];
 $__bag = $errors->getBag($__errorArgs[1] ?? 'default');
@@ -502,7 +503,7 @@ unset($__errorArgs, $__bag); ?>
                                         <div class="form-group">
                                             <?php echo e(Form::label('stream', __('Stream'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo e(Form::text('stream_comment', null, ['class' => 'form-control', 'placeholder' => __('Enter Stream Comment'), 'required' => 'required'])); ?>
+                                            <?php echo e(Form::text('stream_comment', null, ['class' => 'form-control', 'placeholder' => __('Enter Stream Comment')])); ?>
 
                                         </div>
                                     </div>

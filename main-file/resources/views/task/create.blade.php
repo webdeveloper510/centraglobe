@@ -6,7 +6,7 @@
 
 {{ Form::open(['url' => 'task', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
 <div class="row">
-    @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
+    <!-- @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
         <div class="text-end">
             <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true" data-size="md"
                 data-title="{{ __('Generate content with AI') }}" data-url="{{ route('generate', ['task']) }}"
@@ -14,7 +14,7 @@
                 <i class="fas fa-robot"></span><span class="robot">{{ __('Generate With AI') }}</span></i>
             </a>
         </div>
-    @endif
+    @endif -->
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('name', __('Name'), ['class' => 'form-label']) }}

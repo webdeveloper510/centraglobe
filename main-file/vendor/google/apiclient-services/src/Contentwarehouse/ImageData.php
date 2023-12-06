@@ -102,8 +102,6 @@ class ImageData extends \Google\Collection
   public $expirationTimestamp;
   protected $extendedExifType = PhotosImageMetadata::class;
   protected $extendedExifDataType = '';
-  protected $faceDetectionType = ReneFaceResponse::class;
-  protected $faceDetectionDataType = '';
   protected $featuredImagePropType = ImageMonetizationFeaturedImageProperties::class;
   protected $featuredImagePropDataType = '';
   /**
@@ -248,6 +246,8 @@ class ImageData extends \Google\Collection
    * @var string
    */
   public $onPageAlternateUrl;
+  protected $orbitIntentsType = QualityOrbitOrbitImageIntents::class;
+  protected $orbitIntentsDataType = '';
   protected $packedFullFaceInfoType = FaceIndexing::class;
   protected $packedFullFaceInfoDataType = '';
   protected $personAttributesType = LensDiscoveryStylePersonAttributes::class;
@@ -682,20 +682,6 @@ class ImageData extends \Google\Collection
   public function getExtendedExif()
   {
     return $this->extendedExif;
-  }
-  /**
-   * @param ReneFaceResponse
-   */
-  public function setFaceDetection(ReneFaceResponse $faceDetection)
-  {
-    $this->faceDetection = $faceDetection;
-  }
-  /**
-   * @return ReneFaceResponse
-   */
-  public function getFaceDetection()
-  {
-    return $this->faceDetection;
   }
   /**
    * @param ImageMonetizationFeaturedImageProperties
@@ -1298,6 +1284,20 @@ class ImageData extends \Google\Collection
   public function getOnPageAlternateUrl()
   {
     return $this->onPageAlternateUrl;
+  }
+  /**
+   * @param QualityOrbitOrbitImageIntents
+   */
+  public function setOrbitIntents(QualityOrbitOrbitImageIntents $orbitIntents)
+  {
+    $this->orbitIntents = $orbitIntents;
+  }
+  /**
+   * @return QualityOrbitOrbitImageIntents
+   */
+  public function getOrbitIntents()
+  {
+    return $this->orbitIntents;
   }
   /**
    * @param FaceIndexing

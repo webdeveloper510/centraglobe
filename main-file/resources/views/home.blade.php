@@ -71,7 +71,7 @@
                                     </div>
                                 </div>
                                 
-                               <!--  <div class="col-lg-3 col-6">
+                              <!-- <div class="col-lg-3 col-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="theme-avtar bg-info">
@@ -118,12 +118,12 @@
                                             <h3 class="mb-0">{{ $data['totalProduct'] }}</h3>
                                         </div>
                                     </div>
-                                </div>  -->
+                                </div>   -->
                     </div>
                 </div>
                 @endif
 
-                <!-- @if (\Auth::user()->type == 'owner')
+               <!-- @if (\Auth::user()->type == 'owner')
                  <div class="col-xxl-5">
                     <div class="card">
                         <div class="card-header">
@@ -134,8 +134,8 @@
                         </div>
                     </div>
                 </div>
-                @endif
-                @if (\Auth::user()->type != 'owner')
+                @endif -->
+                <!-- @if (\Auth::user()->type != 'owner')
                 <div class="col-xxl-12">
                     <div class="card">
                         <div class="card-header">
@@ -146,8 +146,8 @@
                         </div>
                     </div>
                 </div>
-                @endif -->
-                <!-- <div class="col-xxl-12">
+                @endif  -->
+               <!--  <div class="col-xxl-12">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="row">
@@ -247,11 +247,11 @@
                                 </div>
                                 @endif
                             </div>
-                        </div>
+                        </div> 
 
-                    </div>
-                </div>
-                <div class="col-xxl-6">
+                   </div>
+                </div>-->
+              <!--  <div class="col-xxl-6">
                     <div class="card card-fluid">
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
@@ -320,13 +320,11 @@
                     </div>
                 </div> -->
                 @php
-
                 $setting = App\Models\Utility::settings();
-
-                @endphp
-                <!-- <div class="row"> -->
-                    <!-- [ sample-page ] start -->
-                    <!-- <div class="col-lg-12">
+                @endphp 
+                  <div class="row"> 
+                    <!-- [sample-page] start -->
+                   <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
 
@@ -339,33 +337,23 @@
                                 </select>
                                 @endif
                                 <input type="hidden" id="path_admin" value="{{ url('/') }}">
-
                             </div>
-
                             <div class="card-body">
                                 <div id='calendar' class='calendar'></div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>  
                      <!-- [ sample-page ] end -->
-                <!-- </div> -->
-
-
+                </div>
             </div>
             <!-- [ sample-page ] end -->
         </div>
-
     <!-- [ Main Content ] end -->
 </div>
-
-
-
-
-
 @endsection
 
 @push('script-page')
-<script>
+<!-- <script>
 
 (function () {
         var options = {
@@ -496,60 +484,60 @@
         var chart = new ApexCharts(document.querySelector("#traffic-chart"), options);
         chart.render();
     })();
-</script>
+</script> -->
 
 
 <script type="text/javascript">
-    (function () {
-        var options = {
-            chart: {
-                type: 'area',
-                height: 90,
-                sparkline: {
-                    enabled: true,
-                },
-            },
-            colors: ["#ffa21d"],
-            dataLabels: {
-                enabled: false
-            },
-            stroke: {
-                curve: 'smooth',
-                width: 2,
-            },
-            series: [{
-                name: 'Bandwidth',
-                data: [41, 109, 45, 109, 34, 72, 41]
-            }],
-            xaxis: {
-                categories: ['Apr', 'Jun', 'Aug', 'Oct', 'Oct', 'Nov', 'Dec'],
-                tooltip: {
-                    enabled: false,
-                }
-            },
-            tooltip: {
-                followCursor: false,
-                fixed: {
-                    enabled: false
-                },
-                x: {
-                    show: false
-                },
-                y: {
-                    title: {
-                        formatter: function (seriesName) {
-                            return ''
-                        }
-                    }
-                },
-                marker: {
-                    show: false
-                }
-            }
-        }
-        var chart = new ApexCharts(document.querySelector("#task-chart"), options);
-        chart.render();
-    })();
+    // (function () {
+    //     var options = {
+    //         chart: {
+    //             type: 'area',
+    //             height: 90,
+    //             sparkline: {
+    //                 enabled: true,
+    //             },
+    //         },
+    //         colors: ["#ffa21d"],
+    //         dataLabels: {
+    //             enabled: false
+    //         },
+    //         stroke: {
+    //             curve: 'smooth',
+    //             width: 2,
+    //         },
+    //         series: [{
+    //             name: 'Bandwidth',
+    //             data: [41, 109, 45, 109, 34, 72, 41]
+    //         }],
+    //         xaxis: {
+    //             categories: ['Apr', 'Jun', 'Aug', 'Oct', 'Oct', 'Nov', 'Dec'],
+    //             tooltip: {
+    //                 enabled: false,
+    //             }
+    //         },
+    //         tooltip: {
+    //             followCursor: false,
+    //             fixed: {
+    //                 enabled: false
+    //             },
+    //             x: {
+    //                 show: false
+    //             },
+    //             y: {
+    //                 title: {
+    //                     formatter: function (seriesName) {
+    //                         return ''
+    //                     }
+    //                 }
+    //             },
+    //             marker: {
+    //                 show: false
+    //             }
+    //         }
+    //     }
+    //     var chart = new ApexCharts(document.querySelector("#task-chart"), options);
+    //     chart.render();
+    // })();
 
     @php
     $segment=Request::segment(2);
@@ -631,7 +619,6 @@
                         //     }
 
                     });
-
                     calendar.render();
                 })();
             }
@@ -720,5 +707,5 @@
         chart.render();
 
 
-    </script> 
+    </script>  
 @endpush

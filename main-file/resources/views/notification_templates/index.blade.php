@@ -61,7 +61,7 @@
                                     class="drp-text hide-mob text-primary">{{ __('Template: ') }}{{ $notification_template->name }}</span>
                                 <i class="ti ti-chevron-down drp-arrow nocolor"></i>
                             </a>
-                            @if (isset($settings['enable_chatgpt']) && $settings['enable_chatgpt'] == 'on')
+                            <!-- @if (isset($settings['enable_chatgpt']) && $settings['enable_chatgpt'] == 'on')
                                 <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true"
                                     data-size="md" data-title="{{ __('Generate content with AI') }}"
                                     data-url="{{ route('generate', ['notification template']) }}" data-toggle="tooltip"
@@ -69,7 +69,7 @@
                                     <i class="fas fa-robot"></span><span
                                             class="robot">{{ __('Generate With AI') }}</span></i>
                                 </a>
-                            @endif
+                            @endif -->
                             <div class="dropdown-menu dash-h-dropdown dropdown-menu-end" aria-labelledby="dropdownLanguage">
                                 @foreach ($notification_templates as $notification_template)
                                     <a href="{{ route('notification_templates.index', [$notification_template->id, Request::segment(3) ? Request::segment(3) : \Auth::user()->lang]) }}"
