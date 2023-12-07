@@ -48,7 +48,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-3 col-6">
+                                <!-- <div class="col-lg-3 col-6">
                                     <div class="card">
                                         <div class="card-body">
                                             <div class="theme-avtar bg-success">
@@ -71,7 +71,7 @@
                                             <h3 class="mb-0"><?php echo e($data['totalContact']); ?> </h3>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                                 
                               <!-- <div class="col-lg-3 col-6">
                                     <div class="card">
@@ -253,7 +253,7 @@
 
                    </div>
                 </div>-->
-              <!--  <div class="col-xxl-6">
+               <!-- <div class="col-xxl-6">
                     <div class="card card-fluid">
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
@@ -493,56 +493,56 @@
 
 
 <script type="text/javascript">
-    // (function () {
-    //     var options = {
-    //         chart: {
-    //             type: 'area',
-    //             height: 90,
-    //             sparkline: {
-    //                 enabled: true,
-    //             },
-    //         },
-    //         colors: ["#ffa21d"],
-    //         dataLabels: {
-    //             enabled: false
-    //         },
-    //         stroke: {
-    //             curve: 'smooth',
-    //             width: 2,
-    //         },
-    //         series: [{
-    //             name: 'Bandwidth',
-    //             data: [41, 109, 45, 109, 34, 72, 41]
-    //         }],
-    //         xaxis: {
-    //             categories: ['Apr', 'Jun', 'Aug', 'Oct', 'Oct', 'Nov', 'Dec'],
-    //             tooltip: {
-    //                 enabled: false,
-    //             }
-    //         },
-    //         tooltip: {
-    //             followCursor: false,
-    //             fixed: {
-    //                 enabled: false
-    //             },
-    //             x: {
-    //                 show: false
-    //             },
-    //             y: {
-    //                 title: {
-    //                     formatter: function (seriesName) {
-    //                         return ''
-    //                     }
-    //                 }
-    //             },
-    //             marker: {
-    //                 show: false
-    //             }
-    //         }
-    //     }
-    //     var chart = new ApexCharts(document.querySelector("#task-chart"), options);
-    //     chart.render();
-    // })();
+    (function () {
+        var options = {
+            chart: {
+                type: 'area',
+                height: 90,
+                sparkline: {
+                    enabled: true,
+                },
+            },
+            colors: ["#ffa21d"],
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 2,
+            },
+            series: [{
+                name: 'Bandwidth',
+                data: [41, 109, 45, 109, 34, 72, 41]
+            }],
+            xaxis: {
+                categories: ['Apr', 'Jun', 'Aug', 'Oct', 'Oct', 'Nov', 'Dec'],
+                tooltip: {
+                    enabled: false,
+                }
+            },
+            tooltip: {
+                followCursor: false,
+                fixed: {
+                    enabled: false
+                },
+                x: {
+                    show: false
+                },
+                y: {
+                    title: {
+                        formatter: function (seriesName) {
+                            return ''
+                        }
+                    }
+                },
+                marker: {
+                    show: false
+                }
+            }
+        }
+        var chart = new ApexCharts(document.querySelector("#task-chart"), options);
+        chart.render();
+    })();
 
     <?php
     $segment=Request::segment(2);

@@ -154,14 +154,14 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 <?php endif; ?>
-                <!--<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Task')): ?>
+                <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Task')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'task' || \Request::route()->getName() == 'task.show' || \Request::route()->getName() == 'task.edit' || \Request::route()->getName() == 'task.gantt.chart' ? ' active' : ''); ?>">
                         
                         <a href="<?php echo e(array_key_exists('task',$defaultView) ? route($defaultView['task']) : route('task.index')); ?>" class="dash-link">
                             <span class="dash-micon"><i class="fas fa-tasks"></i></span><span class="dash-mtext"><?php echo e(__('Task')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
+                <?php endif; ?> -->
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Meeting')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'meeting' || \Request::route()->getName() == 'meeting.show' || \Request::route()->getName() == 'meeting.edit' ? ' active' : ''); ?>">
                         
@@ -171,14 +171,15 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Call')): ?>
+                <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Call')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'call' || \Request::route()->getName() == 'call.show' || \Request::route()->getName() == 'call.edit' ? ' active' : ''); ?>">
                         
                         <a href="<?php echo e(array_key_exists('call',$defaultView) ? route($defaultView['call']) : route('call.index')); ?>" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-phone-call"></i></span><span class="dash-mtext"><?php echo e(__('Call')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>-->
+                <?php endif; ?> -->
+
                 <!--<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Contract')): ?>
                     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Contract')): ?>
                         <li class="dash-item  <?php echo e((Request::route()->getName() == 'contract.index' || Request::route()->getName() == 'contract.show') ? 'active' : ''); ?>">
@@ -438,13 +439,13 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                 <?php if(\Auth::user()->type == 'super admin'): ?>
                 <?php echo $__env->make('landingpage::menu.landingpage', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <?php endif; ?>
-                <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner'): ?>
+                <!-- <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner'): ?>
                     <li class="dash-item  <?php echo e(Request::route()->getName() == 'settings' ? 'active' : ''); ?>">
                         <a href="<?php echo e(route('settings')); ?>" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span class="dash-mtext"><?php echo e(__('Settings')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?> 
+                <?php endif; ?>  -->
             </ul>
         </div>
     </div>

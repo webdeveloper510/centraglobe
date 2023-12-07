@@ -64,7 +64,7 @@
                     <div id="useradd-1" class="card">
                         {{ Form::model($meeting, ['route' => ['meeting.update', $meeting->id], 'method' => 'PUT']) }}
                         <div class="card-header">
-                            @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
+                            <!-- @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
                                 <div class="float-end">
                                     <a href="#" data-size="md" class="btn btn-sm btn-primary"
                                         data-ajax-popup-over="true" data-size="md"
@@ -75,7 +75,7 @@
                                                 class="robot">{{ __('Generate With AI') }}</span></i>
                                     </a>
                                 </div>
-                            @endif
+                            @endif -->
                             <h5>{{ __('Overview') }}</h5>
                             <small class="text-muted">{{ __('Edit about your meeting information') }}</small>
                         </div>

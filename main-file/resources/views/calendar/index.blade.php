@@ -10,23 +10,23 @@
     <li class="breadcrumb-item">{{__('Calendar')}}</li>
 @endsection
 @section('action-btn')
-    @can('Create Call')
+    <!-- @can('Create Call')
 
             <a href="#" data-size="lg" data-url="{{ route('call.create',['call',0]) }}" data-ajax-popup="true" data-title="{{__('Create New Call')}}" class="btn btn-sm btn-primary ms-2">
                 {{__('Add Call')}}
             </a>
-    @endcan
+    @endcan -->
     @can('Create Meeting')
             <a href="#" data-size="lg" data-url="{{ route('meeting.create',['meeting',0]) }}" data-ajax-popup="true" data-title="{{__('Create New Meeting')}}" class="btn btn-sm btn-info">
                 {{__('Add Meeting')}}
             </a>
     @endcan
-    @can('Create Task')
+    <!-- @can('Create Task')
 
             <a href="#" data-size="lg" data-url="{{ route('task.create',['task',0]) }}" data-ajax-popup="true" data-title="{{__('Create New Task')}}" class="btn btn-sm btn-success ">
                 {{__('Add Task')}}
             </a>
-    @endcan
+    @endcan -->
     <div class="float-end px-1">
         <select name="calenderdata" data-toggle='select' class="form-select px-2" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             <option value="{{ route('calendar.index','all') }}" {{ ((Request::segment(2) == 'all' || empty(Request::segment(2))) ? 'selected' : '') }}>{{ __('Show All') }}</option>

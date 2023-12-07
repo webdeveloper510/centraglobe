@@ -155,11 +155,7 @@ class LeadController extends Controller
                     $msg = "Webhook call failed.";
                 }
             }
-            // if (Auth::user()) {
-            //     return redirect()->back()->with('success', __('Lead created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
-            // } else {
-            //     return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
-            // }
+            
             $Assign_user_phone = User::where('id', $request->user)->first();
             $setting  = Utility::settings(\Auth::user()->creatorId());
             $uArr = [
@@ -176,6 +172,12 @@ class LeadController extends Controller
                     'lead_name' => $lead->name
                 ];
                 Utility::send_twilio_msg('+919882240722', 'new_lead', $uArr);
+                
+            }
+            if (Auth::user()) {
+                return redirect()->back()->with('success', __('Lead created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
+            } else {
+                return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
             }
             return redirect()->back()->with('success', __('Lead Created.'));
         } else {

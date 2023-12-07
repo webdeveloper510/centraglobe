@@ -11,26 +11,26 @@
     <li class="breadcrumb-item"><?php echo e(__('Calendar')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('action-btn'); ?>
-    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Call')): ?>
+    <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Call')): ?>
 
             <a href="#" data-size="lg" data-url="<?php echo e(route('call.create',['call',0])); ?>" data-ajax-popup="true" data-title="<?php echo e(__('Create New Call')); ?>" class="btn btn-sm btn-primary ms-2">
                 <?php echo e(__('Add Call')); ?>
 
             </a>
-    <?php endif; ?>
+    <?php endif; ?> -->
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Meeting')): ?>
             <a href="#" data-size="lg" data-url="<?php echo e(route('meeting.create',['meeting',0])); ?>" data-ajax-popup="true" data-title="<?php echo e(__('Create New Meeting')); ?>" class="btn btn-sm btn-info">
                 <?php echo e(__('Add Meeting')); ?>
 
             </a>
     <?php endif; ?>
-    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Task')): ?>
+    <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Task')): ?>
 
             <a href="#" data-size="lg" data-url="<?php echo e(route('task.create',['task',0])); ?>" data-ajax-popup="true" data-title="<?php echo e(__('Create New Task')); ?>" class="btn btn-sm btn-success ">
                 <?php echo e(__('Add Task')); ?>
 
             </a>
-    <?php endif; ?>
+    <?php endif; ?> -->
     <div class="float-end px-1">
         <select name="calenderdata" data-toggle='select' class="form-select px-2" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             <option value="<?php echo e(route('calendar.index','all')); ?>" <?php echo e(((Request::segment(2) == 'all' || empty(Request::segment(2))) ? 'selected' : '')); ?>><?php echo e(__('Show All')); ?></option>

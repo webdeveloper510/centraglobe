@@ -170,7 +170,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 @endif
-                <!--@can('Manage Task')
+                <!-- @can('Manage Task')
                     <li class="dash-item {{ \Request::route()->getName() == 'task' || \Request::route()->getName() == 'task.show' || \Request::route()->getName() == 'task.edit' || \Request::route()->getName() == 'task.gantt.chart' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('task')) ? route(\Auth::user()->getDefualtViewRouteByModule('task')) : route('task.index') }}" class="dash-link">
                             <span class="dash-micon"><i class="fas fa-tasks"></i></span><span class="dash-mtext">{{ __('Task') }}</span>
@@ -179,7 +179,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <span class="dash-micon"><i class="fas fa-tasks"></i></span><span class="dash-mtext">{{ __('Task') }}</span>
                         </a>
                     </li>
-                @endcan
+                @endcan -->
                 @can('Manage Meeting')
                     <li class="dash-item {{ \Request::route()->getName() == 'meeting' || \Request::route()->getName() == 'meeting.show' || \Request::route()->getName() == 'meeting.edit' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('meeting')) ? route(\Auth::user()->getDefualtViewRouteByModule('meeting')) : route('meeting.index') }}"
@@ -192,7 +192,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 @endcan
-                @can('Manage Call')
+                <!-- @can('Manage Call')
                     <li class="dash-item {{ \Request::route()->getName() == 'call' || \Request::route()->getName() == 'call.show' || \Request::route()->getName() == 'call.edit' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('call')) ? route(\Auth::user()->getDefualtViewRouteByModule('call')) : route('call.index') }}" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-phone-call"></i></span><span class="dash-mtext">{{ __('Call') }}</span>
@@ -201,7 +201,8 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <span class="dash-micon"><i class="ti ti-phone-call"></i></span><span class="dash-mtext">{{ __('Call') }}</span>
                         </a>
                     </li>
-                @endcan-->
+                @endcan -->
+
                 <!--@can('Manage Contract')
                     @can('Manage Contract')
                         <li class="dash-item  {{ (Request::route()->getName() == 'contract.index' || Request::route()->getName() == 'contract.show') ? 'active' : '' }}">
@@ -465,13 +466,13 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                 @if (\Auth::user()->type == 'super admin')
                 @include('landingpage::menu.landingpage')
                 @endif
-                @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner')
+                <!-- @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner')
                     <li class="dash-item  {{ Request::route()->getName() == 'settings' ? 'active' : '' }}">
                         <a href="{{ route('settings') }}" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span class="dash-mtext">{{ __('Settings') }}</span>
                         </a>
                     </li>
-                @endif 
+                @endif  -->
             </ul>
         </div>
     </div>
