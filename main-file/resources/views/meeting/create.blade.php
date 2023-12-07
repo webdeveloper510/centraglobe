@@ -1,20 +1,11 @@
 @php
-
     $setting = App\Models\Utility::settings();
     $plansettings = App\Models\Utility::plansettings();
 @endphp
 
 {{ Form::open(['url' => 'meeting', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
 <div class="row">
-    <!-- @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
-        <div class="text-end">
-            <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true" data-size="md"
-                data-title="{{ __('Generate content with AI') }}" data-url="{{ route('generate', ['meeting']) }}"
-                data-toggle="tooltip" title="{{ __('Generate') }}">
-                <i class="fas fa-robot"></span><span class="robot">{{ __('Generate With AI') }}</span></i>
-            </a>
-        </div>
-    @endif -->
+   
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('name', __('Name'), ['class' => 'form-label']) }}
@@ -39,7 +30,7 @@
             {!! Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
     </div>
-    <div class="col-6" data-name="parent">
+    <!-- <div class="col-6" data-name="parent">
         <div class="form-group">
             {{ Form::label('parent', __('Parent'), ['class' => 'form-label']) }}
             {!! Form::select('parent', $parent, null, [
@@ -57,7 +48,7 @@
 
             </select>
         </div>
-    </div> 
+    </div>  -->
 
     <div class="col-12">
         <div class="form-group">
@@ -65,7 +56,7 @@
             {{ Form::textarea('description', null, ['class' => 'form-control', 'rows' => 2, 'placeholder' => __('Enter Description')]) }}
         </div>
     </div>
-    @if ($type == 'account')
+    <!-- @if ($type == 'account')
         <div class="col-6">
             <div class="form-group">
                 {{ Form::label('account', __('Account Name'), ['class' => 'form-label']) }}
@@ -85,7 +76,7 @@
                 ]) !!}
             </div>
         </div>
-    @endif
+    @endif -->
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('Assign User', __('Assign User'), ['class' => 'form-label']) }}
@@ -103,18 +94,18 @@
             {!! Form::select('attendees_user', $user, null, ['class' => 'form-control ']) !!}
         </div>
     </div>
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             {{ Form::label('attendees_contact', __('Attendees Contact'), ['class' => 'form-label']) }}
             {!! Form::select('attendees_contact', $attendees_contact, null, ['class' => 'form-control ']) !!}
         </div>
-    </div>
-    <div class="col-12">
+    </div> -->
+    <div class="col-6">
         <div class="form-group">
             {{ Form::label('attendees_lead', __('Attendees Lead'), ['class' => 'form-label']) }}
             {!! Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control ']) !!}
         </div>
-    </div> 
+    </div>
     @if (isset($setting['is_enabled']) && $setting['is_enabled'] == 'on')
         <div class="form-group col-md-6">
             <label>{{ __('Synchronize in Google Calendar') }}</label>

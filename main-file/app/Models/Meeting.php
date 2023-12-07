@@ -12,12 +12,12 @@ class Meeting extends Model
         'status',
         'start_date',
         'end_date',
-        'parent',
-        'parent_id',
-        'account',
+        // 'parent',
+        // 'parent_id',
+        // 'account',
         'description',
         'attendees_user',
-        'attendees_contact',
+        // 'attendees_contact',
         'attendees_lead',
     ];
     public static $status   = [
@@ -25,14 +25,14 @@ class Meeting extends Model
         'Held',
         'Not Held',
     ];
-    public static $parent   = [
-        '' => '--',
-        'account' => 'Account',
-        'lead' => 'Lead',
-        'contact' => 'Contact',
-        'opportunities' => 'Opportunities',
-        'case' => 'Case',
-    ];
+    // public static $parent   = [
+    //     '' => '--',
+    //     'account' => 'Account',
+    //     'lead' => 'Lead',
+    //     'contact' => 'Contact',
+    //     'opportunities' => 'Opportunities',
+    //     'case' => 'Case',
+    // ];
 
     public function assign_user()
     {

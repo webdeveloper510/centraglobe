@@ -17,8 +17,8 @@
             </a>
     @endcan -->
     @can('Create Meeting')
-            <a href="#" data-size="lg" data-url="{{ route('meeting.create',['meeting',0]) }}" data-ajax-popup="true" data-title="{{__('Create New Meeting')}}" class="btn btn-sm btn-info">
-                {{__('Add Meeting')}}
+            <a href="#" data-size="lg" data-url="{{ route('meeting.create',['meeting',0]) }}" data-ajax-popup="true" data-title="{{__('Create New Event')}}" class="btn btn-sm btn-info">
+                {{__('Add Events')}}
             </a>
     @endcan
     <!-- @can('Create Task')
