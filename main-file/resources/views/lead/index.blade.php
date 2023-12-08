@@ -35,7 +35,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="sort" data-sort="name">{{__('Name')}}</th>
-                                <th scope="col" class="sort" data-sort="completion">{{__('Account')}}</th>
+                                <!-- <th scope="col" class="sort" data-sort="completion">{{__('Account')}}</th> -->
                                 <th scope="col" class="sort" data-sort="budget">{{__('Email')}}</th>
                                 <th scope="col" class="sort" data-sort="status">{{__('Phone')}}</th>
                                 <th scope="col" class="sort" data-sort="status">{{__('Assign user')}}</th>
@@ -52,9 +52,9 @@
                                         {{ ucfirst($lead->name) }}
                                     </a>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <span class="budget">{{ ucfirst(!empty($lead->accounts)?$lead->accounts->name:'--')}}</span>
-                                </td>
+                                </td> -->
                                 <td>
                                     <span class="budget">{{ $lead->email }}</a></span>
                                 </td>

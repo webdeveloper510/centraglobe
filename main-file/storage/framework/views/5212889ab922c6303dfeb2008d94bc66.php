@@ -36,7 +36,7 @@
                         <thead>
                             <tr>
                                 <th scope="col" class="sort" data-sort="name"><?php echo e(__('Name')); ?></th>
-                                <th scope="col" class="sort" data-sort="completion"><?php echo e(__('Account')); ?></th>
+                                <!-- <th scope="col" class="sort" data-sort="completion"><?php echo e(__('Account')); ?></th> -->
                                 <th scope="col" class="sort" data-sort="budget"><?php echo e(__('Email')); ?></th>
                                 <th scope="col" class="sort" data-sort="status"><?php echo e(__('Phone')); ?></th>
                                 <th scope="col" class="sort" data-sort="status"><?php echo e(__('Assign user')); ?></th>
@@ -54,9 +54,9 @@
 
                                     </a>
                                 </td>
-                                <td>
+                                <!-- <td>
                                     <span class="budget"><?php echo e(ucfirst(!empty($lead->accounts)?$lead->accounts->name:'--')); ?></span>
-                                </td>
+                                </td> -->
                                 <td>
                                     <span class="budget"><?php echo e($lead->email); ?></a></span>
                                 </td>

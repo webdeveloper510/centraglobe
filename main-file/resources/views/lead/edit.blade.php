@@ -118,7 +118,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('account', __('Account'), ['class' => 'form-label']) }}
                                             {!! Form::select('account', $account, null, ['class' => 'form-control']) !!}
@@ -128,7 +128,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="col-6">
                                         <div class="form-group">
@@ -198,7 +198,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('lead_state', __('Lead State'), ['class' => 'form-label']) }}
                                             {{ Form::text('lead_state', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing State')]) }}
@@ -209,7 +209,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('lead_postalcode', __('Lead Postal Code'), ['class' => 'form-label']) }}
                                             {{ Form::number('lead_postalcode', null, ['class' => 'form-control', 'placeholder' => __('Enter Postal Code')]) }}
@@ -220,7 +220,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-4">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('lead_country', __('Lead Country'), ['class' => 'form-label']) }}
                                             {{ Form::text('lead_country', null, ['class' => 'form-control', 'placeholder' => __('Enter Billing Country')]) }}
@@ -242,7 +242,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('source', __('Source'), ['class' => 'form-label']) }}
                                             {!! Form::select('source', $source, null, ['class' => 'form-control']) !!}
@@ -285,7 +285,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('user', __(' Assigned User'), ['class' => 'form-label']) }}

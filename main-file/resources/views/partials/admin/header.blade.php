@@ -88,7 +88,7 @@
                     </a>
                 </li>
             @endif -->
-            <li class="dropdown dash-h-item drp-language">
+            <!-- <li class="dropdown dash-h-item drp-language">
                 <a class="dash-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="ti ti-world nocolor"></i>
@@ -97,7 +97,7 @@
                     <i class="ti ti-chevron-down drp-arrow nocolor"></i>
                 </a>
                 <div class="dropdown-menu dash-h-dropdown dropdown-menu-end">
-                    @foreach (App\Models\Utility::languages() as $code => $lang)
+                   @foreach (App\Models\Utility::languages() as $code => $lang)
                         <a href="{{ route('change.language', $code) }}"
                             class="dropdown-item {{ $currantLang == $code ? 'text-primary' : '' }}">
                             <span>{{ ucFirst($lang) }}</span>
@@ -115,7 +115,7 @@
                         </a>
                     @endif
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

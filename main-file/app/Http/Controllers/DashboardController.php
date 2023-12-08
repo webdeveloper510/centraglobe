@@ -284,7 +284,7 @@ class DashboardController extends Controller
                 ];
             }
             foreach ($meetings as $val) {
-
+               
                 $end_date = date_create($val->end_date);
                 date_add($end_date, date_interval_create_from_date_string("1 days"));
                 $arrMeeting[] = [

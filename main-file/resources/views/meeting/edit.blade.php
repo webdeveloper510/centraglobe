@@ -1,15 +1,15 @@
 @extends('layouts.admin')
 @section('page-title')
-    {{ __('Meeting Edit') }}
+    {{ __('Event Edit') }}
 @endsection
 @section('title')
-    {{ __('Edit Meeting') }}
+    {{ __('Edit Event') }}
 @endsection
 @php
     $plansettings = App\Models\Utility::plansettings();
 @endphp
 @section('action-btn')
-    <div class="btn-group" role="group">
+    <!-- <div class="btn-group" role="group">
         @if (!empty($previous))
             <div class="action-btn  ms-2">
                 <a href="{{ route('meeting.edit', $previous) }}" class="btn btn-sm btn-primary btn-icon m-1"
@@ -40,11 +40,11 @@
                 </a>
             </div>
         @endif
-    </div>
+    </div> -->
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{ __('Home') }}</a></li>
-    <li class="breadcrumb-item"><a href="{{ route('meeting.index') }}">{{ __('Meeting') }}</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('meeting.index') }}">{{ __('Event') }}</a></li>
     <li class="breadcrumb-item">{{ __('Edit') }}</li>
 @endsection
 @section('content')
@@ -64,20 +64,8 @@
                     <div id="useradd-1" class="card">
                         {{ Form::model($meeting, ['route' => ['meeting.update', $meeting->id], 'method' => 'PUT']) }}
                         <div class="card-header">
-                            <!-- @if (isset($plansettings['enable_chatgpt']) && $plansettings['enable_chatgpt'] == 'on')
-                                <div class="float-end">
-                                    <a href="#" data-size="md" class="btn btn-sm btn-primary"
-                                        data-ajax-popup-over="true" data-size="md"
-                                        data-title="{{ __('Generate content with AI') }}"
-                                        data-url="{{ route('generate', ['meeting']) }}" data-toggle="tooltip"
-                                        title="{{ __('Generate') }}">
-                                        <i class="fas fa-robot"></span><span
-                                                class="robot">{{ __('Generate With AI') }}</span></i>
-                                    </a>
-                                </div>
-                            @endif -->
                             <h5>{{ __('Overview') }}</h5>
-                            <small class="text-muted">{{ __('Edit about your meeting information') }}</small>
+                            <small class="text-muted">{{ __('Edit about your event information') }}</small>
                         </div>
 
                         <div class="card-body">
@@ -138,8 +126,7 @@
                                             @enderror
                                         </div>
                                     </div>
-
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('account', __('Account'), ['class' => 'form-label']) }}
                                             {!! Form::select('account', $account_name, null, ['class' => 'form-control']) !!}
@@ -149,7 +136,7 @@
                                                 <strong class="text-danger">{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
+                                    </div> -->
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('user', __('Assigned User'), ['class' => 'form-label']) }}
@@ -161,7 +148,7 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <div class="col-12">
+                                    <!-- <div class="col-12">
                                         <hr class="mt-2 mb-2">
                                         <h5>{{ __('Attendees') }}</h5>
                                     </div>
@@ -175,8 +162,8 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-6">
+                                    </div> -->
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('attendees_contact', __('Contact'), ['class' => 'form-label']) }}
                                             {!! Form::select('attendees_contact', $attendees_contact, null, ['class' => 'form-control']) !!}
@@ -186,8 +173,8 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
-                                    <div class="col-6">
+                                    </div> -->
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('attendees_lead', __('Lead'), ['class' => 'form-label']) }}
                                             {!! Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control']) !!}
@@ -197,7 +184,7 @@
                                                 </span>
                                             @enderror
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="text-end">
                                         {{ Form::submit(__('Update'), ['class' => 'btn-submit btn btn-primary']) }}
                                     </div>

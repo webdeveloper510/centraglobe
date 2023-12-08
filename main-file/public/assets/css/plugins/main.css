@@ -852,11 +852,11 @@ A HORIZONTAL event
   }
 .fc-direction-ltr .fc-daygrid-event.fc-event-start,
 .fc-direction-rtl .fc-daygrid-event.fc-event-end {
-  margin-left: 2px;
+  margin-left: 31px;
 }
 .fc-direction-ltr .fc-daygrid-event.fc-event-end,
 .fc-direction-rtl .fc-daygrid-event.fc-event-start {
-  margin-right: 2px;
+  margin-right: 31px;
 }
 .fc-direction-ltr .fc-daygrid-week-number {
     left: 0;

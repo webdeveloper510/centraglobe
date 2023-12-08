@@ -27,15 +27,15 @@
                 {{__('Add Task')}}
             </a>
     @endcan -->
-    <div class="float-end px-1">
+    <!-- <div class="float-end px-1">
         <select name="calenderdata" data-toggle='select' class="form-select px-2" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             <option value="{{ route('calendar.index','all') }}" {{ ((Request::segment(2) == 'all' || empty(Request::segment(2))) ? 'selected' : '') }}>{{ __('Show All') }}</option>
-            <option value="{{ route('calendar.index','meeting') }}"{{ ((Request::segment(2) == 'meeting') ? 'selected' : '') }}>{{ __('Show Meeting') }}</option>
+            <option value="{{ route('calendar.index','meeting') }}"{{ ((Request::segment(2) == 'meeting') ? 'selected' : '') }}>{{ __('Show Events') }}</option>
 
             <option value="{{ route('calendar.index','call') }}" {{ ((Request::segment(2) == 'call') ? 'selected' : '') }}>{{ __('Show Call') }}</option>
             <option value="{{ route('calendar.index','task') }}" {{ ((Request::segment(2) == 'task') ? 'selected' : '') }}>{{ __('Show Task') }}</option>
         </select>
-    </div>
+    </div> -->
 
 @endsection
 @section('filter')
@@ -84,6 +84,7 @@
             method:"POST",
             data: {"_token": "{{ csrf_token() }}",'calender_type':calender_type},
             success: function(data) {
+                console.log(data);
                 (function() {
                     var etitle;
                     var etype;

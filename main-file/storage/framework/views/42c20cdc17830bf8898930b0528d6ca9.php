@@ -103,12 +103,12 @@
 
         </div>
     </div>
-     <div class="col-12">
+     <!-- <div class="col-12">
         <hr class="mt-2 mb-2">
         <h6><?php echo e(__('Attendees')); ?></h6>
-    </div>
+    </div> -->
 
-    <div class="col-6">
+   <!--  <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('attendees_user', __('Attendees User'), ['class' => 'form-label'])); ?>
 
@@ -116,14 +116,14 @@
 
         </div>
     </div>
-    <!-- <div class="col-6">
+    <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('attendees_contact', __('Attendees Contact'), ['class' => 'form-label'])); ?>
 
             <?php echo Form::select('attendees_contact', $attendees_contact, null, ['class' => 'form-control ']); ?>
 
         </div>
-    </div> -->
+    </div> 
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('attendees_lead', __('Attendees Lead'), ['class' => 'form-label'])); ?>
@@ -131,7 +131,7 @@
             <?php echo Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control ']); ?>
 
         </div>
-    </div>
+    </div>-->
     <?php if(isset($setting['is_enabled']) && $setting['is_enabled'] == 'on'): ?>
         <div class="form-group col-md-6">
             <label><?php echo e(__('Synchronize in Google Calendar')); ?></label>

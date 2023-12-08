@@ -62,7 +62,6 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
         if (\Auth::user()->can('Create User')){
             $default_language = DB::table('settings')->select('value')->where('name', 'default_language')->first();
             if (\Auth::user()->type == 'super admin') {

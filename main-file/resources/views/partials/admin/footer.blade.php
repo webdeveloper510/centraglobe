@@ -14,10 +14,10 @@
 
 <script src="{{ asset('assets/js/plugins/bootstrap-switch-button.min.js') }}"></script>
 <script src="{{ asset('js/html2pdf.bundle.min.js') }}"></script>
-<script src="{{ asset('public/libs/bootstrap-notify/bootstrap-notify.min.js') }}"></script>
-{{-- <script src="{{asset ('assets/js/pages/ac-alert.js') }}"></script> --}}
+<!-- <script src="{{ asset('public/libs/bootstrap-notify/bootstrap-notify.min.js') }}"></script> -->
+<script src ="{{env('APP_URL')}}/public/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="{{asset('assets/js/plugins/datepicker-full.min.js')}}"></script>
-{{-- <script type="text/javascript" src="{{ asset('js/jquery-1.11.1.min.js')}}"></script> --}}
+
 <script>
 (function () {
   const d_week = new Datepicker(document.querySelector('#pc-datepicker-2_modal'), {
@@ -29,8 +29,8 @@
 <script src="{{asset('assets/js/plugins/dropzone-amd-module.min.js')}}"></script>
 <script src="{{asset('assets/js/plugins/choices.min.js')}}"></script>
 
-<script src="{{ asset('public/libs/select2/dist/css/select2.min.css')}}"></script>
-
+<!-- <script src="{{ asset('public/libs/select2/dist/css/select2.min.css')}}"></script> -->
+<link rel="stylesheet" href="{{ asset('public/libs/select2/dist/css/select2.min.css') }}">
 
 <script src="{{asset ('assets/js/plugins/simple-datatables.js') }}"></script>
 {{-- <script>
@@ -72,7 +72,6 @@
             icon = 'fas fa-times-circle';
             cls = 'danger';
         }
-
         console.log(type, cls);
         $.notify({
             icon: icon,

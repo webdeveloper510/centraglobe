@@ -167,7 +167,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         
                         <a href="<?php echo e(array_key_exists('meeting',$defaultView) ? route($defaultView['meeting']) : route('meeting.index')); ?>"
                             class="dash-link">
-                            <span class="dash-micon"><i class="ti ti-calendar"></i></span><span class="dash-mtext"><?php echo e(__('Meeting')); ?></span>
+                            <span class="dash-micon"><i class="ti ti-calendar"></i></span><span class="dash-mtext"><?php echo e(__('Event')); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
@@ -218,7 +218,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if(\Auth::user()->type == 'super admin'): ?>
+                 <?php if(\Auth::user()->type == 'super admin'): ?>
                     <li class="dash-item  <?php echo e(\Request::route()->getName() == 'plan_request' || \Request::route()->getName() == 'plan_request.show' || \Request::route()->getName() == 'plan_request.edit' ? ' active' : ''); ?>">
                         <a href="<?php echo e(route('plan_request.index')); ?>" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-brand-telegram"></i></span><span class="dash-mtext"><?php echo e(__('Plan Request')); ?></span>
@@ -445,7 +445,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span class="dash-mtext"><?php echo e(__('Settings')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>  -->
+                <?php endif; ?> -->
             </ul>
         </div>
     </div>

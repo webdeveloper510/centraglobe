@@ -28,12 +28,12 @@
             <i class="ti ti-plus"></i>
         </a>
     <?php endif; ?>
-    <!-- <?php if(\Auth::user()->type == 'owner'): ?>
+    <?php if(\Auth::user()->type == 'owner'): ?>
         <a href="<?php echo e(route('userlog.index')); ?>" class="btn btn-sm btn-primary btn-icon m-1"
             data-bs-toggle="tooltip"title="<?php echo e(__('User Log')); ?>">
             <i class="ti ti-user-check"></i>
         </a>
-    <?php endif; ?> -->
+    <?php endif; ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('filter'); ?>
 <?php $__env->stopSection(); ?>

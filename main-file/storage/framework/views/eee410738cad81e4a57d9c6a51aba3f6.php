@@ -1,14 +1,14 @@
 <?php $__env->startSection('page-title'); ?>
-    <?php echo e(__('Meeting')); ?>
+    <?php echo e(__('Event')); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('title'); ?>
-    <?php echo e(__('Meeting')); ?>
+    <?php echo e(__('Event')); ?>
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('breadcrumb'); ?>
     <li class="breadcrumb-item"><a href="<?php echo e(route('dashboard')); ?>"><?php echo e(__('Home')); ?></a></li>
-    <li class="breadcrumb-item"><?php echo e(__('Meeting')); ?></li>
+    <li class="breadcrumb-item"><?php echo e(__('Event')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('action-btn'); ?>
     <a href="<?php echo e(route('meeting.index')); ?>" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip"
@@ -18,7 +18,7 @@
 
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Meeting')): ?>
         <a href="#" data-size="lg" data-url="<?php echo e(route('meeting.create', ['meeting', 0])); ?>" data-ajax-popup="true"
-            data-bs-toggle="tooltip" data-title="<?php echo e(__('Create New Meeting')); ?>" title="<?php echo e(__('Create')); ?>"
+            data-bs-toggle="tooltip" data-title="<?php echo e(__('Create New Event')); ?>" title="<?php echo e(__('Create')); ?>"
             class="btn btn-sm btn-primary btn-icon m-1">
             <i class="ti ti-plus"></i>
         </a>
@@ -61,8 +61,8 @@
                                         <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Show Meeting')): ?>
                                             <a href="#" data-url="<?php echo e(route('meeting.show', $meeting->id)); ?>"
                                                 data-ajax-popup="true"data-size="md" class="dropdown-item"
-                                                data-bs-whatever="<?php echo e(__('Meeting Details')); ?>" data-bs-toggle="tooltip"
-                                                data-title="<?php echo e(__('Meeting Details')); ?>"><i class="ti ti-eye"></i>
+                                                data-bs-whatever="<?php echo e(__('Event Details')); ?>" data-bs-toggle="tooltip"
+                                                data-title="<?php echo e(__('Event Details')); ?>"><i class="ti ti-eye"></i>
                                                 <?php echo e(__('Details')); ?></a>
                                         <?php endif; ?>
 
@@ -110,8 +110,8 @@
                 <div class="badge bg-primary proj-add-icon">
                     <i class="ti ti-plus"></i>
                 </div>
-                <h6 class="mt-4 mb-2">New Meeting</h6>
-                <p class="text-muted text-center">Click here to add New Meeting</p>
+                <h6 class="mt-4 mb-2">New Event</h6>
+                <p class="text-muted text-center">Click here to add New Event</p>
             </a>
         </div>
     </div>

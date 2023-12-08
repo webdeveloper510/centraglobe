@@ -6,8 +6,8 @@
                     <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Name')}}</span></dt>
                     <dd class="col-md-8"><span class="text-md">{{ $lead->name }}</span></dd>
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Account name')}}</span></dt>
-                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->accounts)?$lead->accounts->name:'-'}}</span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Account name')}}</span></dt>
+                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->accounts)?$lead->accounts->name:'-'}}</span></dd> -->
 
                     <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Email')}}</span></dt>
                     <dd class="col-md-8"><span class="text-md">{{ $lead->email }}</span></dd>
@@ -61,17 +61,17 @@
                             @endif
                         </span></dd>
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Source')}}</span></dt>
-                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->LeadSource)?$lead->LeadSource->name:''}}</span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Source')}}</span></dt>
+                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->LeadSource)?$lead->LeadSource->name:''}}</span></dd> -->
 
                     <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Opportunity Amount')}}</span></dt>
                     <dd class="col-md-8"><span class="text-md">{{\Auth::user()->priceFormat($lead->opportunity_amount)}}</span></dd>
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Campaign')}}</span></dt>
-                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->campaigns)?$lead->campaigns->name:'-'}}</span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Campaign')}}</span></dt>
+                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->campaigns)?$lead->campaigns->name:'-'}}</span></dd> -->
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Industry')}}</span></dt>
-                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->accountIndustry)?$lead->accountIndustry->name:''}}</span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0">{{__('Industry')}}</span></dt>
+                    <dd class="col-md-8"><span class="text-md">{{ !empty($lead->accountIndustry)?$lead->accountIndustry->name:''}}</span></dd> -->
 
 
                 </dl>

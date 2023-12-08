@@ -12,14 +12,14 @@
 
         </div>
     </div>
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('account',__('Account'),['class'=>'form-label'])); ?>
 
             <?php echo Form::select('account', $account, null,array('class' => 'form-control')); ?>
 
         </div>
-    </div>
+    </div> -->
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('email',__('Email'),['class'=>'form-label'])); ?>
@@ -104,23 +104,23 @@
 
         </div>
     </div>
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('source',__('Source'),['class'=>'form-label'])); ?>
 
             <?php echo Form::select('source', $leadsource, null,array('class' => 'form-control')); ?>
 
         </div>
-    </div>
-    <div class="col-6">
+    </div> -->
+    <!-- <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('opportunity_amount',__('Opportunity Amount'),['class'=>'form-label'])); ?>
 
             <?php echo Form::number('opportunity_amount', null,array('class' => 'form-control')); ?>
 
         </div>
-    </div>
-    <?php if($type == 'campaign'): ?>
+    </div> -->
+    <!-- <?php if($type == 'campaign'): ?>
         <div class="col-6">
             <div class="form-group">
                 <?php echo e(Form::label('campaign',__('Campaign'),['class'=>'form-label'])); ?>
@@ -138,15 +138,15 @@
 
             </div>
         </div>
-    <?php endif; ?>
-    <div class="col-6">
+    <?php endif; ?> -->
+    <!-- <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('industry',__('Industry'),['class'=>'form-label'])); ?>
 
             <?php echo Form::select('industry', $industry, null,array('class' => 'form-control')); ?>
 
         </div>
-    </div>
+    </div> -->
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('Assign User',__('Assign User'),['class'=>'form-label'])); ?>

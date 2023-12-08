@@ -25,14 +25,14 @@ class Meeting extends Model
         'Held',
         'Not Held',
     ];
-    // public static $parent   = [
-    //     '' => '--',
-    //     'account' => 'Account',
-    //     'lead' => 'Lead',
-    //     'contact' => 'Contact',
-    //     'opportunities' => 'Opportunities',
-    //     'case' => 'Case',
-    // ];
+    public static $parent   = [
+        '' => '--',
+        'account' => 'Account',
+        'lead' => 'Lead',
+        'contact' => 'Contact',
+        'opportunities' => 'Opportunities',
+        'case' => 'Case',
+    ];
 
     public function assign_user()
     {

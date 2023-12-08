@@ -9,12 +9,12 @@
             {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Name'),'required'=>'required'))}}
         </div>
     </div>
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             {{Form::label('account',__('Account'),['class'=>'form-label']) }}
             {!! Form::select('account', $account, null,array('class' => 'form-control')) !!}
         </div>
-    </div>
+    </div> -->
     <div class="col-6">
         <div class="form-group">
             {{Form::label('email',__('Email'),['class'=>'form-label']) }}
@@ -79,19 +79,19 @@
             {!! Form::select('status',$status, null,array('class' => 'form-control','required'=>'required')) !!}
         </div>
     </div>
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             {{Form::label('source',__('Source'),['class'=>'form-label']) }}
             {!! Form::select('source', $leadsource, null,array('class' => 'form-control')) !!}
         </div>
-    </div>
-    <div class="col-6">
+    </div> -->
+    <!-- <div class="col-6">
         <div class="form-group">
             {{Form::label('opportunity_amount',__('Opportunity Amount'),['class'=>'form-label']) }}
             {!! Form::number('opportunity_amount', null,array('class' => 'form-control')) !!}
         </div>
-    </div>
-    @if($type == 'campaign')
+    </div> -->
+    <!-- @if($type == 'campaign')
         <div class="col-6">
             <div class="form-group">
                 {{Form::label('campaign',__('Campaign'),['class'=>'form-label']) }}
@@ -105,13 +105,13 @@
                 {!! Form::select('campaign', $campaign, null,array('class' => 'form-control')) !!}
             </div>
         </div>
-    @endif
-    <div class="col-6">
+    @endif -->
+    <!-- <div class="col-6">
         <div class="form-group">
             {{Form::label('industry',__('Industry'),['class'=>'form-label']) }}
             {!! Form::select('industry', $industry, null,array('class' => 'form-control')) !!}
         </div>
-    </div>
+    </div> -->
     <div class="col-6">
         <div class="form-group">
             {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}

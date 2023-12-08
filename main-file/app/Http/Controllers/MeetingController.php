@@ -216,15 +216,11 @@ class MeetingController extends Controller
             $user              = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $user->prepend('--', 0);
             $account_name      = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-
             // get previous user id
             $previous = Meeting::where('id', '<', $meeting->id)->max('id');
             // get next user id
             $next = Meeting::where('id', '>', $meeting->id)->min('id');
-
-            // return view('meeting.edit', compact('meeting', 'account_name', 'attendees_contact', 'status', 'user', 'attendees_lead', 'previous', 'next'));
-               return view('meeting.edit', compact('meeting', 'account_name', 'attendees_contact', 'status', 'user', 'attendees_lead', 'previous', 'next'))->with('start_date', $meeting->start_date)->with('end_date', $meeting->end_date);
-
+            return view('meeting.edit', compact('meeting', 'account_name', 'attendees_contact', 'status', 'user', 'attendees_lead', 'previous', 'next'))->with('start_date', $meeting->start_date)->with('end_date', $meeting->end_date);
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -265,8 +261,6 @@ class MeetingController extends Controller
             $meeting['attendees_lead']    = $request->attendees_lead;
             $meeting['created_by']        = \Auth::user()->creatorId();
             $meeting->update();
-
-
             Stream::create(
                 [
                     'user_id' => \Auth::user()->id, 'created_by' => \Auth::user()->creatorId(),
@@ -281,7 +275,6 @@ class MeetingController extends Controller
                     ),
                 ]
             );
-
             return redirect()->back()->with('success', __('Meeting Successfully Updated.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');

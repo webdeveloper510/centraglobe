@@ -29,7 +29,7 @@
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('End Date')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e(\Auth::user()->dateFormat($meeting->end_date)); ?></span></dd>
 
-                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Parent')); ?></span></dt>
+                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Parent')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->parent); ?></span></dd>
 
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Parent User')); ?></span></dt>
@@ -38,20 +38,20 @@
                         <?php echo e($meeting->getparent($meeting->parent,$meeting->parent_id)); ?>
 
                         <?php endif; ?>
-                    </span></dd>
+                    </span></dd> -->
 
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Description')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->description); ?></span></dd>
 
 
-                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees User')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_users->name)?$meeting->attendees_users->name:'--'); ?></span></dd>
+                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees User')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_users->name)?$meeting->attendees_users->name:'--'); ?></span></dd> -->
 
-                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees Contact')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_contacts->name)?$meeting->attendees_contacts->name:'--'); ?></span></dd>
+                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees Contact')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_contacts->name)?$meeting->attendees_contacts->name:'--'); ?></span></dd> -->
 
-                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees Lead')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_leads->name)?$meeting->attendees_leads->name:'--'); ?></span></dd>
+                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees Lead')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_leads->name)?$meeting->attendees_leads->name:'--'); ?></span></dd> -->
 
                     <dt class="col-sm-5"><span class="h6 text-sm mb-0"><?php echo e(__('Assigned User')); ?></span></dt>
                     <dd class="col-sm-7"><span class="text-sm"><?php echo e(!empty($meeting->assign_user)?$meeting->assign_user->name:''); ?></span></dd>
@@ -69,7 +69,6 @@
             <a href="<?php echo e(route('meeting.edit',$meeting->id)); ?>" class="mx-3 btn btn-sm d-inline-flex align-items-center text-white" data-bs-toggle="tooltip"data-title="<?php echo e(__('Edit Call')); ?>" title="<?php echo e(__('Edit')); ?>"><i class="ti ti-edit"></i>
             </a>
         </div>
-
         <?php endif; ?>
     </div>
 </div>

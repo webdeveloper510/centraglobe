@@ -89,7 +89,7 @@
                     </a>
                 </li>
             <?php endif; ?> -->
-            <li class="dropdown dash-h-item drp-language">
+            <!-- <li class="dropdown dash-h-item drp-language">
                 <a class="dash-head-link dropdown-toggle arrow-none me-0" data-bs-toggle="dropdown" href="#"
                     role="button" aria-haspopup="false" aria-expanded="false">
                     <i class="ti ti-world nocolor"></i>
@@ -98,7 +98,7 @@
                     <i class="ti ti-chevron-down drp-arrow nocolor"></i>
                 </a>
                 <div class="dropdown-menu dash-h-dropdown dropdown-menu-end">
-                    <?php $__currentLoopData = App\Models\Utility::languages(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $lang): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                   <?php $__currentLoopData = App\Models\Utility::languages(); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $code => $lang): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <a href="<?php echo e(route('change.language', $code)); ?>"
                             class="dropdown-item <?php echo e($currantLang == $code ? 'text-primary' : ''); ?>">
                             <span><?php echo e(ucFirst($lang)); ?></span>
@@ -116,7 +116,7 @@
                         </a>
                     <?php endif; ?>
                 </div>
-            </li>
+            </li> -->
         </ul>
     </div>
 </div>

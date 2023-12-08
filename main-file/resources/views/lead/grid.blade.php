@@ -65,7 +65,7 @@
                         type: 'POST',
                         data: {lead_id: id, status_id: status_id, order: order, "_token": $('meta[name="csrf-token"]').attr('content')},
                         success: function (data) {
-                            show_toastr('Success', 'Lead successfully updated', 'success');
+                            show_toastr('Success', 'Lead  updated', 'success');
                         },
                         error: function (data) {
                             data = data.responseJSON;

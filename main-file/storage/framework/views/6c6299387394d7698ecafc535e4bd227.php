@@ -31,15 +31,15 @@
 
             </a>
     <?php endif; ?> -->
-    <div class="float-end px-1">
+    <!-- <div class="float-end px-1">
         <select name="calenderdata" data-toggle='select' class="form-select px-2" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
             <option value="<?php echo e(route('calendar.index','all')); ?>" <?php echo e(((Request::segment(2) == 'all' || empty(Request::segment(2))) ? 'selected' : '')); ?>><?php echo e(__('Show All')); ?></option>
-            <option value="<?php echo e(route('calendar.index','meeting')); ?>"<?php echo e(((Request::segment(2) == 'meeting') ? 'selected' : '')); ?>><?php echo e(__('Show Meeting')); ?></option>
+            <option value="<?php echo e(route('calendar.index','meeting')); ?>"<?php echo e(((Request::segment(2) == 'meeting') ? 'selected' : '')); ?>><?php echo e(__('Show Events')); ?></option>
 
             <option value="<?php echo e(route('calendar.index','call')); ?>" <?php echo e(((Request::segment(2) == 'call') ? 'selected' : '')); ?>><?php echo e(__('Show Call')); ?></option>
             <option value="<?php echo e(route('calendar.index','task')); ?>" <?php echo e(((Request::segment(2) == 'task') ? 'selected' : '')); ?>><?php echo e(__('Show Task')); ?></option>
         </select>
-    </div>
+    </div> -->
 
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('filter'); ?>
@@ -88,6 +88,7 @@
             method:"POST",
             data: {"_token": "<?php echo e(csrf_token()); ?>",'calender_type':calender_type},
             success: function(data) {
+                console.log(data);
                 (function() {
                     var etitle;
                     var etype;

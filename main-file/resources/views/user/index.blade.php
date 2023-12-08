@@ -26,12 +26,12 @@
             <i class="ti ti-plus"></i>
         </a>
     @endcan
-    <!-- @if (\Auth::user()->type == 'owner')
+    @if (\Auth::user()->type == 'owner')
         <a href="{{ route('userlog.index') }}" class="btn btn-sm btn-primary btn-icon m-1"
             data-bs-toggle="tooltip"title="{{ __('User Log') }}">
             <i class="ti ti-user-check"></i>
         </a>
-    @endif -->
+    @endif
 @endsection
 @section('filter')
 @endsection

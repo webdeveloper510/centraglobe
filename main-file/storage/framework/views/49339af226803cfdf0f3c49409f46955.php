@@ -6,8 +6,8 @@
                     <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Name')); ?></span></dt>
                     <dd class="col-md-8"><span class="text-md"><?php echo e($lead->name); ?></span></dd>
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Account name')); ?></span></dt>
-                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->accounts)?$lead->accounts->name:'-'); ?></span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Account name')); ?></span></dt>
+                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->accounts)?$lead->accounts->name:'-'); ?></span></dd> -->
 
                     <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Email')); ?></span></dt>
                     <dd class="col-md-8"><span class="text-md"><?php echo e($lead->email); ?></span></dd>
@@ -61,17 +61,17 @@
                             <?php endif; ?>
                         </span></dd>
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Source')); ?></span></dt>
-                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->LeadSource)?$lead->LeadSource->name:''); ?></span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Source')); ?></span></dt>
+                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->LeadSource)?$lead->LeadSource->name:''); ?></span></dd> -->
 
                     <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Opportunity Amount')); ?></span></dt>
                     <dd class="col-md-8"><span class="text-md"><?php echo e(\Auth::user()->priceFormat($lead->opportunity_amount)); ?></span></dd>
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Campaign')); ?></span></dt>
-                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->campaigns)?$lead->campaigns->name:'-'); ?></span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Campaign')); ?></span></dt>
+                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->campaigns)?$lead->campaigns->name:'-'); ?></span></dd> -->
 
-                    <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Industry')); ?></span></dt>
-                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->accountIndustry)?$lead->accountIndustry->name:''); ?></span></dd>
+                    <!-- <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Industry')); ?></span></dt>
+                    <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->accountIndustry)?$lead->accountIndustry->name:''); ?></span></dd> -->
 
 
                 </dl>

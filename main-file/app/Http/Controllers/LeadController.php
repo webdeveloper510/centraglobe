@@ -298,7 +298,7 @@ class LeadController extends Controller
                 ]
             );
 
-            return redirect()->back()->with('success', __('Lead Successfully Updated.'));
+            return redirect()->back()->with('success', __('Lead  Updated.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -316,7 +316,7 @@ class LeadController extends Controller
         if (\Auth::user()->can('Delete Lead')) {
             $lead->delete();
 
-            return redirect()->back()->with('success', __('Lead Successfully Deleted.'));
+            return redirect()->back()->with('success', __('Lead  Deleted.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -432,7 +432,7 @@ class LeadController extends Controller
             $lead->is_converted = $account->id;
             $lead->save();
 
-            return redirect()->back()->with('success', __('Lead successfully converted.'));
+            return redirect()->back()->with('success', __('Lead converted.'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }

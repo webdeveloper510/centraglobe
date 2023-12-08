@@ -14,8 +14,8 @@
 
 <script src="<?php echo e(asset('assets/js/plugins/bootstrap-switch-button.min.js')); ?>"></script>
 <script src="<?php echo e(asset('js/html2pdf.bundle.min.js')); ?>"></script>
-<script src="<?php echo e(asset('public/libs/bootstrap-notify/bootstrap-notify.min.js')); ?>"></script>
-
+<!-- <script src="<?php echo e(asset('public/libs/bootstrap-notify/bootstrap-notify.min.js')); ?>"></script> -->
+<script src ="<?php echo e(env('APP_URL')); ?>/public/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="<?php echo e(asset('assets/js/plugins/datepicker-full.min.js')); ?>"></script>
 
 <script>
@@ -29,8 +29,8 @@
 <script src="<?php echo e(asset('assets/js/plugins/dropzone-amd-module.min.js')); ?>"></script>
 <script src="<?php echo e(asset('assets/js/plugins/choices.min.js')); ?>"></script>
 
-<script src="<?php echo e(asset('public/libs/select2/dist/css/select2.min.css')); ?>"></script>
-
+<!-- <script src="<?php echo e(asset('public/libs/select2/dist/css/select2.min.css')); ?>"></script> -->
+<link rel="stylesheet" href="<?php echo e(asset('public/libs/select2/dist/css/select2.min.css')); ?>">
 
 <script src="<?php echo e(asset ('assets/js/plugins/simple-datatables.js')); ?>"></script>
 
@@ -68,7 +68,6 @@
             icon = 'fas fa-times-circle';
             cls = 'danger';
         }
-
         console.log(type, cls);
         $.notify({
             icon: icon,
