@@ -152,7 +152,10 @@ class Utility extends Model
             "google_recaptcha_key" => '',
             "pusher_app_key" => '',
             "pusher_app_secret" => '',
-            "pusher_app_cluster" => ''
+            "pusher_app_cluster" => '',
+            "event_types"=>'',
+            'venue' => '',
+           
         ];
 
         foreach ($data as $row) {
@@ -172,7 +175,6 @@ class Utility extends Model
 
     public static function settingsById($id)
     {
-
         $data     = DB::table('settings');
         $data     = $data->where('created_by', '=', $id);
         $data     = $data->get();
@@ -2557,7 +2559,7 @@ class Utility extends Model
         } elseif ($type == 'call') {
             return 10;
         } elseif ($type == 'meeting') {
-            return 5;
+            return 2;
         } elseif ($type == 'leave') {
             return 6;
         } elseif ($type == 'work_order') {

@@ -171,6 +171,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 <?php endif; ?>
+                
                 <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Call')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'call' || \Request::route()->getName() == 'call.show' || \Request::route()->getName() == 'call.edit' ? ' active' : ''); ?>">
                         
@@ -224,8 +225,8 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <span class="dash-micon"><i class="ti ti-brand-telegram"></i></span><span class="dash-mtext"><?php echo e(__('Plan Request')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
-                <?php if(\Auth::user()->type == 'super admin'): ?>
+                <?php endif; ?> -->
+                <!-- <?php if(\Auth::user()->type == 'super admin'): ?>
                 <li class="dash-item <?php echo e(\Request::route()->getName() == 'coupon' || \Request::route()->getName() == 'coupon.show' ? ' active' : ''); ?>">
                     <a href="<?php echo e(route('coupon.index')); ?>" class="dash-link">
                         <span class="dash-micon"> <i class="ti ti-briefcase"></i></span><span class="dash-mtext"><?php echo e(__('Coupon')); ?></span></a>
@@ -233,6 +234,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                 </li>
             <?php endif; ?> 
 
+            
                 <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner'): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'order' ? ' active' : ''); ?>">
                         <a href="<?php echo e(route('order.index')); ?>" class="dash-link">
@@ -240,7 +242,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                                 class="dash-mtext"><?php echo e(__('Order')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>-->
+                <?php endif; ?>
 
                 <?php if(\Auth::user()->type == 'super admin'): ?>
                     <li class="dash-item <?php echo e((Request::route()->getName() == 'email_template.index' || Request::segment(1) == 'email_template_lang' || Request::route()->getName() == 'manageemail.lang') ? 'active' : ''); ?>">
@@ -248,7 +250,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                                 class="dash-micon"><i class="ti ti-template"></i></span><span
                                 class="dash-mtext"><?php echo e(__('Email Template')); ?></span></a>
                     </li>
-                <?php endif; ?>
+                <?php endif; ?> -->
 
                <!-- <?php if(Gate::check('Manage Report')): ?>
                     <li class="dash-item dash-hasmenu  <?php echo e(\Request::route()->getName() == 'report.index' || \Request::route()->getName() == 'report.show' || \Request::route()->getName() == 'report.edit' ? ' active dash-trigger' : ''); ?>">
@@ -439,13 +441,13 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                 <?php if(\Auth::user()->type == 'super admin'): ?>
                 <?php echo $__env->make('landingpage::menu.landingpage', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
                 <?php endif; ?>
-                <!-- <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner'): ?>
+                 <?php if(\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner'): ?>
                     <li class="dash-item  <?php echo e(Request::route()->getName() == 'settings' ? 'active' : ''); ?>">
                         <a href="<?php echo e(route('settings')); ?>" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span class="dash-mtext"><?php echo e(__('Settings')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?> -->
+                <?php endif; ?>
             </ul>
         </div>
     </div>

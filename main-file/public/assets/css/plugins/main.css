@@ -850,14 +850,14 @@ A HORIZONTAL event
     min-width: 220px;
     padding: 10px;
   }
-.fc-direction-ltr .fc-daygrid-event.fc-event-start,
+/* .fc-direction-ltr .fc-daygrid-event.fc-event-start,
 .fc-direction-rtl .fc-daygrid-event.fc-event-end {
   margin-left: 31px;
 }
 .fc-direction-ltr .fc-daygrid-event.fc-event-end,
 .fc-direction-rtl .fc-daygrid-event.fc-event-start {
   margin-right: 31px;
-}
+} */
 .fc-direction-ltr .fc-daygrid-week-number {
     left: 0;
     border-radius: 0 0 3px 0;

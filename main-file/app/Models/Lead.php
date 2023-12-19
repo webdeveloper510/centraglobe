@@ -11,38 +11,33 @@ class Lead extends Model
         'name',
         'email',
         'phone',
-        'website',
-        'billing_address',
-        'billing_city',
-        'billing_state',
-        'billing_country',
-        'billing_postalcode',
-        'shipping_address',
-        'shipping_city',
-        'shipping_state',
-        'shipping_country',
-        'shipping_postalcode',
         'type',
-        'industry',
-        'is_converted',
+        'company_name',
+        'lead_address',
+        'relationship',
+        'start_date',
+        'end_date',
+        'guest_count',
+        'venue_selection',
+        'function',
         'created_by',
-        'description',
     ];
-
     protected $appends = [
         'status_name',
         'account_name',
         'source_name',
         'campaign_name',
     ];
-
     public static $status = [
         'New',
-        'Assigned',
-        'In Process',
-        'Converted',
-        'Recycled',
-        'Dead',
+        'Assigned'
+    ];
+    public static  $function = [
+        'Breakfast',
+        'Brunch',
+        'Lunch',
+        'Dinner',
+        'Wedding'
     ];
     private static $account_name = null;
     private static $campaign_name = null;

@@ -11,36 +11,12 @@
     <li class="breadcrumb-item"><?php echo e(__('Calendar')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('action-btn'); ?>
-    <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Call')): ?>
-
-            <a href="#" data-size="lg" data-url="<?php echo e(route('call.create',['call',0])); ?>" data-ajax-popup="true" data-title="<?php echo e(__('Create New Call')); ?>" class="btn btn-sm btn-primary ms-2">
-                <?php echo e(__('Add Call')); ?>
-
-            </a>
-    <?php endif; ?> -->
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Meeting')): ?>
-            <a href="#" data-size="lg" data-url="<?php echo e(route('meeting.create',['meeting',0])); ?>" data-ajax-popup="true" data-title="<?php echo e(__('Create New Event')); ?>" class="btn btn-sm btn-info">
+            <a href="<?php echo e(route('meeting.create',['meeting',0])); ?>" data-title="<?php echo e(__('Create New Event')); ?>" class="btn btn-sm btn-info">
                 <?php echo e(__('Add Events')); ?>
 
             </a>
     <?php endif; ?>
-    <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Task')): ?>
-
-            <a href="#" data-size="lg" data-url="<?php echo e(route('task.create',['task',0])); ?>" data-ajax-popup="true" data-title="<?php echo e(__('Create New Task')); ?>" class="btn btn-sm btn-success ">
-                <?php echo e(__('Add Task')); ?>
-
-            </a>
-    <?php endif; ?> -->
-    <!-- <div class="float-end px-1">
-        <select name="calenderdata" data-toggle='select' class="form-select px-2" onchange="this.options[this.selectedIndex].value && (window.location = this.options[this.selectedIndex].value);">
-            <option value="<?php echo e(route('calendar.index','all')); ?>" <?php echo e(((Request::segment(2) == 'all' || empty(Request::segment(2))) ? 'selected' : '')); ?>><?php echo e(__('Show All')); ?></option>
-            <option value="<?php echo e(route('calendar.index','meeting')); ?>"<?php echo e(((Request::segment(2) == 'meeting') ? 'selected' : '')); ?>><?php echo e(__('Show Events')); ?></option>
-
-            <option value="<?php echo e(route('calendar.index','call')); ?>" <?php echo e(((Request::segment(2) == 'call') ? 'selected' : '')); ?>><?php echo e(__('Show Call')); ?></option>
-            <option value="<?php echo e(route('calendar.index','task')); ?>" <?php echo e(((Request::segment(2) == 'task') ? 'selected' : '')); ?>><?php echo e(__('Show Task')); ?></option>
-        </select>
-    </div> -->
-
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('filter'); ?>
 
@@ -48,6 +24,8 @@
 
 
 <?php $__env->startPush('script-page'); ?>
+
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dc4641f860664c6e824b093274f50291"}'></script>
 <script src="<?php echo e(asset('assets/js/plugins/main.min.js')); ?>"></script>
 <script type="text/javascript">
     <?php
@@ -81,14 +59,13 @@
         if(calender_type == undefined){
             calender_type = 'local_calender';
         }
-
         $('#calendar').addClass(calender_type);
         $.ajax({
             url: urls ,
             method:"POST",
             data: {"_token": "<?php echo e(csrf_token()); ?>",'calender_type':calender_type},
             success: function(data) {
-                console.log(data);
+                // console.log(data);
                 (function() {
                     var etitle;
                     var etype;
@@ -112,29 +89,78 @@
                         themeSystem: 'bootstrap',
                         // slotDuration: '00:10:00',
                         navLinks: true,
-                        droppable: true,
+                        droppable: false,
                         selectable: true,
                         selectMirror: true,
-                        editable: true,
+                        editable: false,
                         dayMaxEvents: true,
                         handleWindowResize: true,
                         height: 'auto',
                         timeFormat: 'H(:mm)',
                         events: data,
+                        select: function(info) {
+                            var startDate = info.startStr;
+                            var endDate = info.endStr;
+                            openPopupForm(startDate,endDate);
+                        },
+                        // eventDisplay:'background',
+                        // eventColor: '#378006' ,
+                        // backgroundColor :'#000',
                         // eventContent: function(event, element, view) {
                         //             var customHtml = event.event._def.extendedProps.html;
                         //             return {
                         //                 html: customHtml
                         //             }
                         //     }
-
                     });
-
                     calendar.render();
                 })();
             }
         });
+    $('#close-popup').on('click', function() {
+        closePopupForm();
+    });
+    function isDateBlocked(selectionInfo) {
+      var start = selectionInfo.start;
+      var end = selectionInfo.end;
+      return false;
     }
+    function openPopupForm(start,end) {
+        $("#unblock").hide();
+        $( ".blockd_dates input" ).each(function( index ) {
+            if($(this).val() == start || $(this).val() == end){
+                $("#unblock").show();
+            }
+        });
+        $("input[name = 'start_date']").val(start);
+        $("input[name = 'end_date']").val(end);
+
+        $('#popup-form').show();
+        $('#overlay').show();
+    }
+    function closePopupForm() {
+      $('#popup-form').hide();
+      $('#overlay').hide();
+    }
+    }
+   $('#unblock').on('click', function() {
+        var start = $('#popup-form input[name = "start_date"]').val();
+        var end = $('#popup-form input[name = "end_date"]').val();
+        var purpose = $('#popup-form textarea[name = "purpose"]').val();
+        var url = "<?php echo e(route('meeting.unblock')); ?>";
+        $.ajax({
+            url : url,
+            method:"POST",
+            data: {
+                "_token": "<?php echo e(csrf_token()); ?>",
+                'start':start,
+                'end':end,
+            },
+            success: function(data) {
+                console.log(data);
+            }
+        })
+    });
 </script>
 <?php $__env->stopPush(); ?>
 <?php
@@ -145,21 +171,26 @@ $setting = App\Models\Utility::settings();
 
 
 <?php $__env->startSection('content'); ?>
+<div class ="blockd_dates">
+<?php $__currentLoopData = $blockeddate; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key=> $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+    <input type="hidden" name="strt<?php echo e($key); ?>"  value = "<?php echo e($value->start_date); ?>">
+    <input type="hidden" name="end<?php echo e($key); ?>"   value = "<?php echo e($value->end_date); ?>">
+<?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+</div>
     <div class="row">
         <!-- [ sample-page ] start -->
-        <div class="col-lg-8">
+         <div class="col-lg-8">
             <div class="card">
                 <div class="card-header">
                     <h5 style="width: 150px;"><?php echo e(__('Calendar')); ?></h5>
-                    <?php if(isset($setting['is_enabled']) && $setting['is_enabled'] == 'on'): ?>
+                    <!-- <?php if(isset($setting['is_enabled']) && $setting['is_enabled'] == 'on'): ?>
                         <select class="form-control" name="calender_type" id="calender_type" style="float: right;width: 150px;" onchange="get_data()">
                             <option value="goggle_calender"><?php echo e(__('Google Calender')); ?></option>
                             <option value="local_calender" selected="true"><?php echo e(__('Local Calender')); ?></option>
                         </select>
-                        <?php endif; ?>
+                    <?php endif; ?> -->
                         <input type="hidden" id="path_admin" value="<?php echo e(url('/')); ?>">
                 </div>
-
                 <div class="card-body">
                     <div id='calendar' class='calendar'></div>
                 </div>
@@ -170,42 +201,6 @@ $setting = App\Models\Utility::settings();
                 <div class="card-body">
                     <h4 class="mb-4">Next events</h4>
                     <ul class="event-cards list-group list-group-flush mt-3 w-100">
-                        <?php
-                            $date = Carbon\Carbon::now()->format('m');
-                            $this_month_Call = App\Models\Call::get();
-                            if(\Auth::user()->type == 'owner'){
-                                $this_month_Call = App\Models\Call::where('created_by', \Auth::user()->creatorId())->get();
-
-                            }
-                            else
-                            {
-                                $this_month_Call = App\Models\Call::where('user_id', \Auth::user()->id)->get();
-
-                            }
-                        ?>
-                        <?php $__currentLoopData = $this_month_Call; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $Call): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php
-                                $month =date('m', strtotime($Call->start_date));
-                            ?>
-                            <?php if($date == $month): ?>
-                                <li class="list-group-item card mb-3">
-                                    <div class="row align-items-center justify-content-between">
-                                        <div class="col-auto mb-3 mb-sm-0">
-                                            <div class="d-flex align-items-center">
-                                                <div class="theme-avtar bg-primary">
-                                                    <i class="ti ti-phone-call"></i>
-                                                </div>
-                                                <div class="ms-3" style="color: #3ec9d6">
-                                                <h6 class="m-0"><?php echo e($Call->name); ?></h6>
-                                                <small class="text-muted"><?php echo e($Call->start_date); ?> to <?php echo e($Call->end_date); ?></small>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </li>
-                            <?php endif; ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         <?php
                             $date = Carbon\Carbon::now()->format('m');
                             $this_month_meeting = App\Models\meeting::get();
@@ -238,56 +233,99 @@ $setting = App\Models\Utility::settings();
                                 </li>
                             <?php endif; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                        <?php
-                            $date = Carbon\Carbon::now()->format('m');
-                            $this_month_task = App\Models\task::get();
-                            if(\Auth::user()->type == 'owner'){
-                                $this_month_task = App\Models\task::where('created_by', \Auth::user()->creatorId())->get();
-                            }
-                            else
-                            {
-                                $this_month_task = App\Models\task::where('user_id', \Auth::user()->id)->get();
-                            }
-                        ?>
-                        <?php $__currentLoopData = $this_month_task; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $task): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php
-                                $month =date('m', strtotime($task->start_date));
-                            ?>
-                            <?php if($date == $month): ?>
-                                <li class="list-group-item card mb-3">
-                                    <div class="row align-items-center justify-content-between">
-                                        <div class="col-auto mb-3 mb-sm-0">
-                                            <div class="d-flex align-items-center">
-                                                <div class="theme-avtar bg-primary">
-                                                    <i class="fa fa-tasks"></i>
-                                                </div>
-                                                <div class="ms-3">
-                                                <h6 class="m-0"><?php echo e($task->name); ?></h6>
-                                                <small class="text-muted"><?php echo e($task->start_date); ?> to <?php echo e($task->end_date); ?></small>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                            <?php endif; ?>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
             </div>
         </div>
         <!-- [ sample-page ] end -->
     </div>
+    <div id="overlay"></div>
+ <div id="popup-form">
+    <div class="row">
+        <div  class ="card">
+            <div class="col-md-12">
+                <div class="card-header">
+                <?php echo e(Form::open(['route' => 'meeting.blockdate', 'method' => 'post', 'enctype' => 'multipart/form-data'])); ?>
+
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <h5><?php echo e(__('Block  Date')); ?></h5>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                <?php echo e(Form::label('start_date', __('Start Date'), ['class' => 'form-label'])); ?>
+
+                                <?php echo Form::date('start_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']); ?>
+
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <?php echo e(Form::label('end_date', __('End Date'), ['class' => 'form-label'])); ?>
+
+                                <?php echo Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']); ?>
+
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                <?php echo e(Form::label('purpose',__('Purpose'),['class'=>'form-label'])); ?>
+
+                                <?php echo e(Form::textarea('purpose',null,array('class'=>'form-control','rows'=>2))); ?>
+
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    <?php echo e(Form::submit(__('Block'), ['class' => 'btn  btn-primary '])); ?>
+
+                    <?php echo e(Form::close()); ?>
+
+                    <button class="btn  btn-primary" id= "unblock" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>" style ="display:none">Unblock</button> 
+                <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>">Close</button> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    #popup-form {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      border-radius:2px
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    }
+</style>
 <?php $__env->stopSection(); ?>
 
 
     <?php $__env->startPush('script-page'); ?>
-
     <script type="text/javascript">
         $(document).on('change', 'select[name=parent]', function () {
 
             var parent = $(this).val();
-
             getparent(parent);
         });
 
@@ -345,6 +383,6 @@ $setting = App\Models\Utility::settings();
 
 
     </script>
-<?php $__env->stopPush(); ?>
+    <?php $__env->stopPush(); ?>
 
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\centraglobe\main-file\resources\views/calendar/index.blade.php ENDPATH**/ ?>

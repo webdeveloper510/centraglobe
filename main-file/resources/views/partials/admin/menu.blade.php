@@ -192,6 +192,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 @endcan
+                
                 <!-- @can('Manage Call')
                     <li class="dash-item {{ \Request::route()->getName() == 'call' || \Request::route()->getName() == 'call.show' || \Request::route()->getName() == 'call.edit' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('call')) ? route(\Auth::user()->getDefualtViewRouteByModule('call')) : route('call.index') }}" class="dash-link">
@@ -251,8 +252,8 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <span class="dash-micon"><i class="ti ti-brand-telegram"></i></span><span class="dash-mtext">{{ __('Plan Request') }}</span>
                         </a>
                     </li>
-                @endif
-                @if (\Auth::user()->type == 'super admin')
+                @endif -->
+                <!-- @if (\Auth::user()->type == 'super admin')
                 <li class="dash-item {{ \Request::route()->getName() == 'coupon' || \Request::route()->getName() == 'coupon.show' ? ' active' : '' }}">
                     <a href="{{ route('coupon.index') }}" class="dash-link">
                         <span class="dash-micon"> <i class="ti ti-briefcase"></i></span><span class="dash-mtext">{{ __('Coupon') }}</span></a>
@@ -260,6 +261,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                 </li>
             @endif 
 
+            
                 @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner')
                     <li class="dash-item {{ \Request::route()->getName() == 'order' ? ' active' : '' }}">
                         <a href="{{ route('order.index') }}" class="dash-link">
@@ -267,7 +269,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                                 class="dash-mtext">{{ __('Order') }}</span>
                         </a>
                     </li>
-                @endif-->
+                @endif
 
                 @if (\Auth::user()->type == 'super admin')
                     <li class="dash-item {{ (Request::route()->getName() == 'email_template.index' || Request::segment(1) == 'email_template_lang' || Request::route()->getName() == 'manageemail.lang') ? 'active' : '' }}">
@@ -275,7 +277,7 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                                 class="dash-micon"><i class="ti ti-template"></i></span><span
                                 class="dash-mtext">{{ __('Email Template') }}</span></a>
                     </li>
-                @endif
+                @endif -->
 
                <!-- @if (Gate::check('Manage Report'))
                     <li class="dash-item dash-hasmenu  {{ \Request::route()->getName() == 'report.index' || \Request::route()->getName() == 'report.show' || \Request::route()->getName() == 'report.edit' ? ' active dash-trigger' : '' }}">
@@ -466,13 +468,13 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                 @if (\Auth::user()->type == 'super admin')
                 @include('landingpage::menu.landingpage')
                 @endif
-                <!-- @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner')
+                 @if (\Auth::user()->type == 'super admin' || \Auth::user()->type == 'owner')
                     <li class="dash-item  {{ Request::route()->getName() == 'settings' ? 'active' : '' }}">
                         <a href="{{ route('settings') }}" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-settings"></i></span><span class="dash-mtext">{{ __('Settings') }}</span>
                         </a>
                     </li>
-                @endif -->
+                @endif
             </ul>
         </div>
     </div>

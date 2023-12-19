@@ -12,26 +12,26 @@
 
 @endsection
 @section('action-btn')
-    @if (\Auth::user()->type == 'owner' || \Auth::user()->type == 'Manager')
+    <!-- @if (\Auth::user()->type == 'owner' || \Auth::user()->type == 'Manager')
         @can('Manage User')
             <a href="{{ route('user.grid') }}" class="btn btn-sm btn-primary btn-icon m-1"
                 data-bs-toggle="tooltip"title="{{ __('Grid View') }}">
                 <i class="ti ti-layout-grid text-white"></i>
             </a>
         @endcan
-    @endif
+    @endif -->
     @can('Create User')
         <a href="#" data-url="{{ route('user.create') }}" data-size="md" data-ajax-popup="true" data-bs-toggle="tooltip"
             title="{{ __('Create') }}"data-title="{{ __('Create Staff') }}" class="btn btn-sm btn-primary btn-icon">
             <i class="ti ti-plus"></i>
         </a>
     @endcan
-    @if (\Auth::user()->type == 'owner')
+    <!-- @if (\Auth::user()->type == 'owner')
         <a href="{{ route('userlog.index') }}" class="btn btn-sm btn-primary btn-icon m-1"
             data-bs-toggle="tooltip"title="{{ __('User Log') }}">
             <i class="ti ti-user-check"></i>
         </a>
-    @endif
+    @endif -->
 @endsection
 @section('filter')
 @endsection

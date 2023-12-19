@@ -11,16 +11,14 @@
     <li class="breadcrumb-item"><?php echo e(__('Event')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('action-btn'); ?>
-    <a href="<?php echo e(route('meeting.grid')); ?>" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip"
-        title="<?php echo e(__('Grid View')); ?>">
-        <i class="ti ti-layout-grid text-white"></i>
-    </a>
 
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Meeting')): ?>
-        <a href="#" data-size="lg" data-url="<?php echo e(route('meeting.create',['meeting',0])); ?>" data-ajax-popup="true" data-bs-toggle="tooltip"
-            data-title="<?php echo e(__('Create New Event')); ?>" title="<?php echo e(__('Create')); ?>" class="btn btn-sm btn-primary btn-icon m-1">
-            <i class="ti ti-plus"></i>
-        </a>
+        <div class="col-12 text-end mt-3">
+            <a href="<?php echo e(route('meeting.create',['meeting',0])); ?>"> 
+                <button  data-bs-toggle="tooltip"title="<?php echo e(__('Create')); ?>" class="btn btn-sm btn-primary btn-icon m-1">
+                <i class="ti ti-plus"></i></button>
+            </a>
+        </div>
     <?php endif; ?>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('filter'); ?>
@@ -55,9 +53,6 @@
 
                                             </a>
                                         </td>
-                                        <!-- <td>
-                                            <span class="budget"><?php echo e(ucfirst($meeting->parent)); ?></span>
-                                        </td> -->
                                         <td>
                                             <?php if($meeting->status == 0): ?>
                                                 <span class="badge bg-success p-2 px-3 rounded"

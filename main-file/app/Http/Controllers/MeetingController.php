@@ -14,6 +14,7 @@ use App\Models\Utility;
 use App\Models\User;
 use App\Models\UserDefualtView;
 use Illuminate\Http\Request;
+USE App\Models\Blockdate;
 
 
 class MeetingController extends Controller
@@ -49,25 +50,21 @@ class MeetingController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create($type, $id)
     {
         if (\Auth::user()->can('Create Meeting')) {
             $status            = Meeting::$status;
             $parent            = Meeting::$parent;
             $user              = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $user->prepend('--', 0);
-            $attendees_contact = Contact::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $attendees_contact->prepend('--', 0);
+            $user->prepend('Select User', 0);
             $attendees_lead    = Lead::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $attendees_lead->prepend('--', 0);
-            $account_name      = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-
-            return view('meeting.create', compact('status', 'account_name', 'type', 'parent', 'user', 'attendees_contact', 'attendees_lead'));
+            $attendees_lead->prepend('Select Lead', 0);
+            $function = Meeting::$function;
+            $breakfast = Meeting::$breakfast;
+            $lunch = Meeting::$lunch;
+            $dinner = Meeting::$dinner;
+            $wedding = Meeting::$wedding;
+            return view('meeting.create', compact('status','type','breakfast', 'lunch', 'dinner', 'wedding', 'parent','user', 'attendees_lead','function'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -82,34 +79,59 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
+     
         if (\Auth::user()->can('Create Meeting')) {
             $validator = \Validator::make(
                 $request->all(),
                 [
                     'name' => 'required|max:120',
-                ]
-            );
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+                    'email' => 'required|email|max:120',
+                    'lead_address' => 'required|max:120',
+                    'type' => 'required',
+                    'venue' => 'required',
+                    'function' => 'required|max:120',
+                    'guest_count' => 'required', 
+                    'start_time' => 'required',
+                    'end_time' => 'required',
+
+                ]);
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
-
                 return redirect()->back()->with('error', $messages->first());
             }
+        //    $a =Meeting::where('start_date',$request->start_date)->orWhere('end_date',$request->end_date)->get();
+        //    echo"<pre>";print_r($a);die;
             $meeting                      = new Meeting();
             $meeting['user_id']           = $request->user;
             $meeting['name']              = $request->name;
             $meeting['status']            = $request->status;
             $meeting['start_date']        = $request->start_date;
             $meeting['end_date']          = $request->end_date;
+            $meeting['email']              = $request->email;
+            $meeting['lead_address']      = $request->lead_address;
             $meeting['parent']            = $request->parent;
             $meeting['parent_id']         = $request->parent_id ?? '0';
-            $meeting['account']           = $request->account;
-            $meeting['description']       = $request->description;
-            $meeting['attendees_user']    = $request->attendees_user;
-            $meeting['attendees_contact'] = $request->attendees_contact;
-            $meeting['attendees_lead']    = $request->attendees_lead;
+            $meeting['relationship']       = $request->relationship;
+            $meeting['type']               = $request->type;
+            $meeting['venue_selection']    = $request->venue_selection;
+            $meeting['function']            = $request->function;
+            $meeting['guest_count']         = $request->guest_count;
+            $meeting['room']                = $request->room;
+            $meeting['meal']                = $request->meal;
+            $meeting['bar']                 = $request->bar;
+            $meeting['spcl_request']        = $request->spcl_request;
+            $meeting['alter_name']          = $request->alter_name;
+            $meeting['alter_email']         = $request->alter_email;
+            $meeting['alter_relationship']  = $request->alter_relationship;
+            $meeting['alter_lead_address']  = $request->alter_lead_address;
+            $meeting['attendees_lead']      = $request->attendees_lead;
+            $meeting['phone']               = $request->phone;
+            $meeting['start_time']          = $request->start_time;
+            $meeting['end_time']            = $request->end_time;
             $meeting['created_by']        = \Auth::user()->creatorId();
             $meeting->save();
-
             Stream::create(
                 [
                     'user_id' => \Auth::user()->id, 'created_by' => \Auth::user()->creatorId(),
@@ -132,16 +154,12 @@ class MeetingController extends Controller
                 'meeting_name' => $request->name,
                 'meeting_start_date' => $request->start_date,
                 'meeting_due_date' => $request->end_date,
-                'meeting_description' => $request->description,
                 'attendees_user' => $request->attendees_user,
                 'attendees_contact' => $request->attendees_contact,
-
             ];
             $resp = Utility::sendEmailTemplate('meeting_assigned', [$meeting->id => $Assign_user_phone->email], $uArr);
-
-
             if (isset($setting['twilio_meeting_create']) && $setting['twilio_meeting_create'] == 1) {
-                // $msg = "New Meeting" . " " . $request->name . " created by " . \Auth::user()->name . '.';
+            //  $msg = "New Meeting" . " " . $request->name . " created by " . \Auth::user()->name . '.';
                 $uArr = [
                     'meeting_name' => $request->name,
                     'meeting_start_date' => $request->start_date,
@@ -149,7 +167,6 @@ class MeetingController extends Controller
                     'user_name' => \Auth::user()->name,
 
                 ];
-
                 Utility::send_twilio_msg($Assign_user_phone->phone, 'new_meeting', $uArr);
             }
             if ($request->get('is_check')  == '1') {
@@ -214,13 +231,16 @@ class MeetingController extends Controller
             $attendees_lead    = Lead::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $attendees_lead->prepend('--', 0);
             $user              = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $user->prepend('--', 0);
+            // $user->prepend('Select User', 0);
             $account_name      = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            // get previous user id
             $previous = Meeting::where('id', '<', $meeting->id)->max('id');
-            // get next user id
             $next = Meeting::where('id', '>', $meeting->id)->min('id');
-            return view('meeting.edit', compact('meeting', 'account_name', 'attendees_contact', 'status', 'user', 'attendees_lead', 'previous', 'next'))->with('start_date', $meeting->start_date)->with('end_date', $meeting->end_date);
+            $function = Meeting::$function;
+            $breakfast = Meeting::$breakfast;
+            $lunch = Meeting::$lunch;
+            $dinner = Meeting::$dinner;
+            $wedding = Meeting::$wedding;
+            return view('meeting.edit', compact('meeting', 'account_name', 'breakfast', 'lunch', 'dinner', 'wedding','attendees_contact', 'status', 'user', 'function','attendees_lead', 'previous', 'next'))->with('start_date', $meeting->start_date)->with('end_date', $meeting->end_date);
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -241,6 +261,16 @@ class MeetingController extends Controller
                 $request->all(),
                 [
                     'name' => 'required|max:120',
+                    'start_date' => 'required',
+                    'end_date' => 'required',
+                    'email' => 'required|email|max:120',
+                    'lead_address' => 'required|max:120',
+                    'type' => 'required',
+                    'venue_selection' => 'required|max:120',
+                    'function' => 'required|max:120',
+                    'guest_count' => 'required', 
+                    'start_time' => 'required',
+                    'end_time' => 'required',
                 ]
             );
             if ($validator->fails()) {
@@ -248,17 +278,32 @@ class MeetingController extends Controller
 
                 return redirect()->back()->with('error', $messages->first());
             }
-
+            
             $meeting['user_id']           = $request->user_id;
             $meeting['name']              = $request->name;
             $meeting['status']            = $request->status;
             $meeting['start_date']        = $request->start_date;
             $meeting['end_date']          = $request->end_date;
-            $meeting['description']       = $request->description;
-            $meeting['account']           = $request->account;
-            $meeting['attendees_user']    = $request->attendees_user;
-            $meeting['attendees_contact'] = $request->attendees_contact;
-            $meeting['attendees_lead']    = $request->attendees_lead;
+            $meeting['relationship']       = $request->relationship;
+            $meeting['type']               = $request->type;
+            $meeting['venue_selection']    = $request->venue_selection;
+            $meeting['email']              = $request->email;
+            $meeting['lead_address']      = $request->lead_address;
+            $meeting['function']           = $request->function;
+            $meeting['status']             = $request->status;
+            $meeting['guest_count']        = $request->guest_count;
+            $meeting['room']                = $request->room;
+            $meeting['meal']                = implode(',',$request->meal);
+            $meeting['bar']                 = implode(',',$request->bar);
+            $meeting['spcl_request']        = $request->spcl_request;
+            $meeting['alter_name']        = $request->alter_name;
+            $meeting['alter_email']       = $request->alter_email;
+            $meeting['alter_relationship']        = $request->alter_relationship;
+            $meeting['alter_lead_address']       = $request->alter_lead_address;
+            $meeting['attendees_lead']        = $request->attendees_lead;
+            $meeting['phone']       = $request->phone;
+            $meeting['start_time']        = $request->start_time;
+            $meeting['end_time']       = $request->end_time;
             $meeting['created_by']        = \Auth::user()->creatorId();
             $meeting->update();
             Stream::create(
@@ -275,7 +320,7 @@ class MeetingController extends Controller
                     ),
                 ]
             );
-            return redirect()->back()->with('success', __('Meeting Successfully Updated.'));
+            return redirect()->back()->with('success', __('Meeting  Updated.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -339,9 +384,7 @@ class MeetingController extends Controller
             $arrayJson =  Utility::getCalendarData($type);
         } else {
             $data = Meeting::where('created_by', \Auth::user()->creatorId())->get();
-
             foreach ($data as $val) {
-
                 $end_date = date_create($val->end_date);
                 date_add($end_date, date_interval_create_from_date_string("1 days"));
                 $arrayJson[] = [
@@ -358,5 +401,69 @@ class MeetingController extends Controller
         }
 
         return $arrayJson;
+    }
+    public function get_lead_data(Request $request){
+        $lead = Lead::where('id',$request->venue)->first();
+        return $lead;
+    }
+    // public function get_calender_date(Request $request){
+    //     $data = Meeting::where('start_date',$request->start)
+    //     ->orWhere('end_date',$request->start)  ->orWhere('end_date',$request->end)  ->orWhere('end_date',$request->end)
+    //     ->get();
+       
+    //     // foreach ($data as $val) {
+    //     //     $end_date = date_create($val->end_date);
+    //     //     date_add($end_date, date_interval_create_from_date_string("1 days"));
+    //         // $arrayJson[] = [
+    //         //     "id" => $val->id,
+    //         //     "title" => $val->name,
+    //         //     "start" => $val->start_date,
+    //         //     "end" => date_format($end_date, "Y-m-d H:i:s"),
+    //         //     "className" => $val->color,
+    //         //     "url" => route('meeting.show', $val['id']),
+    //         //     "textColor" => '#FFF',
+    //         //     "allDay" => true,
+    //         // ];
+    //     // }
+    //     // return $arrayJson;
+        
+    // }
+    public function block_date(Request $request)
+    {
+        if (\Auth::user()->can('Create Meeting')) {
+            $blocked_date = Blockdate::where('start_date',$request->start_date)
+                ->orWhere('start_date',$request->end_date)->orWhere('end_date',$request->end_date)
+                ->orWhere('end_date',$request->start_date)->get()->toArray();
+            // echo "<pre>";print_r($blocked_date);
+            if (!empty($blocked_date)){
+                return redirect()->back()->with('error', __('Date already Blocked'));
+            }else{
+                $validator = \Validator::make(
+                    $request->all(),
+                    [
+                        'start_date' => 'required',
+                        'end_date' => 'required',
+                        'purpose' => 'required',
+                    ]);
+                if ($validator->fails()) {
+                    $messages = $validator->getMessageBag();
+                    return redirect()->back()->with('error', $messages->first());
+                } 
+                $block                      = new Blockdate();
+                $block['start_date']        = $request->start_date;
+                $block['end_date']          = $request->end_date;
+                $block['purpose']           = $request->purpose;
+                $block['created_by']        = \Auth::user()->creatorId();
+                $block->save();
+                return redirect()->back()->with('success', __('Date Blocked'));
+            }
+        } else {
+            return redirect()->back()->with('error', 'permission Denied');
+        }
+    }
+    public function unblock_date(Request $request)
+    {
+        $booked = Blockdate::where('start_date',$request->start_date)->orWhere('end_date',$request->end_date)->get();
+        // $booked->delete();
     }
 }

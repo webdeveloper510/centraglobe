@@ -455,6 +455,11 @@ Route::group(['middleware' => ['verified']], function () {
             Route::resource('meeting', MeetingController::class);
             Route::post('meeting/get_meeting_data', [MeetingController::class, 'get_meeting_data'])->name('meeting.get_meeting_data')->middleware(['auth', 'XSS']);
             Route::get('meeting/create/{type}/{id}', [MeetingController::class, 'create'])->name('meeting.create');
+            Route::post('meeting/get_lead_data/',[MeetingController::class, 'get_lead_data'])->name('meeting.lead');
+            Route::post('meeting/get_calender_date/',[MeetingController::class, 'get_calender_date'])->name('meeting.calender');
+            Route::post('meeting/block-date/',[MeetingController::class,'block_date'])->name('meeting.blockdate');
+            Route::post('meeting/unblock-date/',[MeetingController::class,'unblock_date'])->name('meeting.unblock');
+
         }
     );
     Route::group(
@@ -1145,6 +1150,15 @@ Route::group(['middleware' => ['verified']], function () {
     //=======================================Twilio==========================================//
     Route::post('setting/twilio', [SettingController::class, 'twilio'])->name('twilio.setting');
 
+
+ //=======================================Event TYPE==========================================//
+ Route::post('setting/event-type', [SettingController::class, 'event_type'])->name('event_type.setting');
+ Route::post('setting/delete-eventtype',[SettingController::class,'delete_event_type'])->name('eventedit.setting');
+
+
+ //=======================================Venue==========================================//
+ Route::post('setting/venue', [SettingController::class, 'venue_select'])->name('venue.setting');
+ Route::post('setting/delete-venue',[SettingController::class,'delete_venue'])->name('venueedit.setting');
 
 
     //========================================================================================//

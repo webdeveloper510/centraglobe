@@ -6,24 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Meeting extends Model
 {
-    protected     $fillable = [
+    protected 
+    $fillable = [
         'user_id',
         'name',
         'status',
         'start_date',
         'end_date',
-        // 'parent',
-        // 'parent_id',
-        // 'account',
         'description',
         'attendees_user',
-        // 'attendees_contact',
         'attendees_lead',
     ];
     public static $status   = [
-        'Planned',
-        'Held',
-        'Not Held',
+        'Active','Inactive'
     ];
     public static $parent   = [
         '' => '--',
@@ -33,7 +28,35 @@ class Meeting extends Model
         'opportunities' => 'Opportunities',
         'case' => 'Case',
     ];
+    public static  $function = [
+        'Breakfast',
+        'Brunch',
+        'Lunch',
+        'Dinner','Wedding'
+    ];
+    public static $breakfast = [
+        'Premium Breakfast',
+        'Classic Brunch',
+        'Additional Options'
+    ];
+    public static $lunch = [
+        'Hot Luncheon',
+        'Cold Luncheon',
+        'Barbecue',
+        'Additional Options'
 
+    ];
+    public static $dinner = [
+        'Adirondack Premium Dinner',
+        'Emerald Dinner',
+        'Elite Dinner'
+    ];
+    public static $wedding = [
+        'Premium Wedding',
+        'Elite Wedding',
+        'Plated Wedding Package'        
+    ];
+   
     public function assign_user()
     {
         return $this->hasOne('App\Models\User', 'id', 'user_id');

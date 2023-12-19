@@ -1,24 +1,24 @@
 @php
     $plansettings = App\Models\Utility::plansettings();
+    $settings = Utility::settings();
+    $type_arr= explode(',',$settings['event_type']);
+    $venue = explode(',',$settings['venue'])
 @endphp
 {{Form::open(array('url'=>'lead','method'=>'post','enctype'=>'multipart/form-data'))}}
 <div class="row">
-    <div class="col-6">
+    <div class="col-12">
+        <div class="form-group">
+            {{Form::label('company_name',__('Company Name'),['class'=>'form-label']) }}
+            {{Form::text('company_name',null,array('class'=>'form-control','placeholder'=>__('Enter Company Name'),'required'=>'required'))}}
+        </div>
+    </div>
+    <div class="col-12  p-0 modaltitle pb-3 mb-3">
+        <h5 style="margin-left: 14px;">{{ __('Contact Information') }}</h5>
+    </div>
+        <div class="col-6">
         <div class="form-group">
             {{Form::label('name',__('Name'),['class'=>'form-label']) }}
             {{Form::text('name',null,array('class'=>'form-control','placeholder'=>__('Enter Name'),'required'=>'required'))}}
-        </div>
-    </div>
-    <!-- <div class="col-6">
-        <div class="form-group">
-            {{Form::label('account',__('Account'),['class'=>'form-label']) }}
-            {!! Form::select('account', $account, null,array('class' => 'form-control')) !!}
-        </div>
-    </div> -->
-    <div class="col-6">
-        <div class="form-group">
-            {{Form::label('email',__('Email'),['class'=>'form-label']) }}
-            {{Form::text('email',null,array('class'=>'form-control','placeholder'=>__('Enter Email'),'required'=>'required'))}}
         </div>
     </div>
     <div class="col-6">
@@ -27,16 +27,11 @@
             {{Form::text('phone',null,array('class'=>'form-control','placeholder'=>__('Enter Phone'),'required'=>'required'))}}
         </div>
     </div>
+
     <div class="col-6">
         <div class="form-group">
-            {{Form::label('title',__('Title'),['class'=>'form-label']) }}
-            {{Form::text('title',null,array('class'=>'form-control','placeholder'=>__('Enter Title'),'required'=>'required'))}}
-        </div>
-    </div>
-    <div class="col-6">
-        <div class="form-group">
-            {{Form::label('website',__('Website'),['class'=>'form-label']) }}
-            {{Form::text('website',null,array('class'=>'form-control','placeholder'=>__('Enter Website'),'required'=>'required'))}}
+            {{Form::label('email',__('Email'),['class'=>'form-label']) }}
+            {{Form::text('email',null,array('class'=>'form-control','placeholder'=>__('Enter Email'),'required'=>'required'))}}
         </div>
     </div>
     <div class="col-6">
@@ -45,86 +40,92 @@
             {{Form::text('lead_address',null,array('class'=>'form-control','placeholder'=>__('Address'),'required'=>'required'))}}
         </div>
     </div>
-    <div class="col-3">
+    <div class="col-6">
         <div class="form-group">
-            {{Form::label('lead_city',__('City'),['class'=>'form-label']) }}
-            {{Form::text('lead_city',null,array('class'=>'form-control','placeholder'=>__('City'),'required'=>'required'))}}
+            {{Form::label('relationship',__('Relationship'),['class'=>'form-label']) }}
+            {{Form::text('relationship',null,array('class'=>'form-control','placeholder'=>__('Enter Relationship'),'required'=>'required'))}}
         </div>
     </div>
-    <div class="col-3">
+    <div class="col-12  p-0 modaltitle pb-3 mb-3">
+        <h5 style="margin-left: 14px;">{{ __('Event Details') }}</h5>
+    </div>
+    <div class="col-6">
         <div class="form-group">
-            {{Form::label('lead_state',__('State'),['class'=>'form-label']) }}
-            {{Form::text('lead_state',null,array('class'=>'form-control','placeholder'=>__('State'),'required'=>'required'))}}
+            {{Form::label('type',__('Event Type'),['class'=>'form-label']) }}
+            {!! Form::select('type', isset($type_arr) ? $type_arr : '', null,array('class' => 'form-control')) !!}
         </div>
     </div>
     <div class="col-6">
         <div class="form-group">
-            {{Form::label('lead_postalcode',__('Postal Code'),['class'=>'form-label']) }}
-            {{Form::text('lead_postalcode',null,array('class'=>'form-control','placeholder'=>__('Postal Code'),'required'=>'required'))}}
+            {{ Form::label('venue_selection', __('Venue'), ['class' => 'form-label']) }}
+            @foreach($venue as $key => $label)
+                <div>
+                    {{ Form::checkbox('venue[]', 'option' . ($key + 1), false, ['id' => 'venue' . ($key + 1)]) }}
+                    {{ Form::label('venue' . ($key + 1), $label) }}
+                </div>
+            @endforeach  
         </div>
     </div>
-    <div class="col-12">
+    <div class="col-6">
         <div class="form-group">
-            {{Form::label('lead_country',__('Country'),['class'=>'form-label']) }}
-            {{Form::text('lead_country',null,array('class'=>'form-control','placeholder'=>__('Country'),'required'=>'required'))}}
+            {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
+            {!! Form::date('start_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
     </div>
-     <div class="col-12 p-0 modaltitle pb-3 mb-3" >
-        <hr class="mt-2">
-        <h5 style="margin-left: 20px; "class="mt-2" >{{__('Details')}}</h5>
+    <div class="col-6">
+        <div class="form-group">
+            {{ Form::label('end_date', __('End Date'), ['class' => 'form-label']) }}
+            {!! Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
+        </div>
+    </div>
+    
+    <div class="col-6">
+        <div class="form-group">
+            {{Form::label('guest_count',__('Guest Count'),['class'=>'form-label']) }}
+            {!! Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)) !!}
+        </div>
+    </div>
+    
+    <div class="col-6">
+        <div class="form-group">
+        {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
+        {!! Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')) !!}
+        </div>
     </div>
     <div class="col-6">
         <div class="form-group">
             {{Form::label('status',__('Status'),['class'=>'form-label']) }}
             {!! Form::select('status',$status, null,array('class' => 'form-control','required'=>'required')) !!}
         </div>
-    </div>
-    <!-- <div class="col-6">
-        <div class="form-group">
-            {{Form::label('source',__('Source'),['class'=>'form-label']) }}
-            {!! Form::select('source', $leadsource, null,array('class' => 'form-control')) !!}
-        </div>
-    </div> -->
-    <!-- <div class="col-6">
-        <div class="form-group">
-            {{Form::label('opportunity_amount',__('Opportunity Amount'),['class'=>'form-label']) }}
-            {!! Form::number('opportunity_amount', null,array('class' => 'form-control')) !!}
-        </div>
-    </div> -->
-    <!-- @if($type == 'campaign')
-        <div class="col-6">
-            <div class="form-group">
-                {{Form::label('campaign',__('Campaign'),['class'=>'form-label']) }}
-                {!! Form::select('campaign', $campaign, $id,array('class' => 'form-control')) !!}
-            </div>
-        </div>
-    @else
-        <div class="col-6">
-            <div class="form-group">
-                {{Form::label('campaign',__('Campaign'),['class'=>'form-label']) }}
-                {!! Form::select('campaign', $campaign, null,array('class' => 'form-control')) !!}
-            </div>
-        </div>
-    @endif -->
-    <!-- <div class="col-6">
-        <div class="form-group">
-            {{Form::label('industry',__('Industry'),['class'=>'form-label']) }}
-            {!! Form::select('industry', $industry, null,array('class' => 'form-control')) !!}
-        </div>
-    </div> -->
+    </div> 
     <div class="col-6">
         <div class="form-group">
             {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}
             {!! Form::select('user', $user, null,array('class' => 'form-control')) !!}
         </div>
     </div>
+    <div class="col-12  p-0 modaltitle pb-3 mb-3">
+        <!-- <hr class="mt-2 mb-2"> -->
+        <h5 style="margin-left: 14px;">{{ __('Other Information') }}</h5>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            {{Form::label('allergies',__('Allergies'),['class'=>'form-label']) }}
+            {{Form::text('allergies',null,array('class'=>'form-control','placeholder'=>__('Enter Allergies(if any)')))}}
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="form-group">
+            {{Form::label('special_requirements',__('Any Special Requirements'),['class'=>'form-label']) }}
+            {{Form::textarea('special_requirements',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))}}
+        </div>
+    </div>
     <div class="col-12">
         <div class="form-group">
-            {{Form::label('Description',__('Description'),['class'=>'form-label']) }}
-            {{Form::textarea('description',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Description')))}}
+            {{Form::label('Description',__('How did you hear about us?'),['class'=>'form-label']) }}
+            {{Form::textarea('description',null,array('class'=>'form-control','rows'=>2))}}
         </div>
     </div> 
-
 </div>
 <div class="modal-footer">
     <button type="button" class="btn  btn-light"

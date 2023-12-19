@@ -29,29 +29,17 @@
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('End Date')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e(\Auth::user()->dateFormat($meeting->end_date)); ?></span></dd>
 
-                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Parent')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->parent); ?></span></dd>
-
-                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Parent User')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md">
-                        <?php if(!empty($meeting->parent_id)): ?>
-                        <?php echo e($meeting->getparent($meeting->parent,$meeting->parent_id)); ?>
-
-                        <?php endif; ?>
-                    </span></dd> -->
-
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Description')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->description); ?></span></dd>
 
+                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Guest Count')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->guest_count); ?></span></dd>
 
-                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees User')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_users->name)?$meeting->attendees_users->name:'--'); ?></span></dd> -->
+                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Event Type')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->type); ?></span></dd>
 
-                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees Contact')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_contacts->name)?$meeting->attendees_contacts->name:'--'); ?></span></dd> -->
-
-                    <!-- <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees Lead')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_leads->name)?$meeting->attendees_leads->name:'--'); ?></span></dd> -->
+                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Attendees Lead')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e(!empty($meeting->attendees_leads->name)?$meeting->attendees_leads->name:'--'); ?></span></dd>
 
                     <dt class="col-sm-5"><span class="h6 text-sm mb-0"><?php echo e(__('Assigned User')); ?></span></dt>
                     <dd class="col-sm-7"><span class="text-sm"><?php echo e(!empty($meeting->assign_user)?$meeting->assign_user->name:''); ?></span></dd>

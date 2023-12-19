@@ -67,8 +67,9 @@ class LeadController extends Controller
             $account    = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $account->prepend('--', 0);
             $status     = Lead::$status;
+            $function = Lead::$function;
 
-            return view('lead.create', compact('status', 'leadsource', 'user', 'account', 'industry', 'campaign', 'type', 'id'));
+            return view('lead.create', compact('status', 'leadsource', 'user', 'account', 'industry', 'campaign','function', 'id'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -91,10 +92,12 @@ class LeadController extends Controller
                 [
                     'name' => 'required|max:120',
                     'email' => 'required|unique:leads,email',
-                    'lead_postalcode' => 'required',
-                    'opportunity_amount' => 'required|numeric',
+                    'venue' => 'required',
+                    'guest_count' => 'required|numeric',
                     'status' => 'required',
-                    // ' source' => 'required',
+                    'start_date'=>'required',
+                    'end_date'=>'required',
+                    'function' => 'required'
                 ]
             );
             if ($validator->fails()) {
@@ -109,17 +112,16 @@ class LeadController extends Controller
             $lead['email']              = $request->email;
             $lead['phone']              = $request->phone;
             $lead['title']              = $request->title;
-            $lead['website']            = $request->website;
             $lead['lead_address']       = $request->lead_address;
-            $lead['lead_city']          = $request->lead_city;
-            $lead['lead_state']         = $request->lead_state;
-            $lead['lead_country']       = $request->lead_country;
-            $lead['lead_postalcode']    = $request->lead_postalcode;
+            $lead['company_name']       = $request->company_name;
+            $lead['relationship']       = $request->relationship;
+            $lead['start_date']         = $request->start_date;
+            $lead['end_date']           = $request->end_date;
+            $lead['type']               = $request->type;
+            $lead['venue_selection']    = implode(',',$request->venue);
+            $lead['function']           = $request->function;
             $lead['status']             = $request->status;
-            $lead['source']             = $request->source;
-            $lead['opportunity_amount'] = $request->opportunity_amount;
-            $lead['campaign']           = $request->campaign;
-            $lead['industry']           = $request->industry;
+            $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;
             $lead['created_by']         = \Auth::user()->creatorId();
             $lead->save();
@@ -229,9 +231,8 @@ class LeadController extends Controller
             $previous = Lead::where('id', '<', $lead->id)->max('id');
             // get next user id
             $next = Lead::where('id', '>', $lead->id)->min('id');
-
-
-            return view('lead.edit', compact('lead', 'account', 'user', 'source', 'industry', 'status', 'tasks', 'streams', 'campaign', 'previous', 'next'));
+            $function = Lead::$function;
+            return view('lead.edit', compact('lead', 'account', 'user', 'source', 'industry', 'status', 'tasks', 'streams', 'campaign', 'previous', 'next','function'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -252,9 +253,13 @@ class LeadController extends Controller
                 $request->all(),
                 [
                     'name' => 'required|max:120',
-                    'email' => 'required|email|unique:users',
-                    'lead_postalcode' => 'required',
-                    'opportunity_amount' => 'required|numeric',
+                    'email' => 'required|email',
+                    'guest_count' => 'required|numeric',
+                    'status' => 'required',
+                    'start_date'=>'required',
+                    'end_date'=>'required',
+                    'venue'=>'required',
+                    'function'=>'required','user'=>'required'
                 ]
             );
             if ($validator->fails()) {
@@ -268,17 +273,17 @@ class LeadController extends Controller
             $lead['email']              = $request->email;
             $lead['phone']              = $request->phone;
             $lead['title']              = $request->title;
-            $lead['website']            = $request->website;
             $lead['lead_address']       = $request->lead_address;
-            $lead['lead_city']          = $request->lead_city;
-            $lead['lead_state']         = $request->lead_state;
-            $lead['lead_country']       = $request->lead_country;
-            $lead['lead_postalcode']    = $request->lead_postalcode;
+            $lead['company_name']       = $request->company_name;
+            $lead['relationship']       = $request->relationship;
+            $lead['start_date']         = $request->start_date;
+            $lead['end_date']           = $request->end_date;
+            $lead['type']               = $request->type;
+            $lead['venue_selection']    = implode(',',$request->venue);
+            $lead['function']           = $request->function;
+            // $lead['function']           = implode(',',$request->function);
             $lead['status']             = $request->status;
-            $lead['source']             = $request->source;
-            $lead['opportunity_amount'] = $request->opportunity_amount;
-            $lead['campaign']           = $request->source;
-            $lead['industry']           = $request->industry;
+            $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;
             $lead['created_by']         = \Auth::user()->creatorId();
             $lead->update();

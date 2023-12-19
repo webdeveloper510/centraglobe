@@ -10,8 +10,11 @@ use Illuminate\Support\Facades\Mail;
 use Artisan;
 use File;
 use Illuminate\Support\Facades\Validator;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 use App\Models\Webhook;
 use Google\Service\ServiceControl\Auth;
+use DB;
 
 
 class SettingController extends Controller
@@ -21,11 +24,11 @@ class SettingController extends Controller
     {
         if (\Auth::user()->type == 'owner' || \Auth::user()->type == 'super admin') {
             $settings = Utility::settings();
-
+            $permissions = Permission::all()->pluck('name', 'id')->toArray();
             $payment = Utility::set_payment_settings();
             $webhooks = Webhook::where('created_by', \Auth::user()->id)->get();
 
-            return view('settings.index', compact('settings', 'payment', 'webhooks'));
+            return view('settings.index', compact('settings', 'payment', 'webhooks','permissions'));
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
@@ -1112,7 +1115,6 @@ class SettingController extends Controller
         } else {
             $post['is_xendit_enabled'] = 'off';
         }
-
         // if (isset($request->is_payhere_enabled) && $request->is_payhere_enabled == 'on') {
         //     $post['is_payhere_enabled'] = $request->is_payhere_enabled;
         //     $post['payhere_mode'] = $request->payhere_mode;
@@ -1145,7 +1147,7 @@ class SettingController extends Controller
 
     public function twilio(Request $request)
     {
-        // return redirect()->back()->with('error', __('This operation is not perform due to demo mode.'));
+
         $user = \Auth::user();
         $post = [];
         $post['twilio_sid'] = $request->input('twilio_sid');
@@ -1186,7 +1188,6 @@ class SettingController extends Controller
                 );
             }
         }
-
         return redirect()->back()->with('success', __('Twillio Settings updated successfully.'));
     }
 
@@ -1530,6 +1531,105 @@ class SettingController extends Controller
         } else {
             return redirect()->back()->with('error', __('Permission denied.'));
         }
+    }
+    public function event_type(Request $request)
+    {
+        $user = \Auth::user();
+        $inputValue =  $request->input('event_type');
+        $settings = Utility::settings();
+        $created_at = $updated_at = date('Y-m-d H:i:s');
+        $existingValue = $settings['event_type'] ?? '';
+        $newValue = $existingValue . ($existingValue ? ',' : '') . $inputValue;
+        if(isset($settings['event_type']) && !empty($settings['event_type'])){
+            DB::table('settings')
+                ->where('name','event_type')
+                ->update([
+                    'value' => $newValue,
+                    'created_by'=> $user->id,
+                    'created_at' =>$created_at,
+                    'updated_at'=>$updated_at
+                ]);
+        }
+        else{
+            \DB::insert(
+                'INSERT INTO settings (`value`, `name`,`created_by`,`created_at`,`updated_at`) values (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`) ',
+                [
+                    $inputValue,
+                    'event_type',
+                    $user->id,
+                    $created_at,
+                    $updated_at,
+                ]);
+        }
+        return redirect()->back()->with('success', __('Event Type Added successfully.'));
+       
+    }
+    public function delete_event_type(Request $request){
+        $user = \Auth::user();
+        $setting = Utility::settings();
+        $existingValues = explode(',', $setting['event_type']);
+        $updatedValues = array_diff($existingValues, [$request->badge]);
+        $newvalue = implode(',', $updatedValues);
+        $created_at = $updated_at = date('Y-m-d H:i:s');
+        
+        DB::table('settings')
+        ->where('name','event_type')
+        ->update([
+            'value' => $newvalue,
+            'created_by'=> $user->id,
+            'created_at' =>$created_at,
+            'updated_at'=>$updated_at
+        ]);
+        return true;
+    }
+    public function venue_select(Request $request){
+        $user = \Auth::user();
+        $inputValue =  $request->input('venue');
+        $settings = Utility::settings();
+        $created_at = $updated_at = date('Y-m-d H:i:s');
+        $existingValue = $settings['venue'] ?? '';
+        $newValue = $existingValue . ($existingValue ? ',' : '') . $inputValue;
+        if(isset($settings['venue']) && !empty($settings['venue'])){
+            DB::table('settings')
+                ->where('name','venue')
+                ->update([
+                    'value' => $newValue,
+                    'created_by'=> $user->id,
+                    'created_at' =>$created_at,
+                    'updated_at'=>$updated_at
+                ]);
+        }
+        else{
+            \DB::insert(
+                'INSERT INTO settings (`value`, `name`,`created_by`,`created_at`,`updated_at`) values (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE `value` = VALUES(`value`), `updated_at` = VALUES(`updated_at`) ',
+                [
+                    $inputValue,
+                    'venue',
+                    $user->id,
+                    $created_at,
+                    $updated_at,
+                ]);
+        }
+        return redirect()->back()->with('success', __('Venue Added successfully.'));
+       
+    }
+    public function delete_venue(Request $request){
+        $user = \Auth::user();
+        $setting = Utility::settings();
+        $existingValues = explode(',', $setting['venue']);
+        $updatedValues = array_diff($existingValues, [$request->badge]);
+        $newvalue = implode(',', $updatedValues);
+        $created_at = $updated_at = date('Y-m-d H:i:s');
+        
+        DB::table('settings')
+        ->where('name','venue')
+        ->update([
+            'value' => $newvalue,
+            'created_by'=> $user->id,
+            'created_at' =>$created_at,
+            'updated_at'=>$updated_at
+        ]);
+        return true;
     }
 }
 function get_device_type($user_agent)
