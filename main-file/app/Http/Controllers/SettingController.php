@@ -1631,6 +1631,39 @@ class SettingController extends Controller
         ]);
         return true;
     }
+
+    public function storeImage(Request $request)
+    {
+        // echo "<pre>";
+        // print_r($_FILES);
+        $request->validate([
+            'venue' => 'required|image',
+        ]);
+    
+        $image = $request->file('venue');
+
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+    
+        $image->move(public_path('floor_images'), $imageName);
+    
+        $filePath = 'floor_images/' . $imageName;
+    
+        return redirect()->back()->with('success', __('Image Successfully Uploaded'));;
+    }
+
+    public function deleteImage(Request $request)
+    {
+        $imageName = $request->input('imageName');
+        $imagePath = public_path('floor_images') . '/' . $imageName;
+
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+            return response()->json(['success' => true]);
+        } else {
+            return response()->json(['success' => false, 'error' => 'Image not found']);
+        }
+    }
+    
 }
 function get_device_type($user_agent)
 {

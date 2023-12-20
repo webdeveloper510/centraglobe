@@ -61,8 +61,8 @@
             .btn.btn-outline-success {
                 color: #51459d;
                 border-color: #51459d !important;
-            }
-        </style>
+            }                
+            </style>
     @endif
     @if ($color == 'theme-2')
         <style>
@@ -208,17 +208,17 @@
         $(document).on("change", "select[name='quote_template'], input[name='quote_color']", function() {
             var template = $("select[name='quote_template']").val();
             var color = $("input[name='quote_color']:checked").val();
-            $('#quote_frame').attr('src', '{{ url('/quote/preview') }}/' + template + '/' + color);
+            $('#quote_frame').attr('src', "{{ url('/quote/preview') }}/" + template + '/' + color);
         });
         $(document).on("change", "select[name='invoice_template'], input[name='invoice_color']", function() {
             var template = $("select[name='invoice_template']").val();
             var color = $("input[name='invoice_color']:checked").val();
-            $('#invoice_frame').attr('src', '{{ url('/invoice/preview') }}/' + template + '/' + color);
+            $('#invoice_frame').attr('src', "{{ url('/invoice/preview') }}/" + template + '/' + color);
         });
         $(document).on("change", "select[name='salesorder_template'], input[name='salesorder_color']", function() {
             var template = $("select[name='salesorder_template']").val();
             var color = $("input[name='salesorder_color']:checked").val();
-            $('#salesorder_frame').attr('src', '{{ url('/salesorder/preview') }}/' + template + '/' + color);
+            $('#salesorder_frame').attr('src', "{{ url('/salesorder/preview') }}/" + template + '/' + color);
         });
     </script>
 
@@ -343,6 +343,17 @@
 
 
 @section('content')
+<style>
+    input[type="radio"] {
+    display: none;
+    }
+
+    .floorimages{
+    height:160px; 
+    width:200px;
+    margin: 26px;
+}
+</style>
     <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-sm-12">
@@ -389,6 +400,11 @@
                             @if (\Auth::user()->type == 'owner')
                                 <a href="#venue-settings"
                                     class="list-group-item list-group-item-action border-0">{{ __('Venue Settings') }} <div
+                                        class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+                            @endif
+                            @if (\Auth::user()->type == 'owner')
+                                <a href="#floor-plan-setting"
+                                    class="list-group-item list-group-item-action border-0">{{ __('Floor Plan Settings') }} <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
                             @endif
                         </div>
@@ -3764,8 +3780,49 @@
                                 </div>  
                             </div>
                     </div>
+                    <!--  -->
+                    <div id="floor-plan-setting" class="card">
+                            <div class="col-md-12">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div id="floor-plan-setting" class="col-lg-8 col-md-8 col-sm-8">
+                                            <h5>{{ __('Upload Floor Plan') }}</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mt-3">
+                                        <form method="POST" action="{{ url('/floor-images') }}" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="form-group col-md-12">
+                                                <label for="venue" class="form-label">Choose Image</label></br>
+                                                <input type="file" name="venue"  class="form-control" />
+                                            </div>
+                                            <div class="text-end">
+                                                <button type="submit" class="btn-submit btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- IMAGE -->
+                                 <div class="col-12">
+                                    <div class="row">
+                                        @foreach(File::files(public_path('floor_images')) as $image)
+                                            <div class="col-6">    
+                                                <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input" value="{{ asset('/public/floor_images/' . basename($image)) }}">
+                                                <label for="image_{{ $loop->index }}" class="form-check-label">
+                                                    <img src="{{ asset('/public/floor_images/' . basename($image)) }}" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
+                                                    <i class="ti ti-trash" data-image="{{ basename($image) }}" onclick="deleteImage(this)"></i>
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                            <!-- IMAGE -->
                 @endif
-            </div>
+                </div>
             </div>
         </div>
     </div>
@@ -3782,7 +3839,29 @@
                 }); 
             });
     </script>
-    @endpush
-    <!-- [ Main Content ] end -->
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  function deleteImage(icon) {    
+        var imageName = icon.getAttribute('data-image');
+        if (confirm('Are you sure you want to delete this image?')) {
+        $.ajax({
+            type: 'POST',
+            url : " {{ url('/delete-image') }}",
+            data: { 
+                "_token": "{{ csrf_token() }}",
+                 imageName: imageName },
+            success: function(response) {
+                alert('Image deleted successfully');
+                window.location.reload();
+            },
+            error: function(error) {
+                alert('Error deleting image');
+            }
+        });
+    }
+}
+</script>
+
+@endpush  <!-- [ Main Content ] end -->
 @endsection
