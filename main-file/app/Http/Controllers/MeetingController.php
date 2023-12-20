@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Models\UserDefualtView;
 use Illuminate\Http\Request;
 USE App\Models\Blockdate;
+use DateTime;
 
 
 class MeetingController extends Controller
@@ -101,8 +102,6 @@ class MeetingController extends Controller
                 $messages = $validator->getMessageBag();
                 return redirect()->back()->with('error', $messages->first());
             }
-        //    $a =Meeting::where('start_date',$request->start_date)->orWhere('end_date',$request->end_date)->get();
-        //    echo"<pre>";print_r($a);die;
             $meeting                      = new Meeting();
             $meeting['user_id']           = $request->user;
             $meeting['name']              = $request->name;
@@ -110,8 +109,8 @@ class MeetingController extends Controller
             $meeting['start_date']        = $request->start_date;
             $meeting['end_date']          = $request->end_date;
             $meeting['email']              = $request->email;
-            $meeting['lead_address']      = $request->lead_address;
-            $meeting['parent']            = $request->parent;
+            $meeting['lead_address']       = $request->lead_address;
+            $meeting['parent']             = $request->parent;
             $meeting['parent_id']         = $request->parent_id ?? '0';
             $meeting['relationship']       = $request->relationship;
             $meeting['type']               = $request->type;
@@ -121,6 +120,7 @@ class MeetingController extends Controller
             $meeting['room']                = $request->room;
             $meeting['meal']                = $request->meal;
             $meeting['bar']                 = $request->bar;
+            $meeting['bar_package']         = $request->bar_package;
             $meeting['spcl_request']        = $request->spcl_request;
             $meeting['alter_name']          = $request->alter_name;
             $meeting['alter_email']         = $request->alter_email;
@@ -266,7 +266,7 @@ class MeetingController extends Controller
                     'email' => 'required|email|max:120',
                     'lead_address' => 'required|max:120',
                     'type' => 'required',
-                    'venue_selection' => 'required|max:120',
+                    'venue' => 'required|max:120',
                     'function' => 'required|max:120',
                     'guest_count' => 'required', 
                     'start_time' => 'required',
@@ -290,18 +290,20 @@ class MeetingController extends Controller
             $meeting['email']              = $request->email;
             $meeting['lead_address']      = $request->lead_address;
             $meeting['function']           = $request->function;
+            // $meeting['func_package'] =  $request->function;
             $meeting['status']             = $request->status;
             $meeting['guest_count']        = $request->guest_count;
             $meeting['room']                = $request->room;
-            $meeting['meal']                = implode(',',$request->meal);
-            $meeting['bar']                 = implode(',',$request->bar);
+            $meeting['meal']                = $request->meal;
+            $meeting['bar']                 = $request->bar;
+            $meeting['bar_package']         = $request->bar_package;
             $meeting['spcl_request']        = $request->spcl_request;
-            $meeting['alter_name']        = $request->alter_name;
-            $meeting['alter_email']       = $request->alter_email;
-            $meeting['alter_relationship']        = $request->alter_relationship;
-            $meeting['alter_lead_address']       = $request->alter_lead_address;
+            $meeting['alter_name']          = $request->alter_name;
+            $meeting['alter_email']         = $request->alter_email;
+            $meeting['alter_relationship']  = $request->alter_relationship;
+            $meeting['alter_lead_address']  = $request->alter_lead_address;
             $meeting['attendees_lead']        = $request->attendees_lead;
-            $meeting['phone']       = $request->phone;
+            $meeting['phone']               = $request->phone;
             $meeting['start_time']        = $request->start_time;
             $meeting['end_time']       = $request->end_time;
             $meeting['created_by']        = \Auth::user()->creatorId();
@@ -434,10 +436,11 @@ class MeetingController extends Controller
             $blocked_date = Blockdate::where('start_date',$request->start_date)
                 ->orWhere('start_date',$request->end_date)->orWhere('end_date',$request->end_date)
                 ->orWhere('end_date',$request->start_date)->get()->toArray();
-            // echo "<pre>";print_r($blocked_date);
             if (!empty($blocked_date)){
                 return redirect()->back()->with('error', __('Date already Blocked'));
-            }else{
+            }
+            else
+            {
                 $validator = \Validator::make(
                     $request->all(),
                     [
@@ -463,7 +466,12 @@ class MeetingController extends Controller
     }
     public function unblock_date(Request $request)
     {
-        $booked = Blockdate::where('start_date',$request->start_date)->orWhere('end_date',$request->end_date)->get();
-        // $booked->delete();
+        $booked = Blockdate::where('start_date',$request->start)->orWhere('end_date',$request->end_date)
+        ->orWhere('start_date',$request->end_date)
+        ->orWhere('end_date',$request->start)->get();
+        foreach($booked as $val){
+            Blockdate::where('id',$val->id)->delete();
+        }
+        
     }
 }

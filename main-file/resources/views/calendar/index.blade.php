@@ -22,9 +22,10 @@
 
 
 @push('script-page')
-
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dc4641f860664c6e824b093274f50291"}'></script>
 <script src="{{ asset('assets/js/plugins/main.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script type="text/javascript">
     @php
     $segment=Request::segment(2);
@@ -63,7 +64,7 @@
             method:"POST",
             data: {"_token": "{{ csrf_token() }}",'calender_type':calender_type},
             success: function(data) {
-                // console.log(data);
+                console.log(data);
                 (function() {
                     var etitle;
                     var etype;
@@ -98,9 +99,12 @@
                         events: data,
                         select: function(info) {
                             var startDate = info.startStr;
-                            var endDate = info.endStr;
+                            var endDate =  info.endStr;
                             openPopupForm(startDate,endDate);
                         },
+                        // eventClick: function(event) {
+                        //    alert('hy');
+                        // },
                         // eventDisplay:'background',
                         // eventColor: '#378006' ,
                         // backgroundColor :'#000',
@@ -118,21 +122,18 @@
     $('#close-popup').on('click', function() {
         closePopupForm();
     });
-    function isDateBlocked(selectionInfo) {
-      var start = selectionInfo.start;
-      var end = selectionInfo.end;
-      return false;
-    }
     function openPopupForm(start,end) {
+        $("#block").show();
         $("#unblock").hide();
         $( ".blockd_dates input" ).each(function( index ) {
             if($(this).val() == start || $(this).val() == end){
                 $("#unblock").show();
+                $("#block").hide();
             }
         });
-        $("input[name = 'start_date']").val(start);
-        $("input[name = 'end_date']").val(end);
-
+        var enddate = moment(end).subtract(1, 'days').format('yyyy-MM-DD');     
+        $("input[name = 'start_date']").attr('value',start);
+        $("input[name = 'end_date']").attr('value',enddate);
         $('#popup-form').show();
         $('#overlay').show();
     }
@@ -155,7 +156,8 @@
                 'end':end,
             },
             success: function(data) {
-                console.log(data);
+                location.reload();
+                // console.log(data);
             }
         })
     });
@@ -164,7 +166,6 @@
 @php
 
 $setting = App\Models\Utility::settings();
-
 @endphp
 
 
@@ -181,12 +182,6 @@ $setting = App\Models\Utility::settings();
             <div class="card">
                 <div class="card-header">
                     <h5 style="width: 150px;">{{ __('Calendar') }}</h5>
-                    <!-- @if (isset($setting['is_enabled']) && $setting['is_enabled'] == 'on')
-                        <select class="form-control" name="calender_type" id="calender_type" style="float: right;width: 150px;" onchange="get_data()">
-                            <option value="goggle_calender">{{__('Google Calender')}}</option>
-                            <option value="local_calender" selected="true">{{__('Local Calender')}}</option>
-                        </select>
-                    @endif -->
                         <input type="hidden" id="path_admin" value="{{url('/')}}">
                 </div>
                 <div class="card-body">
@@ -246,7 +241,7 @@ $setting = App\Models\Utility::settings();
                 {{ Form::open(['route' => 'meeting.blockdate', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8">
-                            <h5>{{ __('Block  Date') }}</h5>
+                            <h5>{{ __('Block Date') }}</h5>
                         </div>
                     </div>
                 </div>
@@ -273,7 +268,7 @@ $setting = App\Models\Utility::settings();
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    {{ Form::submit(__('Block'), ['class' => 'btn  btn-primary ']) }}
+                    {{ Form::submit(__('Block'), ['id'=>'block','class' => 'btn  btn-primary ']) }}
                     {{Form::close()}}
                     <button class="btn  btn-primary" id= "unblock" data-bs-toggle="tooltip" title="{{__('Close')}}" style ="display:none">Unblock</button> 
                 <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="{{__('Close')}}">Close</button> 
@@ -282,7 +277,11 @@ $setting = App\Models\Utility::settings();
         </div>
     </div>
 </div>
-<style>
+
+@endsection
+
+    @push('css-page')
+    <style>
     #popup-form {
       display: none;
       position: fixed;
@@ -307,9 +306,7 @@ $setting = App\Models\Utility::settings();
       z-index: 999;
     }
 </style>
-@endsection
-
-
+    @endpush
     @push('script-page')
     <script type="text/javascript">
         $(document).on('change', 'select[name=parent]', function () {

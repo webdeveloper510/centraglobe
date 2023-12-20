@@ -29,9 +29,6 @@
                     <dt class="col-md-5"><span class="h6 text-md mb-0">{{__('End Date')}}</span></dt>
                     <dd class="col-md-5"><span class="text-md">{{\Auth::user()->dateFormat($meeting->end_date)}}</span></dd>
 
-                    <dt class="col-md-5"><span class="h6 text-md mb-0">{{__('Description')}}</span></dt>
-                    <dd class="col-md-5"><span class="text-md">{{ $meeting->description }}</span></dd>
-
                     <dt class="col-md-5"><span class="h6 text-md mb-0">{{__('Guest Count')}}</span></dt>
                     <dd class="col-md-5"><span class="text-md">{{$meeting->guest_count}}</span></dd>
 

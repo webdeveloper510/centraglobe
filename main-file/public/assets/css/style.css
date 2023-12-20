@@ -25151,7 +25151,7 @@ body.theme-10 .team-lists img {
 .fc-event,
 .fc-event:not([href]) {
     color: #fff;
-    border-color: #ff5f2c;
+    border-color: #378006;
     border-left-width: 4px;
     padding: 5px 10px;
     border-radius: 2px;
@@ -25161,9 +25161,11 @@ body.theme-10 .team-lists img {
 
 .fc-event:not([class*="bg-"]),
   .fc-event:not([href]):not([class*="bg-"]) {
-    background-color: #ff5f2c;
+    background-color: #378006;
 }
-
+.fc-bg-event {
+    background: black !important;
+}
 .external-event {
     cursor: move;
     margin: 10px 0;

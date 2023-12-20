@@ -32,7 +32,8 @@ class Meeting extends Model
         'Breakfast',
         'Brunch',
         'Lunch',
-        'Dinner','Wedding'
+        'Dinner',
+        'Wedding'
     ];
     public static $breakfast = [
         'Premium Breakfast',
