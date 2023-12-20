@@ -86,12 +86,28 @@
         </div>
     </div>
     
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
         {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
         {!! Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')) !!}
         </div>
+    </div> -->
+
+    <div class="col-6">
+        <div class="form-group">
+            {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
+
+            @foreach($function as $key => $value)
+                <div class="form-check">
+                    {!! Form::checkbox('function[]', $key, null, ['class' => 'form-check-input', 'id' => 'function_' . $key]) !!}
+                    {{ Form::label('function_' . $key, $value, ['class' => 'form-check-label']) }}
+                </div>
+            @endforeach
+
+        </div>
     </div>
+
+
     <div class="col-6">
         <div class="form-group">
             {{Form::label('status',__('Status'),['class'=>'form-label']) }}

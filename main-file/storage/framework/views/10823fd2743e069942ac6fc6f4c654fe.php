@@ -110,14 +110,33 @@
         </div>
     </div>
     
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
         <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
 
         <?php echo Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')); ?>
 
         </div>
+    </div> -->
+
+    <div class="col-6">
+        <div class="form-group">
+            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
+
+
+            <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <div class="form-check">
+                    <?php echo Form::checkbox('function[]', $key, null, ['class' => 'form-check-input', 'id' => 'function_' . $key]); ?>
+
+                    <?php echo e(Form::label('function_' . $key, $value, ['class' => 'form-check-label'])); ?>
+
+                </div>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+        </div>
     </div>
+
+
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('status',__('Status'),['class'=>'form-label'])); ?>

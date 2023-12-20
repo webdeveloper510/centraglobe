@@ -1240,3 +1240,6 @@ Route::group(['middleware' => ['verified']], function () {
     // Storage setting
     Route::post('storage-settings', [SettingController::class, 'storageSettingStore'])->name('storage.setting.store')->middleware(['auth', 'XSS']);
 });
+
+Route::post('/floor-images',[SettingController::class,'storeImage']);
+Route::post('/delete-image', [SettingController::class, 'deleteImage']);

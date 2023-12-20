@@ -85,6 +85,10 @@ class LeadController extends Controller
     public function store(Request $request)
     {
 
+        // echo "<pre>";
+        // print_r($_REQUEST);
+        // die;
+
         if (\Auth::user()->can('Create Lead')) {
 
             $validator = \Validator::make(
@@ -119,7 +123,7 @@ class LeadController extends Controller
             $lead['end_date']           = $request->end_date;
             $lead['type']               = $request->type;
             $lead['venue_selection']    = implode(',',$request->venue);
-            $lead['function']           = $request->function;
+            $lead['function']           = implode(',',$request->function);
             $lead['status']             = $request->status;
             $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;

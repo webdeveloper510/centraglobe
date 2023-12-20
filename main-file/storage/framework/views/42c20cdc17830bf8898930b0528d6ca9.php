@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title'); ?>
     <?php echo e(__('Event Create')); ?>
 
@@ -15,6 +16,44 @@
     $bar = ['Open Bar', 'Cash Bar', 'Package Choice'];
 ?>
 <?php $__env->startSection('content'); ?>
+<style>
+.floorimages{
+    height: 183px;
+    width: 256px;
+    margin: 26px;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.selected-image {
+    border: 2px solid #3498db; 
+    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); 
+    transition: border-color 0.3s, box-shadow 0.3s; 
+}
+
+.selected-image:hover {
+    border-color: #2980b9; 
+    box-shadow: 0 0 15px rgba(41, 128, 185, 0.8);
+}
+
+.zoom {
+  /* padding: 50px; */
+  background-color: none;
+  transition: transform .2s;
+  /* width: 200px;
+  height: 200px; */
+  /* margin: 0 auto; */
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.5); 
+  -webkit-transform: scale(1.5); 
+  transform: scale(1.2); 
+}
+</style>
+<meta name="csrf-token" content="<?php echo e(csrf_token()); ?>" />
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
@@ -260,16 +299,32 @@
                                             <?php echo Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)); ?>
 
                                         </div>
-                                    </div>
-                                    
-                                    <div class="col-6">
+                                    </div>                                    
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
 
                                             <?php echo Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')); ?>
 
                                         </div>
-                                    </div>
+                                    </div> -->
+                                   
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
+
+                                           <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="form-check">
+                                                    <?php echo Form::checkbox('function[]', $key, null, ['id' => 'function_' . $key, 'class' => 'form-check-input']); ?>
+
+                                                    <?php echo e(Form::label('function_' . $key, $value, ['class' => 'form-check-label'])); ?>
+
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </div>
+                                    </div>                                   
+
+
                                     <div class="col-6" id ="breakfast" style ="display:none">
                                         <div class="form-group">
                                             <?php echo e(Form::label('break_package', __('Breakfast Package'), ['class' => 'form-label'])); ?>
@@ -326,6 +381,22 @@
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
                                         </div>
                                     </div>
+                                    <!-- IMAGES -->
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <label><b>Select Floor Plans</b></label>
+                                            <?php $__currentLoopData = File::files(public_path('floor_images')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <div class="col-6">    
+                                                    <input type="radio" id="image_<?php echo e($loop->index); ?>" name="uploadedImage" class="form-check-input" value="<?php echo e(asset('/public/floor_images/' . basename($image))); ?>">
+                                                    <label for="image_<?php echo e($loop->index); ?>" class="form-check-label">
+                                                        <img src="<?php echo e(asset('/public/floor_images/' . basename($image))); ?>" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
+                                                        <!-- <i class="ti ti-trash" data-image="<?php echo e(basename($image)); ?>" onclick="deleteImage(this)"></i> -->
+                                                    </label>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </div>
+                                    </div>
+                                    <!-- /IMAGES  -->
                                 </div>
                             </div>
                         </div>
@@ -440,13 +511,15 @@
             $('#wedding').hide();
             var venu = this.value ;
             $.ajax({
-                url: '<?php echo e(route('meeting.lead')); ?>',
+                url: "<?php echo e(route('meeting.lead')); ?>",
                 type: 'POST',
                 data: {
                     "venue": venu,
                     "_token": "<?php echo e(csrf_token()); ?>",
                 },
                 success: function(data) {
+                    // alert("yes");
+                    // alert(data.function);
                     venue_str = data.venue_selection;
                     venue_arr = venue_str.split(",");
                     func_str = data.function;
@@ -461,12 +534,27 @@
                     $('input[name ="lead_address"]').val(data.lead_address);
                     $("select[name='type'] option[value='"+data.type+"']").prop("selected", true);
                     $("select[name='user'] option[value='"+data.user_id+"']").prop("selected", true);
-                    $("select[name='function'] option[value='"+data.function+"']").prop("selected", true);
+                    // $("select[name='function'] option[value='"+data.function+"']").prop("selected", true);                    
                     $.each(venue_arr, function(i, val){
                         $("input[name='venue[]'][value='" + val + "']").prop('checked', true);
-                    }); 
+                    });
+                    
+                    $.each(func_arr, function(i, val){
+                        $("input[name='function[]'][value='" + val + "']").prop('checked', true);
+                    });
+                    
                     $('input[name ="guest_count"]').val(data.guest_count);
-                    var fun = $('select[name = "function"]').val();
+
+                    var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
+                        return $(this).val();
+                    }).get();
+
+                    console.log(checkedFunctions[0]);
+                    console.log(checkedFunctions[1]);
+
+
+                    // var fun = $('input[name = "function[]"]').val();
+                    // // console.log(fun)
                     if(fun == 0 || fun == 1){
                         $('#breakfast').show();
                     }
@@ -503,8 +591,40 @@
             }
         });
     </script>
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('input[name="uploadedImage"]').change(function () {
+            $('.floorimages').removeClass('selected-image');
+            
+            if ($(this).is(':checked')) {
+                var imageId = $(this).attr('id');
+                $('label[for="' + imageId + '"] img').addClass('selected-image');
+            }
+        });
+    });
+</script>
 <?php $__env->stopPush(); ?>
+<!-- <script>
+    function deleteImage(icon) {
+        var imageName = icon.getAttribute('data-image');
+
+        if (confirm('Are you sure you want to delete this image?')) {
+            // Send an AJAX request to delete the image
+            axios.delete(`/delete-image/${imageName}`)
+                .then(function (response) {
+                    // Handle success, e.g., remove the image from the DOM
+                    icon.parentElement.parentElement.remove();
+                    alert('Image deleted successfully.');
+                })
+                .catch(function (error) {
+                    // Handle errors
+                    console.error('Error deleting image:', error);
+                    alert('Error deleting image.');
+                });
+        }
+    }
+</script> -->
 
 
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\centraglobe\main-file\resources\views/meeting/create.blade.php ENDPATH**/ ?>

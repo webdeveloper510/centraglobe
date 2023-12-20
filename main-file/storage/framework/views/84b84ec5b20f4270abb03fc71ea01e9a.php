@@ -1,3 +1,4 @@
+
 <?php 
     $settings = App\Models\Utility::settings();
     // $logo = asset(Storage::url('uploads/logo/'));
@@ -60,8 +61,8 @@
             .btn.btn-outline-success {
                 color: #51459d;
                 border-color: #51459d !important;
-            }
-        </style>
+            }                
+            </style>
     <?php endif; ?>
     <?php if($color == 'theme-2'): ?>
         <style>
@@ -207,17 +208,17 @@
         $(document).on("change", "select[name='quote_template'], input[name='quote_color']", function() {
             var template = $("select[name='quote_template']").val();
             var color = $("input[name='quote_color']:checked").val();
-            $('#quote_frame').attr('src', '<?php echo e(url('/quote/preview')); ?>/' + template + '/' + color);
+            $('#quote_frame').attr('src', "<?php echo e(url('/quote/preview')); ?>/" + template + '/' + color);
         });
         $(document).on("change", "select[name='invoice_template'], input[name='invoice_color']", function() {
             var template = $("select[name='invoice_template']").val();
             var color = $("input[name='invoice_color']:checked").val();
-            $('#invoice_frame').attr('src', '<?php echo e(url('/invoice/preview')); ?>/' + template + '/' + color);
+            $('#invoice_frame').attr('src', "<?php echo e(url('/invoice/preview')); ?>/" + template + '/' + color);
         });
         $(document).on("change", "select[name='salesorder_template'], input[name='salesorder_color']", function() {
             var template = $("select[name='salesorder_template']").val();
             var color = $("input[name='salesorder_color']:checked").val();
-            $('#salesorder_frame').attr('src', '<?php echo e(url('/salesorder/preview')); ?>/' + template + '/' + color);
+            $('#salesorder_frame').attr('src', "<?php echo e(url('/salesorder/preview')); ?>/" + template + '/' + color);
         });
     </script>
 
@@ -344,6 +345,17 @@
 
 
 <?php $__env->startSection('content'); ?>
+<style>
+    input[type="radio"] {
+    display: none;
+    }
+
+    .floorimages{
+    height:160px; 
+    width:200px;
+    margin: 26px;
+}
+</style>
     <div class="row">
         <!-- [ sample-page ] start -->
         <div class="col-sm-12">
@@ -392,6 +404,11 @@
                             <?php if(\Auth::user()->type == 'owner'): ?>
                                 <a href="#venue-settings"
                                     class="list-group-item list-group-item-action border-0"><?php echo e(__('Venue Settings')); ?> <div
+                                        class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+                            <?php endif; ?>
+                            <?php if(\Auth::user()->type == 'owner'): ?>
+                                <a href="#floor-plan-setting"
+                                    class="list-group-item list-group-item-action border-0"><?php echo e(__('Floor Plan Settings')); ?> <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
                             <?php endif; ?>
                         </div>
@@ -3993,8 +4010,49 @@ unset($__errorArgs, $__bag); ?>
                                 </div>  
                             </div>
                     </div>
+                    <!--  -->
+                    <div id="floor-plan-setting" class="card">
+                            <div class="col-md-12">
+                                <div class="card-header">
+                                    <div class="row">
+                                        <div id="floor-plan-setting" class="col-lg-8 col-md-8 col-sm-8">
+                                            <h5><?php echo e(__('Upload Floor Plan')); ?></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row mt-3">
+                                        <form method="POST" action="<?php echo e(url('/floor-images')); ?>" enctype="multipart/form-data">
+                                            <?php echo csrf_field(); ?>
+                                            <div class="form-group col-md-12">
+                                                <label for="venue" class="form-label">Choose Image</label></br>
+                                                <input type="file" name="venue"  class="form-control" />
+                                            </div>
+                                            <div class="text-end">
+                                                <button type="submit" class="btn-submit btn btn-primary">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!-- IMAGE -->
+                                 <div class="col-12">
+                                    <div class="row">
+                                        <?php $__currentLoopData = File::files(public_path('floor_images')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <div class="col-6">    
+                                                <input type="radio" id="image_<?php echo e($loop->index); ?>" name="uploadedImage" class="form-check-input" value="<?php echo e(asset('/public/floor_images/' . basename($image))); ?>">
+                                                <label for="image_<?php echo e($loop->index); ?>" class="form-check-label">
+                                                    <img src="<?php echo e(asset('/public/floor_images/' . basename($image))); ?>" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
+                                                    <i class="ti ti-trash" data-image="<?php echo e(basename($image)); ?>" onclick="deleteImage(this)"></i>
+                                                </label>
+                                            </div>
+                                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                    </div>
+                                 </div>
+                            </div>
+                        </div>
+                            <!-- IMAGE -->
                 <?php endif; ?>
-            </div>
+                </div>
             </div>
         </div>
     </div>
@@ -4011,9 +4069,31 @@ unset($__errorArgs, $__bag); ?>
                 }); 
             });
     </script>
-    <?php $__env->stopPush(); ?>
-    <!-- [ Main Content ] end -->
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+  function deleteImage(icon) {    
+        var imageName = icon.getAttribute('data-image');
+        if (confirm('Are you sure you want to delete this image?')) {
+        $.ajax({
+            type: 'POST',
+            url : " <?php echo e(url('/delete-image')); ?>",
+            data: { 
+                "_token": "<?php echo e(csrf_token()); ?>",
+                 imageName: imageName },
+            success: function(response) {
+                alert('Image deleted successfully');
+                window.location.reload();
+            },
+            error: function(error) {
+                alert('Error deleting image');
+            }
+        });
+    }
+}
+</script>
+
+<?php $__env->stopPush(); ?>  <!-- [ Main Content ] end -->
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\centraglobe\main-file\resources\views/settings/index.blade.php ENDPATH**/ ?>
