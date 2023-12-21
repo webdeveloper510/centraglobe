@@ -76,9 +76,9 @@
 
             <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div>
-                    <?php echo e(Form::checkbox('venue[]', 'option' . ($key + 1), false, ['id' => 'venue' . ($key + 1)])); ?>
+                    <?php echo e(Form::checkbox('venue[]', $label, false, ['id' => 'venue' . ($key + 1)])); ?>
 
-                    <?php echo e(Form::label('venue' . ($key + 1), $label)); ?>
+                    <?php echo e(Form::label($label, $label)); ?>
 
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
@@ -126,9 +126,9 @@
 
             <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div class="form-check">
-                    <?php echo Form::checkbox('function[]', $key, null, ['class' => 'form-check-input', 'id' => 'function_' . $key]); ?>
+                    <?php echo Form::checkbox('function[]', $value, null, ['class' => 'form-check-input', 'id' => 'function_' . $key]); ?>
 
-                    <?php echo e(Form::label('function_' . $key, $value, ['class' => 'form-check-label'])); ?>
+                    <?php echo e(Form::label($value, $value, ['class' => 'form-check-label'])); ?>
 
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

@@ -15,8 +15,8 @@ return new class extends Migration
             $table->integer('room')->default(0);
             $table->string('meal')->nullable();
             $table->string('bar')->nullable();
-            $table->string('bar_package')->nullable();
-            $table->string('func_package');
+            // $table->string('bar_package')->nullable();
+            // $table->string('func_package');
             $table->string('spcl_request')->nullable();
             $table->string('type')->nullable();
         });

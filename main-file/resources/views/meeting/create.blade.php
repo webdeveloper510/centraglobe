@@ -26,9 +26,12 @@
     margin: 26px;
 }
 
-input[type="radio"] {
+/* input[type="radio"] {
     display: none;
-}
+} */
+/* .floor-radio-buttons input[type="radio"] {
+    display: none;
+} */
 
 .selected-image {
     border: 2px solid #3498db; 
@@ -218,17 +221,33 @@ input[type="radio"] {
                                             {!! Form::select('type', $type_arr, null,array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
-                                    <div class="col-6">
+                                    <!-- VENUE -->
+                                     <!-- <div class="col-6">
                                         <div class="form-group">
                                           {{ Form::label('venue_selection', __('Venue'), ['class' => 'form-label']) }}
                                             @foreach($venue as $key => $label)
                                                 <div>
-                                                    {{ Form::checkbox('venue[]', 'option' . ($key + 1), false, ['id' => 'venue' . ($key + 1)]) }}
+                                                    {{ Form::checkbox('venue[]', 'option' . ($key + 1) , false, ['id' => 'venue' . ($key + 1)]) }}
                                                     {{ Form::label('venue' . ($key + 1), $label) }}
                                                 </div>
                                             @endforeach
                                         </div>
+                                    </div>  -->
+
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label for="venue_selection" class="form-label">Venue</label>
+                                            @foreach($venue as $key => $label)
+                                                <div>
+                                                    <input type="checkbox" name="venue[]" value="{{ $label }}" id="venue{{ $key + 1 }}">
+                                                    <label for="{{ $label }}">{{ $label }}</label>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
+
+
+
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
@@ -271,8 +290,8 @@ input[type="radio"] {
                                             {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
                                            @foreach($function as $key => $value)
                                                 <div class="form-check">
-                                                    {!! Form::checkbox('function[]', $key, null, ['id' => 'function_' . $key, 'class' => 'form-check-input']) !!}
-                                                    {{ Form::label('function_' . $key, $value, ['class' => 'form-check-label']) }}
+                                                    {!! Form::checkbox('function[]',$value, null, ['id' => 'function_' . $key, 'class' => 'form-check-input']) !!}
+                                                    {{ Form::label($value, $value, ['class' => 'form-check-label']) }}
                                                 </div>
                                             @endforeach
                                         </div>
@@ -284,8 +303,8 @@ input[type="radio"] {
                                             {{ Form::label('break_package', __('Breakfast Package'), ['class' => 'form-label']) }}
                                             @foreach($breakfast as $key => $label)
                                                 <div>
-                                                    {{ Form::checkbox('break_package[]', 'option' . ($key + 1), false, ['id' => 'break_package' . ($key + 1)]) }}
-                                                    {{ Form::label('break_package' . ($key + 1), $label) }}
+                                                    {{ Form::radio('break_package[]',$label, false, ['id' => 'break_package' . ($key + 1)]) }}
+                                                    {{ Form::label($label, $label) }}
                                                 </div>
                                             @endforeach  
                                         </div>
@@ -295,8 +314,8 @@ input[type="radio"] {
                                             {{ Form::label('lunch_package', __('Lunch Package'), ['class' => 'form-label']) }}
                                             @foreach($lunch as $key => $label)
                                                 <div>
-                                                    {{ Form::checkbox('lunch_package[]', 'option' . ($key + 1), false, ['id' => 'lunch_package' . ($key + 1)]) }}
-                                                    {{ Form::label('lunch_package' . ($key + 1), $label) }}
+                                                    {{ Form::radio('lunch_package[]', $label, false, ['id' => 'lunch_package' . ($key + 1)]) }}
+                                                    {{ Form::label($label, $label) }}
                                                 </div>
                                             @endforeach  
                                         </div>
@@ -306,8 +325,8 @@ input[type="radio"] {
                                             {{ Form::label('dinner_package', __('Dinner Package'), ['class' => 'form-label']) }}
                                             @foreach($dinner as $key => $label)
                                                 <div>
-                                                    {{ Form::checkbox('dinner_package[]', 'option' . ($key + 1), false, ['id' => 'dinner_package' . ($key + 1)]) }}
-                                                    {{ Form::label('dinner_package' . ($key + 1), $label) }}
+                                                    {{ Form::radio('dinner_package[]', $label, false, ['id' => 'dinner_package' . ($key + 1)]) }}
+                                                    {{ Form::label($label, $label) }}
                                                 </div>
                                             @endforeach  
                                         </div>
@@ -317,8 +336,8 @@ input[type="radio"] {
                                             {{ Form::label('wedding_package', __('Wedding Package'), ['class' => 'form-label']) }}
                                             @foreach($wedding as $key => $label)
                                                 <div>
-                                                    {{ Form::checkbox('wedding_package[]', 'option' . ($key + 1), false, ['id' => 'wedding_package' . ($key + 1)]) }}
-                                                    {{ Form::label('wedding_package' . ($key + 1), $label) }}
+                                                    {{ Form::radio('wedding_package[]', $label, false, ['id' => 'wedding_package' . ($key + 1)]) }}
+                                                    {{ Form::label($label, $label) }}
                                                 </div>
                                             @endforeach  
                                         </div>
@@ -329,7 +348,7 @@ input[type="radio"] {
                                             <label><b>Select Floor Plans</b></label>
                                             @foreach(File::files(public_path('floor_images')) as $image)
                                             <div class="col-6">    
-                                                    <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input" value="{{ asset('/public/floor_images/' . basename($image)) }}">
+                                                    <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input " value="{{ asset('/public/floor_images/' . basename($image)) }}" style="display:none;">
                                                     <label for="image_{{ $loop->index }}" class="form-check-label">
                                                         <img src="{{URL::asset('/floor_images/'. basename($image))}}" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
                                                         <!-- <i class="ti ti-trash" data-image="{{ basename($image) }}" onclick="deleteImage(this)"></i> -->
@@ -495,6 +514,7 @@ input[type="radio"] {
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
+                    console.log(data)
                     // alert("yes");
                     // alert(data.function);
                     venue_str = data.venue_selection;
@@ -510,9 +530,10 @@ input[type="radio"] {
                     $('input[name ="email"]').val(data.email);
                     $('input[name ="lead_address"]').val(data.lead_address);
                     $("select[name='type'] option[value='"+data.type+"']").prop("selected", true);
-                    $("select[name='user'] option[value='"+data.user_id+"']").prop("selected", true);
+                    $("select[name='user'] option[value='"+data.assigned_user+"']").prop("selected", true);
                     // $("select[name='function'] option[value='"+data.function+"']").prop("selected", true);                    
                     $.each(venue_arr, function(i, val){
+                        // console.log(i,val)
                         $("input[name='venue[]'][value='" + val + "']").prop('checked', true);
                     });
                     
@@ -525,19 +546,19 @@ input[type="radio"] {
                     var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
                         return $(this).val();
                     }).get();
-                    // console.log("check",checkedFunctions);
+                    console.log("check",checkedFunctions);
 
-                    if(checkedFunctions.includes('0') || checkedFunctions.includes('1')){
-                        console.log("fdsfdsfds")
-                        $('#breakfast').show();
+                    if(checkedFunctions.includes('Breakfast') || checkedFunctions.includes('Brunch')){
+                        // console.log("fdsfdsfds")
+                        $('#breakfast').show();                        
                     }
-                    if(checkedFunctions.includes('2') ){
+                    if(checkedFunctions.includes('Lunch') ){
                         $('#lunch').show();
                     }
-                    if(checkedFunctions.includes('3') ){
+                    if(checkedFunctions.includes('Dinner') ){
                         $('#dinner').show();
                     }
-                    if(checkedFunctions.includes('4')){
+                    if(checkedFunctions.includes('Wedding')){
                         $('#wedding').show();
                     }
                 }
@@ -551,21 +572,23 @@ input[type="radio"] {
             $('#wedding').hide();
             // var fun = $('input[name = "function[]"]').val();
             var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
-                return $(this).val();
-            }).get();
-            // console.log(fun+"+++++++++++++++++++++++++++++++++++++++++++++++")
-            if(checkedFunctions.includes('0') || checkedFunctions.includes('1')){
-                $('#breakfast').show();
-            }
-            if(checkedFunctions.includes('2') ){
-                $('#lunch').show();
-            }
-            if(checkedFunctions.includes('3') ){
-                $('#dinner').show();
-            }
-            if(checkedFunctions.includes('4')){
-                $('#wedding').show();
-            }
+                        return $(this).val();
+                    }).get();
+                    console.log("check",checkedFunctions);
+
+                    if(checkedFunctions.includes('Breakfast') || checkedFunctions.includes('Brunch')){
+                        // console.log("fdsfdsfds")
+                        $('#breakfast').show();
+                    }
+                    if(checkedFunctions.includes('Lunch') ){
+                        $('#lunch').show();
+                    }
+                    if(checkedFunctions.includes('Dinner') ){
+                        $('#dinner').show();
+                    }
+                    if(checkedFunctions.includes('Wedding')){
+                        $('#wedding').show();
+                    }
         });
         $('input[type=radio][name=bar]').change(function() {
             $('#package').hide();

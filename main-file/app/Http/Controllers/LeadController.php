@@ -87,6 +87,10 @@ class LeadController extends Controller
 
         // echo "<pre>";
         // print_r($_REQUEST);
+        // $user = User::where('id',$request->user)->get();
+
+        // echo "" $user->username;
+        // print_r($user);
         // die;
 
         if (\Auth::user()->can('Create Lead')) {
@@ -112,6 +116,7 @@ class LeadController extends Controller
             $lead                       = new Lead();
             $lead['user_id']            = Auth::user()->id;
             $lead['name']               = $request->name;
+            $lead['assigned_user']      = $request->user;
             $lead['account']            = $request->account;
             $lead['email']              = $request->email;
             $lead['phone']              = $request->phone;
@@ -217,10 +222,17 @@ class LeadController extends Controller
      */
     public function edit(Lead $lead)
     {
+        // echo "<pre>";
+        // print_r($lead);
+        // die;
+        // $venue_function = $lead->function;
+        $venue_function = explode(',', $lead->venue_selection);
+        $function_package =  explode(',', $lead->function);
         if (\Auth::user()->can('Edit Lead')) {
             $status   = Lead::$status;
             $source   = LeadSource::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $user     = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            $user     = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');             
+            $leadUserId = $lead->assigned_user;
             $user->prepend('--', 0);
             $account  = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $account->prepend('--', 0);
@@ -236,7 +248,7 @@ class LeadController extends Controller
             // get next user id
             $next = Lead::where('id', '>', $lead->id)->min('id');
             $function = Lead::$function;
-            return view('lead.edit', compact('lead', 'account', 'user', 'source', 'industry', 'status', 'tasks', 'streams', 'campaign', 'previous', 'next','function'));
+            return view('lead.edit', compact('leadUserId','venue_function','function_package','lead', 'account', 'user', 'source', 'industry', 'status', 'tasks', 'streams', 'campaign', 'previous', 'next','function'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
