@@ -16,6 +16,7 @@ class Meeting extends Model
         'description',
         'attendees_user',
         'attendees_lead',
+        'food_package',
     ];
     public static $status   = [
         'Active','Inactive'
@@ -38,13 +39,13 @@ class Meeting extends Model
     public static $breakfast = [
         'Premium Breakfast',
         'Classic Brunch',
-        'Additional Options'
+        // 'Additional Options'
     ];
     public static $lunch = [
         'Hot Luncheon',
         'Cold Luncheon',
         'Barbecue',
-        'Additional Options'
+        // 'Additional Options'
 
     ];
     public static $dinner = [

@@ -46,13 +46,7 @@
                             <a href="#useradd-1"
                                 class="list-group-item list-group-item-action border-0">{{ __('Overview') }} <div
                                     class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            <!--<a href="#useradd-2"
-                                class="list-group-item list-group-item-action border-0">{{ __('Stream') }} <div
-                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            <a href="#useradd-3"
-                                class="list-group-item list-group-item-action border-0">{{ __('Tasks') }} <div
-                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a> -->
-                        </div>
+                          </div>
                     </div>
                 </div>
                 <div class="col-xl-9">
@@ -65,127 +59,7 @@
 
                         <div class="card-body">
                             <form>
-                                <!-- <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('name', __('Name'), ['class' => 'form-label']) }}
-                                            {{ Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Name')]) }}
-                                            @error('name')
-                                                <span class="invalid-name" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('email', __('Email'), ['class' => 'form-label']) }}
-                                            {{ Form::text('email', null, ['class' => 'form-control', 'placeholder' => __('Enter Email')]) }}
-                                            @error('email')
-                                                <span class="invalid-email" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('phone', __('Phone'), ['class' => 'form-label']) }}
-                                            {{ Form::text('phone', null, ['class' => 'form-control', 'placeholder' => __('Enter Phone')]) }}
-                                            @error('phone')
-                                                <span class="invalid-phone" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('relationship', __('Relationship'), ['class' => 'form-label']) }}
-                                            {{ Form::text('relationship', null, ['class' => 'form-control', 'placeholder' => __('Enter Relationship')]) }}
-                                            @error('website')
-                                                <span class="invalid-relationship" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('status', __('Status'), ['class' => 'form-label']) }}
-                                            {!! Form::select('status', $status, null, ['class' => 'form-control']) !!}
-                                            @error('status')
-                                                <span class="invalid-status" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
-                                            {!! Form::date('start_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
-                                            @error('start_date')
-                                                <span class="invalid-start_date" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('end_date', __('End Date'), ['class' => 'form-label']) }}
-                                            {!! Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
-                                            @error('end_date')
-                                                <span class="invalid-end_date" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('guest_count', __('Guest Count'), ['class' => 'form-label']) }}
-                                            {!! Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)) !!}
-                                            @error('guest_count')
-                                                <span class="invalid-guest_count" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{Form::label('venue_selection',__('Venue Selection'),['class'=>'form-label']) }}
-                                            {{Form::select('venue_selection', $venue , null,array('class'=>'form-control','required'=>'required'))}}
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-                                            @foreach($function as $key => $label)
-                                                <div>
-                                                    {{ Form::checkbox('function[]', 'option' . ($key + 1), false, ['id' => 'function' . ($key + 1)]) }}
-                                                    {{ Form::label('function' . ($key + 1), $label) }}
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('user', __(' Assigned User'), ['class' => 'form-label']) }}
-                                            {!! Form::select('user', $user, $lead->user_id, ['class' => 'form-control']) !!}
-                                            @error('user')
-                                                <span class="invalid-user" role="alert">
-                                                    <strong class="text-danger">{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    
-
-
-                                </div> -->
+                              
                                 <div class="row">
     <div class="col-12">
         <div class="form-group">
@@ -236,17 +110,20 @@
             {!! Form::select('type', $type_arr, null,array('class' => 'form-control')) !!}
         </div>
     </div>
+
     <div class="col-6">
         <div class="form-group">
-            {{ Form::label('venue', __('Venue'), ['class' => 'form-label']) }}
+            <label for="venue" class="form-label">{{ __('Venue') }}</label>
             @foreach($venue as $key => $label)
                 <div>
-                    {{ Form::checkbox('venue[]', 'option' . ($key + 1), false, ['id' => 'venue' . ($key + 1)]) }}
-                    {{ Form::label('venue' . ($key + 1), $label) }}
+                    <input type="checkbox" name="venue[]" id="{{ $label }}" value="venue{{ $key + 1 }}" 
+                        {{ in_array($label, $venue_function) ? 'checked' : '' }}>
+                    <label for="{{ $label }}">{{ $label }}</label>
                 </div>
             @endforeach  
         </div>
     </div>
+
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
@@ -267,26 +144,58 @@
         </div>
     </div>
     
+
+    <!-- <div class="col-6">
+        <div class="form-group">
+            {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
+            <div class="checkbox-group">
+                @foreach($function as $key => $value)
+                    <label>
+                        {!! Form::checkbox('function[]', $key, in_array($value, $function), ['class' => 'function-checkbox']) !!}
+                        {{ $value }}
+                    </label><br>
+                @endforeach
+            </div>
+        </div>
+    </div> -->
+
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-            {!! Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')) !!}
+            <div class="checkbox-group">
+                @foreach($function as $key => $value)
+                    <label>
+                        <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $key }}" class="function-checkbox" {{ in_array($value, $function_package) ? 'checked' : '' }}>
+                        {{ $value }}
+                    </label><br>
+                @endforeach
+            </div>
         </div>
     </div>
+
+
+
+
     <div class="col-6">
         <div class="form-group">
             {{Form::label('status',__('Status'),['class'=>'form-label']) }}
             {!! Form::select('status',$status, null,array('class' => 'form-control','required'=>'required')) !!}
         </div>
     </div> 
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}
             {!! Form::select('user', $user, null,array('class' => 'form-control')) !!}
         </div>
+    </div> -->
+    <div class="col-6">
+        <div class="form-group">
+            {{ Form::label('Assign User', __('Assign User'), ['class' => 'form-label']) }}
+            {!! Form::select('user', $user, $leadUserId, ['class' => 'form-control']) !!}
+        </div>
     </div>
+
     <div class="col-12  p-0 modaltitle pb-3 mb-3">
-        <!-- <hr class="mt-2 mb-2"> -->
         <h5 style="margin-left: 14px;">{{ __('Other Information') }}</h5>
     </div>
     <div class="col-6">
@@ -338,7 +247,7 @@
         function getparent(bid) {
             console.log(bid);
             $.ajax({
-                url: '{{ route('task.getparent') }}',
+                url: "{{ route('task.getparent') }}",
                 type: 'POST',
                 data: {
                     "parent": bid,
@@ -347,7 +256,7 @@
                 success: function(data) {
                     console.log(data);
                     $('#parent_id').empty();
-                    {{-- $('#parent_id').append('<option value="">{{__('Select Parent')}}</option>'); --}}
+                    {{-- $('#parent_id').append('<option value="">{{__("Select Parent")}}</option>'); --}}
 
                     $.each(data, function(key, value) {
                         $('#parent_id').append('<option value="' + key + '">' + value + '</option>');

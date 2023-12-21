@@ -18,6 +18,7 @@ class CreateLeadsTable extends Migration
             $table->id();
             $table->integer('user_id')->default(0);
             $table->string('name')->nullable();
+            $table->string('assigned_user');
             $table->integer('account')->default(0);
             $table->string('title')->nullable();
             $table->string('email')->unique();

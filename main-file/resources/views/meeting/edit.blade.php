@@ -54,18 +54,33 @@
                                 </div>
                                 <div class="card-body"> 
                                     <div class="row">
-                                        <div class="col-6">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            {{ Form::label('attendees_lead', __('Lead'), ['class' => 'form-label']) }}
+                                            {!! Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
+                                        </div>
+                                    </div>
+
+                                        <!-- <div class="col-6">
                                             <div class="form-group">
                                                 {{ Form::label('attendees_lead', __('Lead'), ['class' => 'form-label']) }}
-                                                {!! Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control ']) !!}
+                                                {!! Form::text('attendees_lead', 'Default Value', ['class' => 'form-control']) !!}
                                             </div>
-                                        </div>
-                                        <div class="col-6">
+                                        </div> -->
+
+                                        <!-- <div class="col-6">
                                             <div class="form-group">
                                                 {{ Form::label('Assign User', __('Assign User'), ['class' => 'form-label']) }}
                                                 {!! Form::select('user', $user, null,array('class' => 'form-control')) !!}
                                             </div>
+                                        </div> -->
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                {{ Form::label('Assign User', __('Assign User'), ['class' => 'form-label']) }}
+                                                {!! Form::select('user', $users, $user_id, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
+                                            </div>
                                         </div>
+
                                         <div class="col-6">
                                             <div class="form-group">
                                                 {{Form::label('company_name',__('Company Name'),['class'=>'form-label']) }}
@@ -185,7 +200,7 @@
                                                 {!! Form::select('type', $type_arr, null,array('class' => 'form-control')) !!}
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                        <!-- <div class="col-6">
                                             <div class="form-group">
                                             {{ Form::label('venue_selection', __('Venue'), ['class' => 'form-label']) }}
                                                 @foreach($venue as $key => $label)
@@ -194,10 +209,22 @@
                                                         {{ Form::label('venue' . ($key + 1), $label) }}
                                                     </div>
                                                 @endforeach
-                                                <!-- {{Form::label('venue_selection',__('Venue'),['class'=>'form-label']) }}
-                                                {{Form::select('venue_selection', $venue , null,array('class'=>'form-control','placeholder'=>__(' Select Venue'),'required'=>'required'))}} -->
+                                            </div>
+                                        </div> -->
+
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                <label for="venue" class="form-label">{{ __('Venue') }}</label>
+                                                @foreach($venue as $key => $label)
+                                                    <div>
+                                                        <input type="checkbox" name="venue[]" id="{{ $label }}" value="venue{{ $key + 1 }}" 
+                                                            {{ in_array($label, $venue_function) ? 'checked' : '' }}>
+                                                        <label for="{{ $label }}">{{ $label }}</label>
+                                                    </div>
+                                                @endforeach  
                                             </div>
                                         </div>
+
                                         <div class="col-6">
                                             <div class="form-group">
                                                 {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
@@ -229,17 +256,95 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-                                           @foreach($function as $key => $value)
-                                                <div class="form-check">
-                                                    {!! Form::checkbox('function[]', $key, null, ['id' => 'function_' . $key, 'class' => 'form-check-input']) !!}
-                                                    {{ Form::label('function_' . $key, $value, ['class' => 'form-check-label']) }}
+                                        <!-- <div class="col-6">
+                                            <div class="form-group">
+                                                {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
+                                                    </br>
+                                                @foreach($function as $key => $value)
+                                                    <label>
+                                                            <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $key }}" class="function-checkbox" {{ in_array($value, $function) ? 'checked' : '' }}>
+                                                            {{ $value }}
+                                                        </label><br>
+                                                @endforeach
+                                            </div>
+                                        </div>      -->
+                                        <!--  -->
+                                        <!-- <div class="col-6">
+                                            <div class="form-group">
+                                                {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
+                                                <br>
+                                                @foreach($function as $value)
+                                                    <label>
+                                                        <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $value }}" class="function-checkbox" {{ in_array($value, $function_p) ? 'checked' : '' }}>
+                                                        {{ $value }}
+                                                    </label><br>
+                                                @endforeach
+                                            </div>
+                                        </div> -->
+                                            <!--  -->
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
+                                                    <br>
+                                                    @foreach($function as $value)
+                                                        <label>
+                                                            <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $value }}" class="function-checkbox" {{ in_array($value, $function_p) ? 'checked' : '' }} onchange="toggleDiv('{{ $value }}')">
+                                                            {{ $value }}
+                                                        </label><br>
+                                                    @endforeach
                                                 </div>
-                                            @endforeach
-                                        </div>
-                                    </div>     
+                                            </div>
+
+                                            <div class="col-6" id="breakfast">
+    <div class="form-group">
+        {{ Form::label('break_package', __('Breakfast Package'), ['class' => 'form-label']) }}
+        @foreach($breakfast as $key => $label)
+            <div>
+                {{ Form::radio('break_package[]', $label, in_array($label, $food_package), ['id' => 'break_package' . ($key + 1)]) }}
+                {{ Form::label($label, $label) }}
+            </div>
+        @endforeach  
+    </div>
+</div>
+
+<div class="col-6" id="lunch">
+    <div class="form-group">
+        {{ Form::label('lunch_package', __('Lunch Package'), ['class' => 'form-label']) }}
+        @foreach($lunch as $key => $label)
+            <div>
+                {{ Form::radio('lunch_package[]', $label, in_array($label, $food_package), ['id' => 'lunch_package' . ($key + 1)]) }}
+                {{ Form::label($label, $label) }}
+            </div>
+        @endforeach  
+    </div>
+</div>
+
+<div class="col-6" id="dinner">
+    <div class="form-group">
+        {{ Form::label('dinner_package', __('Dinner Package'), ['class' => 'form-label']) }}
+        @foreach($dinner as $key => $label)
+            <div>
+                {{ Form::radio('dinner_package[]', $label, in_array($label, $food_package), ['id' => 'dinner_package' . ($key + 1)]) }}
+                {{ Form::label($label, $label) }}
+            </div>
+        @endforeach  
+    </div>
+</div>
+
+<div class="col-6" id="wedding">
+    <div class="form-group">
+        {{ Form::label('wedding_package', __('Wedding Package'), ['class' => 'form-label']) }}
+        @foreach($wedding as $key => $label)
+            <div>
+                {{ Form::radio('wedding_package[]', $label, in_array($label, $food_package), ['id' => 'wedding_package' . ($key + 1)]) }}
+                {{ Form::label($label, $label) }}
+            </div>
+        @endforeach  
+    </div>
+</div>
+
+
+                                            <!--  -->                                       
 
                                     </div>
                                 </div>
@@ -357,12 +462,7 @@
                                                 {{Form::text('allergies',null,array('class'=>'form-control','placeholder'=>__('Enter Allergies(if any)')))}}
                                             </div>
                                         </div>
-                                        <div class="col-12">
-                                            <div class="form-group">
-                                                {{Form::label('Description',__('How did you hear about us?'),['class'=>'form-label']) }}
-                                                {{Form::textarea('description',null,array('class'=>'form-control','rows'=>2))}}
-                                            </div>
-                                        </div> 
+                                         
                                     </div>
                                 </div>
                                 <div class="card-footer text-end">
@@ -389,4 +489,30 @@
                 }
         });
     </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var checkboxes = document.querySelectorAll('.function-checkbox');
+        checkboxes.forEach(function (checkbox) {
+            toggleDiv(checkbox.id);
+        });
+
+        function toggleDiv(value) {
+            var divId = value.toLowerCase();
+            var div = document.getElementById(divId);
+
+            if (div) {
+                div.style.display = document.getElementById(value).checked ? 'block' : 'none';
+            }
+        }
+
+        checkboxes.forEach(function (checkbox) {
+            checkbox.addEventListener('change', function () {
+                toggleDiv(checkbox.id);
+            });
+        });
+    });
+</script>
+
+
 @endpush

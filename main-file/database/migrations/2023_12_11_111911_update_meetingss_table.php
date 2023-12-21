@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('relationship')->nullable();
             $table->integer('guest_count')->default(0);
             $table->string('function')->nullable();
+            $table->string('food_package')->nullable();
             $table->string('venue_selection')->nullable();
             $table->integer('room')->default(0);
             $table->string('meal')->nullable();

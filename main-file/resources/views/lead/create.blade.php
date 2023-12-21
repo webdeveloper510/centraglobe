@@ -60,8 +60,8 @@
             {{ Form::label('venue_selection', __('Venue'), ['class' => 'form-label']) }}
             @foreach($venue as $key => $label)
                 <div>
-                    {{ Form::checkbox('venue[]', 'option' . ($key + 1), false, ['id' => 'venue' . ($key + 1)]) }}
-                    {{ Form::label('venue' . ($key + 1), $label) }}
+                    {{ Form::checkbox('venue[]', $label, false, ['id' => 'venue' . ($key + 1)]) }}
+                    {{ Form::label($label, $label) }}
                 </div>
             @endforeach  
         </div>
@@ -99,8 +99,8 @@
 
             @foreach($function as $key => $value)
                 <div class="form-check">
-                    {!! Form::checkbox('function[]', $key, null, ['class' => 'form-check-input', 'id' => 'function_' . $key]) !!}
-                    {{ Form::label('function_' . $key, $value, ['class' => 'form-check-label']) }}
+                    {!! Form::checkbox('function[]', $value, null, ['class' => 'form-check-input', 'id' => 'function_' . $key]) !!}
+                    {{ Form::label($value, $value, ['class' => 'form-check-label']) }}
                 </div>
             @endforeach
 

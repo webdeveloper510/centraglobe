@@ -48,13 +48,7 @@
                             <a href="#useradd-1"
                                 class="list-group-item list-group-item-action border-0"><?php echo e(__('Overview')); ?> <div
                                     class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            <!--<a href="#useradd-2"
-                                class="list-group-item list-group-item-action border-0"><?php echo e(__('Stream')); ?> <div
-                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            <a href="#useradd-3"
-                                class="list-group-item list-group-item-action border-0"><?php echo e(__('Tasks')); ?> <div
-                                    class="float-end"><i class="ti ti-chevron-right"></i></div></a> -->
-                        </div>
+                          </div>
                     </div>
                 </div>
                 <div class="col-xl-9">
@@ -68,213 +62,7 @@
 
                         <div class="card-body">
                             <form>
-                                <!-- <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('name', __('Name'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo e(Form::text('name', null, ['class' => 'form-control', 'placeholder' => __('Enter Name')])); ?>
-
-                                            <?php $__errorArgs = ['name'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-name" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('email', __('Email'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo e(Form::text('email', null, ['class' => 'form-control', 'placeholder' => __('Enter Email')])); ?>
-
-                                            <?php $__errorArgs = ['email'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-email" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('phone', __('Phone'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo e(Form::text('phone', null, ['class' => 'form-control', 'placeholder' => __('Enter Phone')])); ?>
-
-                                            <?php $__errorArgs = ['phone'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-phone" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('relationship', __('Relationship'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo e(Form::text('relationship', null, ['class' => 'form-control', 'placeholder' => __('Enter Relationship')])); ?>
-
-                                            <?php $__errorArgs = ['website'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-relationship" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('status', __('Status'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo Form::select('status', $status, null, ['class' => 'form-control']); ?>
-
-                                            <?php $__errorArgs = ['status'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-status" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('start_date', __('Start Date'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo Form::date('start_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']); ?>
-
-                                            <?php $__errorArgs = ['start_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-start_date" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('end_date', __('End Date'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']); ?>
-
-                                            <?php $__errorArgs = ['end_date'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-end_date" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('guest_count', __('Guest Count'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)); ?>
-
-                                            <?php $__errorArgs = ['guest_count'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-guest_count" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('venue_selection',__('Venue Selection'),['class'=>'form-label'])); ?>
-
-                                            <?php echo e(Form::select('venue_selection', $venue , null,array('class'=>'form-control','required'=>'required'))); ?>
-
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
-
-                                            <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <div>
-                                                    <?php echo e(Form::checkbox('function[]', 'option' . ($key + 1), false, ['id' => 'function' . ($key + 1)])); ?>
-
-                                                    <?php echo e(Form::label('function' . ($key + 1), $label)); ?>
-
-                                                </div>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('user', __(' Assigned User'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo Form::select('user', $user, $lead->user_id, ['class' => 'form-control']); ?>
-
-                                            <?php $__errorArgs = ['user'];
-$__bag = $errors->getBag($__errorArgs[1] ?? 'default');
-if ($__bag->has($__errorArgs[0])) :
-if (isset($message)) { $__messageOriginal = $message; }
-$message = $__bag->first($__errorArgs[0]); ?>
-                                                <span class="invalid-user" role="alert">
-                                                    <strong class="text-danger"><?php echo e($message); ?></strong>
-                                                </span>
-                                            <?php unset($message);
-if (isset($__messageOriginal)) { $message = $__messageOriginal; }
-endif;
-unset($__errorArgs, $__bag); ?>
-                                        </div>
-                                    </div>
-                                    
-
-
-                                </div> -->
+                              
                                 <div class="row">
     <div class="col-12">
         <div class="form-group">
@@ -339,20 +127,20 @@ unset($__errorArgs, $__bag); ?>
 
         </div>
     </div>
+
     <div class="col-6">
         <div class="form-group">
-            <?php echo e(Form::label('venue', __('Venue'), ['class' => 'form-label'])); ?>
-
+            <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
             <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div>
-                    <?php echo e(Form::checkbox('venue[]', 'option' . ($key + 1), false, ['id' => 'venue' . ($key + 1)])); ?>
-
-                    <?php echo e(Form::label('venue' . ($key + 1), $label)); ?>
-
+                    <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="venue<?php echo e($key + 1); ?>" 
+                        <?php echo e(in_array($label, $venue_function) ? 'checked' : ''); ?>>
+                    <label for="<?php echo e($label); ?>"><?php echo e($label); ?></label>
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
         </div>
     </div>
+
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('start_date', __('Start Date'), ['class' => 'form-label'])); ?>
@@ -379,14 +167,43 @@ unset($__errorArgs, $__bag); ?>
         </div>
     </div>
     
+
+    <!-- <div class="col-6">
+        <div class="form-group">
+            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
+
+            <div class="checkbox-group">
+                <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <label>
+                        <?php echo Form::checkbox('function[]', $key, in_array($value, $function), ['class' => 'function-checkbox']); ?>
+
+                        <?php echo e($value); ?>
+
+                    </label><br>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
+        </div>
+    </div> -->
+
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
 
-            <?php echo Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')); ?>
+            <div class="checkbox-group">
+                <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <label>
+                        <input type="checkbox" id="<?php echo e($value); ?>" name="function[]" value="<?php echo e($key); ?>" class="function-checkbox" <?php echo e(in_array($value, $function_package) ? 'checked' : ''); ?>>
+                        <?php echo e($value); ?>
 
+                    </label><br>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </div>
         </div>
     </div>
+
+
+
+
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('status',__('Status'),['class'=>'form-label'])); ?>
@@ -395,16 +212,24 @@ unset($__errorArgs, $__bag); ?>
 
         </div>
     </div> 
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('Assign User',__('Assign User'),['class'=>'form-label'])); ?>
 
             <?php echo Form::select('user', $user, null,array('class' => 'form-control')); ?>
 
         </div>
+    </div> -->
+    <div class="col-6">
+        <div class="form-group">
+            <?php echo e(Form::label('Assign User', __('Assign User'), ['class' => 'form-label'])); ?>
+
+            <?php echo Form::select('user', $user, $leadUserId, ['class' => 'form-control']); ?>
+
+        </div>
     </div>
+
     <div class="col-12  p-0 modaltitle pb-3 mb-3">
-        <!-- <hr class="mt-2 mb-2"> -->
         <h5 style="margin-left: 14px;"><?php echo e(__('Other Information')); ?></h5>
     </div>
     <div class="col-6">
@@ -464,7 +289,7 @@ unset($__errorArgs, $__bag); ?>
         function getparent(bid) {
             console.log(bid);
             $.ajax({
-                url: '<?php echo e(route('task.getparent')); ?>',
+                url: "<?php echo e(route('task.getparent')); ?>",
                 type: 'POST',
                 data: {
                     "parent": bid,
