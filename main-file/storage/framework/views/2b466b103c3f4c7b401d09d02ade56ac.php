@@ -1,3 +1,4 @@
+
 <?php $__env->startSection('page-title'); ?>
     <?php echo e(__('Event Edit')); ?>
 
@@ -66,7 +67,7 @@
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
-                                                <?php echo e(Form::label('Assign User',__('Assign User'),['class'=>'form-label'])); ?>
+                                                <?php echo e(Form::label('Assign User', __('Assign User'), ['class' => 'form-label'])); ?>
 
                                                 <?php echo Form::select('user', $user, null,array('class' => 'form-control')); ?>
 
@@ -274,23 +275,22 @@
 
                                             </div>
                                         </div>
-                                        
+
                                         <div class="col-6">
-                                            <div class="form-group">
-                                                <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
+                                        <div class="form-group">
+                                            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
 
-                                                <?php echo Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')); ?>
+                                           <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div class="form-check">
+                                                    <?php echo Form::checkbox('function[]', $key, null, ['id' => 'function_' . $key, 'class' => 'form-check-input']); ?>
 
-                                                <!-- <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <div>
-                                                        <?php echo e(Form::checkbox('function[]', 'option' . ($key + 1), false, ['id' => 'function' . ($key + 1)])); ?>
+                                                    <?php echo e(Form::label('function_' . $key, $value, ['class' => 'form-check-label'])); ?>
 
-                                                        <?php echo e(Form::label('function' . ($key + 1), $label)); ?>
-
-                                                    </div>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?> -->
-                                            </div>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </div>
+                                    </div>     
+
                                     </div>
                                 </div>
                             </div>

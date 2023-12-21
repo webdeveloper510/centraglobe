@@ -264,7 +264,7 @@ input[type="radio"] {
                                             {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
                                             {!! Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')) !!}
                                         </div>
-                                    </div> -->
+                                    </div> -->  
                                    
                                     <div class="col-6">
                                         <div class="form-group">
@@ -525,43 +525,45 @@ input[type="radio"] {
                     var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
                         return $(this).val();
                     }).get();
+                    // console.log("check",checkedFunctions);
 
-                    console.log(checkedFunctions[0]);
-                    console.log(checkedFunctions[1]);
-                    // var fun = $('input[name = "function[]"]').val();
-                    // // console.log(fun)
-                    if(fun == 0 || fun == 1){
+                    if(checkedFunctions.includes('0') || checkedFunctions.includes('1')){
+                        console.log("fdsfdsfds")
                         $('#breakfast').show();
                     }
-                    else if(fun == 2 ){
+                    if(checkedFunctions.includes('2') ){
                         $('#lunch').show();
                     }
-                    else if(fun == 3 ){
+                    if(checkedFunctions.includes('3') ){
                         $('#dinner').show();
                     }
-                    else if(fun == 4){
+                    if(checkedFunctions.includes('4')){
                         $('#wedding').show();
                     }
                 }
-            });
-          
-        });
-        $('select[name= "function"]').on('change', function() {
+            });          
+        });;
+
+        $('input[name= "function[]"]').on('change', function() {
             $('#breakfast').hide();
             $('#lunch').hide();
             $('#dinner').hide();
             $('#wedding').hide();
-            var fun = $('select[name = "function"]').val();
-            if(fun == 0 || fun == 1){
+            // var fun = $('input[name = "function[]"]').val();
+            var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
+                return $(this).val();
+            }).get();
+            // console.log(fun+"+++++++++++++++++++++++++++++++++++++++++++++++")
+            if(checkedFunctions.includes('0') || checkedFunctions.includes('1')){
                 $('#breakfast').show();
             }
-            else if(fun == 2 ){
+            if(checkedFunctions.includes('2') ){
                 $('#lunch').show();
             }
-            else if(fun == 3 ){
+            if(checkedFunctions.includes('3') ){
                 $('#dinner').show();
             }
-            else if(fun == 4){
+            if(checkedFunctions.includes('4')){
                 $('#wedding').show();
             }
         });

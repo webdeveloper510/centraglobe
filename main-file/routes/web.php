@@ -1151,15 +1151,18 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('setting/twilio', [SettingController::class, 'twilio'])->name('twilio.setting');
 
 
- //=======================================Event TYPE==========================================//
- Route::post('setting/event-type', [SettingController::class, 'event_type'])->name('event_type.setting');
- Route::post('setting/delete-eventtype',[SettingController::class,'delete_event_type'])->name('eventedit.setting');
+    //=======================================Event TYPE==========================================//
+    Route::post('setting/event-type', [SettingController::class, 'event_type'])->name('event_type.setting');
+    Route::post('setting/delete-eventtype',[SettingController::class,'delete_event_type'])->name('eventedit.setting');
 
 
- //=======================================Venue==========================================//
- Route::post('setting/venue', [SettingController::class, 'venue_select'])->name('venue.setting');
- Route::post('setting/delete-venue',[SettingController::class,'delete_venue'])->name('venueedit.setting');
-
+    //=======================================Venue==========================================//
+    Route::post('setting/venue', [SettingController::class, 'venue_select'])->name('venue.setting');
+    Route::post('setting/delete-venue',[SettingController::class,'delete_venue'])->name('venueedit.setting');
+    
+    //=======================================Floor Plans=======================//
+    Route::post('/floor-images',[SettingController::class,'storeImage']);
+    Route::post('/delete-image', [SettingController::class, 'deleteImage']);
 
     //========================================================================================//
     Route::any('user-reset-password/{id}', [UserController::class, 'employeePassword'])->name('user.reset');
@@ -1241,5 +1244,4 @@ Route::group(['middleware' => ['verified']], function () {
     Route::post('storage-settings', [SettingController::class, 'storageSettingStore'])->name('storage.setting.store')->middleware(['auth', 'XSS']);
 });
 
-Route::post('/floor-images',[SettingController::class,'storeImage']);
-Route::post('/delete-image', [SettingController::class, 'deleteImage']);
+
