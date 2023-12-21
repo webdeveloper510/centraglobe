@@ -85,6 +85,7 @@ use App\Http\Controllers\PaytrController;
 use App\Http\Controllers\SspayController;
 use App\Http\Controllers\XenditPaymentController;
 use App\Http\Controllers\YooKassaController;
+use App\Http\Controllers\BillingController;
 use Illuminate\Support\Facades\DB;
 
 /*
@@ -389,6 +390,17 @@ Route::group(['middleware' => ['verified']], function () {
             ],
         ],
         function () {
+          Route::resource('billing',BillingController::class);
+        }
+    );
+    Route::group(
+        [
+            'middleware' => [
+                'auth',
+                'XSS',
+            ],
+        ],
+        function () {
             Route::resource('lead_source', LeadSourceController::class);
         }
     );
@@ -462,6 +474,7 @@ Route::group(['middleware' => ['verified']], function () {
 
         }
     );
+    
     Route::group(
         [
             'middleware' => [

@@ -82,6 +82,7 @@ class MeetingController extends Controller
     {
      
         if (\Auth::user()->can('Create Meeting')) {
+            $type = 
             $validator = \Validator::make(
                 $request->all(),
                 [

@@ -73,6 +73,17 @@
                                         </td>
                                         @if (Gate::check('Show Meeting') || Gate::check('Edit Meeting') || Gate::check('Delete Meeting'))
                                             <td class="text-end">
+                                            @can('Manage Meeting')
+                                                    <div class="action-btn bg-success ms-2">
+                                                        <a href="#" data-size="md"
+                                                            data-url="{{ route('meeting.show', $meeting->id) }}"
+                                                            data-ajax-popup="true" data-bs-toggle="tooltip"
+                                                            data-title="{{ __('Event Details') }}"title="{{ __('Share') }}"
+                                                            class="mx-3 btn btn-sm d-inline-flex align-items-center text-white ">
+                                                            <i class="fas fa-share"></i>
+                                                        </a>
+                                                    </div>
+                                                @endcan
                                                 @can('Show Meeting')
                                                     <div class="action-btn bg-warning ms-2">
                                                         <a href="#" data-size="md"
