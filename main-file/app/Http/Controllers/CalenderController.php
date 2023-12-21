@@ -116,6 +116,7 @@ class CalenderController extends Controller
             $arrMeeting = [];
             $arrTask    = [];
             $arrCall    = [];
+            $arrblock   = [];
 
         if($request->get('calender_type') == 'goggle_calender')
         {
@@ -143,12 +144,14 @@ class CalenderController extends Controller
                 $calls    = Call::where('created_by', \Auth::user()->creatorId())->get();
                 $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();
                 $tasks    = Task::where('created_by', \Auth::user()->creatorId())->get();
+                $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
             }
             else
             {
                 $calls    = Call::where('user_id', \Auth::user()->id)->get();
                 $meetings = Meeting::where('user_id', \Auth::user()->id)->get();
                 $tasks    = Task::where('user_id', \Auth::user()->id)->get();
+                $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
             }
 
         foreach($tasks as $val)
@@ -183,6 +186,22 @@ class CalenderController extends Controller
                         // "display" =>'background'
                     ];
                 }
+                foreach($blockeddate as $val)
+                {
+                    $end_date=date_create($val->end_date);
+                    date_add($end_date,date_interval_create_from_date_string("1 days"));
+                    $arrblock[] = [
+                        "id"=> $val->id,
+                        "title" => $val->purpose,
+                        "start" => $val->start_date,
+                        "end" => date_format($end_date,"Y-m-d H:i:s"),
+                        "className" => $val->color,
+                        "textColor" => '#000',
+                        // "url" => route('meeting.show', $val['id']),
+                        "allDay" => true,
+                        "display" =>'background',
+                    ];
+                }
                 foreach($calls as $val)
                 {
                     $end_date=date_create($val->end_date);
@@ -198,7 +217,7 @@ class CalenderController extends Controller
                         "allDay" => true,
                     ];
                 }
-                        $arrayJson = array_merge($arrCall, $arrMeeting, $arrTask);
+                        $arrayJson = array_merge($arrCall, $arrMeeting, $arrTask,$arrblock);
 
 
                 }

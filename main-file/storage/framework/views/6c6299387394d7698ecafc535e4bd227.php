@@ -25,9 +25,10 @@
 
 
 <?php $__env->startPush('script-page'); ?>
-
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dc4641f860664c6e824b093274f50291"}'></script>
 <script src="<?php echo e(asset('assets/js/plugins/main.min.js')); ?>"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 <script type="text/javascript">
     <?php
     $segment=Request::segment(2);
@@ -66,7 +67,7 @@
             method:"POST",
             data: {"_token": "<?php echo e(csrf_token()); ?>",'calender_type':calender_type},
             success: function(data) {
-                // console.log(data);
+                console.log(data);
                 (function() {
                     var etitle;
                     var etype;
@@ -101,9 +102,12 @@
                         events: data,
                         select: function(info) {
                             var startDate = info.startStr;
-                            var endDate = info.endStr;
+                            var endDate =  info.endStr;
                             openPopupForm(startDate,endDate);
                         },
+                        // eventClick: function(event) {
+                        //    alert('hy');
+                        // },
                         // eventDisplay:'background',
                         // eventColor: '#378006' ,
                         // backgroundColor :'#000',
@@ -121,21 +125,18 @@
     $('#close-popup').on('click', function() {
         closePopupForm();
     });
-    function isDateBlocked(selectionInfo) {
-      var start = selectionInfo.start;
-      var end = selectionInfo.end;
-      return false;
-    }
     function openPopupForm(start,end) {
+        $("#block").show();
         $("#unblock").hide();
         $( ".blockd_dates input" ).each(function( index ) {
             if($(this).val() == start || $(this).val() == end){
                 $("#unblock").show();
+                $("#block").hide();
             }
         });
-        $("input[name = 'start_date']").val(start);
-        $("input[name = 'end_date']").val(end);
-
+        var enddate = moment(end).subtract(1, 'days').format('yyyy-MM-DD');     
+        $("input[name = 'start_date']").attr('value',start);
+        $("input[name = 'end_date']").attr('value',enddate);
         $('#popup-form').show();
         $('#overlay').show();
     }
@@ -158,7 +159,8 @@
                 'end':end,
             },
             success: function(data) {
-                console.log(data);
+                location.reload();
+                // console.log(data);
             }
         })
     });
@@ -167,7 +169,6 @@
 <?php
 
 $setting = App\Models\Utility::settings();
-
 ?>
 
 
@@ -184,12 +185,6 @@ $setting = App\Models\Utility::settings();
             <div class="card">
                 <div class="card-header">
                     <h5 style="width: 150px;"><?php echo e(__('Calendar')); ?></h5>
-                    <!-- <?php if(isset($setting['is_enabled']) && $setting['is_enabled'] == 'on'): ?>
-                        <select class="form-control" name="calender_type" id="calender_type" style="float: right;width: 150px;" onchange="get_data()">
-                            <option value="goggle_calender"><?php echo e(__('Google Calender')); ?></option>
-                            <option value="local_calender" selected="true"><?php echo e(__('Local Calender')); ?></option>
-                        </select>
-                    <?php endif; ?> -->
                         <input type="hidden" id="path_admin" value="<?php echo e(url('/')); ?>">
                 </div>
                 <div class="card-body">
@@ -250,7 +245,7 @@ $setting = App\Models\Utility::settings();
 
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8">
-                            <h5><?php echo e(__('Block  Date')); ?></h5>
+                            <h5><?php echo e(__('Block Date')); ?></h5>
                         </div>
                     </div>
                 </div>
@@ -283,7 +278,7 @@ $setting = App\Models\Utility::settings();
                     </div>
                 </div>
                 <div class="card-footer text-end">
-                    <?php echo e(Form::submit(__('Block'), ['class' => 'btn  btn-primary '])); ?>
+                    <?php echo e(Form::submit(__('Block'), ['id'=>'block','class' => 'btn  btn-primary '])); ?>
 
                     <?php echo e(Form::close()); ?>
 
@@ -294,7 +289,11 @@ $setting = App\Models\Utility::settings();
         </div>
     </div>
 </div>
-<style>
+
+<?php $__env->stopSection(); ?>
+
+    <?php $__env->startPush('css-page'); ?>
+    <style>
     #popup-form {
       display: none;
       position: fixed;
@@ -319,9 +318,7 @@ $setting = App\Models\Utility::settings();
       z-index: 999;
     }
 </style>
-<?php $__env->stopSection(); ?>
-
-
+    <?php $__env->stopPush(); ?>
     <?php $__env->startPush('script-page'); ?>
     <script type="text/javascript">
         $(document).on('change', 'select[name=parent]', function () {

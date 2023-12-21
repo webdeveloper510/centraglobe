@@ -18,6 +18,7 @@ use App\Models\User;
 use App\Models\Order;
 use App\Models\Plan;
 use App\Models\Utility;
+use App\Models\Blockdate;
 use App\Models\LandingPageSections;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -168,10 +169,12 @@ class DashboardController extends Controller
         $calls    = Call::where('created_by', \Auth::user()->creatorId())->get();
         $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();
         $tasks    = Task::where('created_by', \Auth::user()->creatorId())->get();
+        $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
 
         $arrMeeting = [];
         $arrTask    = [];
         $arrCall    = [];
+        $arrblock   = [];
 
         if ($calenderdata == 'call') {
             foreach ($calls as $call) {
@@ -203,7 +206,8 @@ class DashboardController extends Controller
                 $arr['url']       = route('meeting.show', $meeting['id']);
                 $arrMeeting[]     = $arr;
             }
-        } else {
+        } 
+        else {
             foreach ($calls as $call) {
                 $arr['id']        = $call['id'];
                 $arr['title']     = $call['name'];
@@ -231,9 +235,18 @@ class DashboardController extends Controller
                 $arr['url']       = route('meeting.show', $meeting['id']);
                 $arrMeeting[]     = $arr;
             }
+            foreach ($blockeddate as $blockeddate) {
+                $arr['id']        = $blockeddate['id'];
+                $arr['title']     = $blockeddate['purpose'];
+                $arr['start']     = $blockeddate['start_date'];
+                $arr['end']       = $blockeddate['end_date'];
+                $arr['className'] = 'event-info';
+                $arr['display']   = 'background';
+                $arrblock[]     = $arr;
+            }
         }
 
-        $calandar = array_merge($arrCall, $arrMeeting, $arrTask);
+        $calandar = array_merge($arrCall, $arrMeeting, $arrTask,$arrblock);
         return  str_replace('"[', '[', str_replace(']"', ']', json_encode($calandar)));
     }
     public function get_data(Request $request)

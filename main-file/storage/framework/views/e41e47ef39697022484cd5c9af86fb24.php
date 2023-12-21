@@ -29,9 +29,6 @@
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('End Date')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e(\Auth::user()->dateFormat($meeting->end_date)); ?></span></dd>
 
-                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Description')); ?></span></dt>
-                    <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->description); ?></span></dd>
-
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Guest Count')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->guest_count); ?></span></dd>
 

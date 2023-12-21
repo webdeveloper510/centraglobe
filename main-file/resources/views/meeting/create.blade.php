@@ -12,6 +12,11 @@
     $venue = explode(',',$setting['venue']);
     $meal = ['Formal Plated' ,'Buffet Style' , 'Family Style'];
     $bar = ['Open Bar', 'Cash Bar', 'Package Choice'];
+    $platinum = ['Platinum - 4 Hours', 'Platinum - 3 Hours', 'Platinum - 2 Hours'];
+    $gold = ['Gold - 4 Hours', 'Gold - 3 Hours', 'Gold - 2 Hours'];
+    $silver = ['Silver - 4 Hours', 'Silver - 3 Hours', 'Silver - 2 Hours'];
+    $beer = ['Beer & Wine - 4 Hours', 'Beer & Wine - 3 Hours', 'Beer & Wine - 2 Hours'];
+  
 @endphp
 @section('content')
 <style>
@@ -358,7 +363,7 @@ input[type="radio"] {
                                         {!! Form::label('meal', 'Meal Preference') !!}
                                             @foreach($meal as $key => $label)
                                             <div>
-                                                    {{ Form::checkbox('meal', 'option' . ($key + 1), false, ['id' => 'meal' . ($key + 1)]) }}
+                                                    {{ Form::radio('meal', 'option' . ($key + 1), false, ['id' => 'meal' . ($key + 1)]) }}
                                                     {{ Form::label('meal' . ($key + 1), $label) }}
                                             </div>
                                             @endforeach
@@ -369,10 +374,57 @@ input[type="radio"] {
                                             {!! Form::label('bar', 'Bar') !!}
                                             @foreach($bar as $key => $label)
                                                 <div>
-                                                    {{ Form::checkbox('bar','option'.($key + 1) , false, ['id' => 'bar' . ($key + 1)]) }}
+                                                    {{ Form::radio('bar', 'option' . ($key + 1), false, ['id' => 'bar' . ($key + 1)]) }}
                                                     {{ Form::label('bar' . ($key + 1), $label) }}
                                                 </div>
                                             @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="row" id = "package" style = "display:none">
+                                        {{ Form::label('bar_package', __('Bar Packages'), ['class' => 'form-label']) }}
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                {{ Form::label('platinum_package', __('Platinum Package'), ['class' => 'form-label']) }}
+                                                @foreach($platinum as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('bar_package', 'platinum_package' . ($key + 1), false) }}
+                                                        {{ Form::label('platinum_package' . ($key + 1), $label) }}
+                                                    </div>
+                                                @endforeach  
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                {{ Form::label('gold_package', __('Gold Package'), ['class' => 'form-label']) }}
+                                                @foreach($gold as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('bar_package', 'gold_package' . ($key + 1), false) }}
+                                                        {{ Form::label('gold_package' . ($key + 1), $label) }}
+                                                    </div>
+                                                @endforeach  
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="form-group">
+                                                {{ Form::label('silver_package', __('Silver Package'), ['class' => 'form-label']) }}
+                                                @foreach($silver as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('bar_package', 'silver_package' . ($key + 1), false) }}
+                                                        {{ Form::label('silver_package' . ($key + 1), $label) }}
+                                                    </div>
+                                                @endforeach  
+                                            </div>
+                                        </div>
+                                        <div class="col-6" >
+                                            <div class="form-group" >
+                                                {{ Form::label('beer_package', __('Beer & Wine'), ['class' => 'form-label']) }}
+                                                @foreach($beer as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('bar_package', 'beer_package' . ($key + 1), false) }}
+                                                        {{ Form::label('beer_package' . ($key + 1), $label) }}
+                                                    </div>
+                                                @endforeach  
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-12">
@@ -514,6 +566,13 @@ input[type="radio"] {
             if(checkedFunctions.includes('4')){
                 $('#wedding').show();
             }
+        });
+        $('input[type=radio][name=bar]').change(function() {
+            $('#package').hide();
+                var val = $(this).val();
+                if(val == 'option3'){
+                    $('#package').show();
+                }
         });
     </script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
