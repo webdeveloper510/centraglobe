@@ -45,7 +45,7 @@ class Lead extends Model
 
     public function assign_user()
     {
-        return $this->hasOne('App\Models\User', 'id', 'user_id');
+        return $this->hasOne('App\Models\User', 'id', 'assigned_user');
     }
 
     public function accountIndustry()

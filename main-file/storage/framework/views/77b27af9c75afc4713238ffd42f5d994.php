@@ -12,17 +12,9 @@
                             <span class="badge bg-success p-2 px-3 rounded"><?php echo e(__(\App\Models\Meeting::$status[$meeting->status])); ?></span>
                         <?php elseif($meeting->status == 1): ?>
                             <span class="badge bg-info p-2 px-3 rounded"><?php echo e(__(\App\Models\Meeting::$status[$meeting->status])); ?></span>
-                        <?php elseif($meeting->status == 2): ?>
-                            <span class="badge bg-warning p-2 px-3 rounded"><?php echo e(__(\App\Models\Meeting::$status[$meeting->status])); ?></span>
-                        <?php elseif($meeting->status == 3): ?>
-                            <span class="badge bg-danger p-2 px-3 rounded"><?php echo e(__(\App\Models\Meeting::$status[$meeting->status])); ?></span>
-                        <?php elseif($meeting->status == 4): ?>
-                            <span class="badge bg-danger p-2 px-3 rounded"><?php echo e(__(\App\Models\Meeting::$status[$meeting->status])); ?></span>
-                        <?php elseif($meeting->status == 5): ?>
-                            <span class="badge bg-warning p-2 px-3 rounded"><?php echo e(__(\App\Models\Meeting::$status[$meeting->status])); ?></span>
                         <?php endif; ?>
                     </dd>
-
+                    
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Start Date')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e(\Auth::user()->dateFormat($meeting->start_date)); ?></span></dd>
 
@@ -31,6 +23,12 @@
 
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Guest Count')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->guest_count); ?></span></dd>
+
+                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Venue')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->venue_selection); ?></span></dd>
+
+                    <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Function')); ?></span></dt>
+                    <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->function); ?></span></dd>
 
                     <dt class="col-md-5"><span class="h6 text-md mb-0"><?php echo e(__('Event Type')); ?></span></dt>
                     <dd class="col-md-5"><span class="text-md"><?php echo e($meeting->type); ?></span></dd>

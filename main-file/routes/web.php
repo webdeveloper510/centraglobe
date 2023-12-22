@@ -471,6 +471,7 @@ Route::group(['middleware' => ['verified']], function () {
             Route::post('meeting/get_calender_date/',[MeetingController::class, 'get_calender_date'])->name('meeting.calender');
             Route::post('meeting/block-date/',[MeetingController::class,'block_date'])->name('meeting.blockdate');
             Route::post('meeting/unblock-date/',[MeetingController::class,'unblock_date'])->name('meeting.unblock');
+            Route::get('meeting/share_floor_plan/{meeting}', [MeetingController::class, 'view_floor'])->name('meeting.floor_plan');
 
         }
     );

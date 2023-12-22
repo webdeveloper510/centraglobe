@@ -79,7 +79,7 @@
                                             <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Meeting')): ?>
                                                     <div class="action-btn bg-success ms-2">
                                                         <a href="#" data-size="md"
-                                                            data-url="<?php echo e(route('meeting.show', $meeting->id)); ?>"
+                                                            data-url="<?php echo e(route('meeting.floor_plan', $meeting->id)); ?>"
                                                             data-ajax-popup="true" data-bs-toggle="tooltip"
                                                             data-title="<?php echo e(__('Event Details')); ?>"title="<?php echo e(__('Share')); ?>"
                                                             class="mx-3 btn btn-sm d-inline-flex align-items-center text-white ">

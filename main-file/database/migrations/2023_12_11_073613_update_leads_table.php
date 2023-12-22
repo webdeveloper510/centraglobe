@@ -18,8 +18,11 @@ return new class extends Migration
             $table->integer('guest_count')->default(0);
             $table->string('function')->nullable();
             $table->string('venue_selection')->nullable();
+            $table->string('spcl_req')->nullable();
+            $table->string('allergies')->nullable();
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('assigned_user');
         });
     }
 

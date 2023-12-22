@@ -60,7 +60,6 @@
                                             {!! Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control', 'disabled' => 'disabled']) !!}
                                         </div>
                                     </div>
-
                                         <!-- <div class="col-6">
                                             <div class="form-group">
                                                 {{ Form::label('attendees_lead', __('Lead'), ['class' => 'form-label']) }}
@@ -255,96 +254,62 @@
                                                 {!! Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)) !!}
                                             </div>
                                         </div>
-
-                                        <!-- <div class="col-6">
-                                            <div class="form-group">
-                                                {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-                                                    </br>
-                                                @foreach($function as $key => $value)
-                                                    <label>
-                                                            <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $key }}" class="function-checkbox" {{ in_array($value, $function) ? 'checked' : '' }}>
-                                                            {{ $value }}
-                                                        </label><br>
-                                                @endforeach
-                                            </div>
-                                        </div>      -->
-                                        <!--  -->
-                                        <!-- <div class="col-6">
+                                        <div class="col-6">
                                             <div class="form-group">
                                                 {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
                                                 <br>
                                                 @foreach($function as $value)
                                                     <label>
-                                                        <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $value }}" class="function-checkbox" {{ in_array($value, $function_p) ? 'checked' : '' }}>
+                                                        <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $value }}" class="function-checkbox" {{ in_array($value, $function_p) ? 'checked' : '' }} onchange="toggleDiv('{{ $value }}')">
                                                         {{ $value }}
                                                     </label><br>
                                                 @endforeach
                                             </div>
-                                        </div> -->
-                                            <!--  -->
-                                            <div class="col-6">
-                                                <div class="form-group">
-                                                    {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-                                                    <br>
-                                                    @foreach($function as $value)
-                                                        <label>
-                                                            <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $value }}" class="function-checkbox" {{ in_array($value, $function_p) ? 'checked' : '' }} onchange="toggleDiv('{{ $value }}')">
-                                                            {{ $value }}
-                                                        </label><br>
-                                                    @endforeach
-                                                </div>
+                                        </div>
+                                        <div class="col-6" id="breakfast">
+                                            <div class="form-group">
+                                                {{ Form::label('break_package', __('Breakfast Package'), ['class' => 'form-label']) }}
+                                                @foreach($breakfast as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('break_package[]', $label, in_array($label, $food_package), ['id' => 'break_package' . ($key + 1)]) }}
+                                                        {{ Form::label($label, $label) }}
+                                                    </div>
+                                                @endforeach  
                                             </div>
-
-                                            <div class="col-6" id="breakfast">
-    <div class="form-group">
-        {{ Form::label('break_package', __('Breakfast Package'), ['class' => 'form-label']) }}
-        @foreach($breakfast as $key => $label)
-            <div>
-                {{ Form::radio('break_package[]', $label, in_array($label, $food_package), ['id' => 'break_package' . ($key + 1)]) }}
-                {{ Form::label($label, $label) }}
-            </div>
-        @endforeach  
-    </div>
-</div>
-
-<div class="col-6" id="lunch">
-    <div class="form-group">
-        {{ Form::label('lunch_package', __('Lunch Package'), ['class' => 'form-label']) }}
-        @foreach($lunch as $key => $label)
-            <div>
-                {{ Form::radio('lunch_package[]', $label, in_array($label, $food_package), ['id' => 'lunch_package' . ($key + 1)]) }}
-                {{ Form::label($label, $label) }}
-            </div>
-        @endforeach  
-    </div>
-</div>
-
-<div class="col-6" id="dinner">
-    <div class="form-group">
-        {{ Form::label('dinner_package', __('Dinner Package'), ['class' => 'form-label']) }}
-        @foreach($dinner as $key => $label)
-            <div>
-                {{ Form::radio('dinner_package[]', $label, in_array($label, $food_package), ['id' => 'dinner_package' . ($key + 1)]) }}
-                {{ Form::label($label, $label) }}
-            </div>
-        @endforeach  
-    </div>
-</div>
-
-<div class="col-6" id="wedding">
-    <div class="form-group">
-        {{ Form::label('wedding_package', __('Wedding Package'), ['class' => 'form-label']) }}
-        @foreach($wedding as $key => $label)
-            <div>
-                {{ Form::radio('wedding_package[]', $label, in_array($label, $food_package), ['id' => 'wedding_package' . ($key + 1)]) }}
-                {{ Form::label($label, $label) }}
-            </div>
-        @endforeach  
-    </div>
-</div>
-
-
-                                            <!--  -->                                       
+                                        </div>
+                                        <div class="col-6" id="lunch">
+                                            <div class="form-group">
+                                                {{ Form::label('lunch_package', __('Lunch Package'), ['class' => 'form-label']) }}
+                                                @foreach($lunch as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('lunch_package[]', $label, in_array($label, $food_package), ['id' => 'lunch_package' . ($key + 1)]) }}
+                                                        {{ Form::label($label, $label) }}
+                                                    </div>
+                                                @endforeach  
+                                            </div>
+                                        </div>
+                                        <div class="col-6" id="dinner">
+                                            <div class="form-group">
+                                                {{ Form::label('dinner_package', __('Dinner Package'), ['class' => 'form-label']) }}
+                                                @foreach($dinner as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('dinner_package[]', $label, in_array($label, $food_package), ['id' => 'dinner_package' . ($key + 1)]) }}
+                                                        {{ Form::label($label, $label) }}
+                                                    </div>
+                                                @endforeach  
+                                            </div>
+                                        </div>
+                                        <div class="col-6" id="wedding">
+                                            <div class="form-group">
+                                                {{ Form::label('wedding_package', __('Wedding Package'), ['class' => 'form-label']) }}
+                                                @foreach($wedding as $key => $label)
+                                                    <div>
+                                                        {{ Form::radio('wedding_package[]', $label, in_array($label, $food_package), ['id' => 'wedding_package' . ($key + 1)]) }}
+                                                        {{ Form::label($label, $label) }}
+                                                    </div>
+                                                @endforeach  
+                                            </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -481,6 +446,12 @@
             target: '#useradd-sidenav',
             offset: 300
         })
+        $(document).ready(function() {
+        var selectedValue = $('input[name="bar"]:checked').val();
+        if(selectedValue == 'option3'){
+                    $('#package').show();
+        }    
+    });
         $('input[type=radio][name=bar]').change(function() {
             $('#package').hide();
                 var val = $(this).val();

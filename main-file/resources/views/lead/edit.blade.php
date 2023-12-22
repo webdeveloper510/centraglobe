@@ -37,7 +37,7 @@
     <li class="breadcrumb-item">{{ __('Details') }}</li>
 @endsection
 @section('content')
-    <div class="row">
+<div class="row">
         <div class="col-sm-12">
             <div class="row">
                 <div class="col-xl-3">
@@ -116,7 +116,7 @@
             <label for="venue" class="form-label">{{ __('Venue') }}</label>
             @foreach($venue as $key => $label)
                 <div>
-                    <input type="checkbox" name="venue[]" id="{{ $label }}" value="venue{{ $key + 1 }}" 
+                    <input type="checkbox" name="venue[]" id="{{ $label }}" value="{{$label}}" 
                         {{ in_array($label, $venue_function) ? 'checked' : '' }}>
                     <label for="{{ $label }}">{{ $label }}</label>
                 </div>
@@ -143,55 +143,29 @@
             {!! Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)) !!}
         </div>
     </div>
-    
-
-    <!-- <div class="col-6">
-        <div class="form-group">
-            {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-            <div class="checkbox-group">
-                @foreach($function as $key => $value)
-                    <label>
-                        {!! Form::checkbox('function[]', $key, in_array($value, $function), ['class' => 'function-checkbox']) !!}
-                        {{ $value }}
-                    </label><br>
-                @endforeach
-            </div>
-        </div>
-    </div> -->
 
     <div class="col-6">
         <div class="form-group">
-            {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-            <div class="checkbox-group">
-                @foreach($function as $key => $value)
-                    <label>
-                        <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $key }}" class="function-checkbox" {{ in_array($value, $function_package) ? 'checked' : '' }}>
-                        {{ $value }}
-                    </label><br>
-                @endforeach
+        <label for="function" class="form-label">{{ __('Function') }}</label>
+            @foreach($function as $key => $value)
+            <div>
+                <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $value }}" 
+                class="function-checkbox" {{ in_array($value, $function_package) ? 'checked' : '' }}>
+                <label for="{{ $value }}">{{ $value }}</label>
             </div>
+            @endforeach  
         </div>
     </div>
-
-
-
-
     <div class="col-6">
         <div class="form-group">
             {{Form::label('status',__('Status'),['class'=>'form-label']) }}
             {!! Form::select('status',$status, null,array('class' => 'form-control','required'=>'required')) !!}
         </div>
     </div> 
-    <!-- <div class="col-6">
-        <div class="form-group">
-            {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}
-            {!! Form::select('user', $user, null,array('class' => 'form-control')) !!}
-        </div>
-    </div> -->
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('Assign User', __('Assign User'), ['class' => 'form-label']) }}
-            {!! Form::select('user', $user, $leadUserId, ['class' => 'form-control']) !!}
+            {!! Form::select('user', $user,$lead->assigned_user, ['class' => 'form-control']) !!}
         </div>
     </div>
 

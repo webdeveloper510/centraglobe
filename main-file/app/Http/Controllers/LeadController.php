@@ -84,17 +84,8 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-
-        // echo "<pre>";
-        // print_r($_REQUEST);
-        // $user = User::where('id',$request->user)->get();
-
-        // echo "" $user->username;
-        // print_r($user);
-        // die;
-
         if (\Auth::user()->can('Create Lead')) {
-
+            print_r($request->function) ;die;
             $validator = \Validator::make(
                 $request->all(),
                 [
@@ -132,6 +123,8 @@ class LeadController extends Controller
             $lead['status']             = $request->status;
             $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;
+            $lead['spcl_req']        = $request->special_requirements;
+            $lead['allergies']        = $request->allergies;
             $lead['created_by']         = \Auth::user()->creatorId();
             $lead->save();
             Stream::create(
@@ -185,11 +178,11 @@ class LeadController extends Controller
                 Utility::send_twilio_msg('+919882240722', 'new_lead', $uArr);
                 
             }
-            if (Auth::user()) {
-                return redirect()->back()->with('success', __('Lead created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
-            } else {
-                return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
-            }
+            // if (Auth::user()) {
+            //     return redirect()->back()->with('success', __('Lead created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
+            // } else {
+            //     return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
+            // }
             return redirect()->back()->with('success', __('Lead Created.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
@@ -222,33 +215,28 @@ class LeadController extends Controller
      */
     public function edit(Lead $lead)
     {
-        // echo "<pre>";
-        // print_r($lead);
-        // die;
-        // $venue_function = $lead->function;
         $venue_function = explode(',', $lead->venue_selection);
         $function_package =  explode(',', $lead->function);
         if (\Auth::user()->can('Edit Lead')) {
             $status   = Lead::$status;
-            $source   = LeadSource::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            // $source   = LeadSource::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $user     = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');             
-            $leadUserId = $lead->assigned_user;
-            $user->prepend('--', 0);
-            $account  = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $account->prepend('--', 0);
-            $industry = AccountIndustry::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $parent   = 'lead';
-            $tasks    = Task::where('parent', $parent)->where('parent_id', $lead->id)->get();
-            $log_type = 'lead comment';
-            $streams  = Stream::where('log_type', $log_type)->get();
-            $campaign = Campaign::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $campaign->prepend('--', 0);
+            $user->prepend('Select User', 0);
+            // $account  = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            // $account->prepend('--', 0);
+            // $industry = AccountIndustry::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            // $parent   = 'lead';
+            // $tasks    = Task::where('parent', $parent)->where('parent_id', $lead->id)->get();
+            // $log_type = 'lead comment';
+            // $streams  = Stream::where('log_type', $log_type)->get();
+            // $campaign = Campaign::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            // $campaign->prepend('--', 0);
             // get previous user id
-            $previous = Lead::where('id', '<', $lead->id)->max('id');
-            // get next user id
-            $next = Lead::where('id', '>', $lead->id)->min('id');
+            // $previous = Lead::where('id', '<', $lead->id)->max('id');
+            // // get next user id
+            // $next = Lead::where('id', '>', $lead->id)->min('id');
             $function = Lead::$function;
-            return view('lead.edit', compact('leadUserId','venue_function','function_package','lead', 'account', 'user', 'source', 'industry', 'status', 'tasks', 'streams', 'campaign', 'previous', 'next','function'));
+            return view('lead.edit', compact('venue_function','function_package','lead','user', 'status', 'function'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -275,7 +263,8 @@ class LeadController extends Controller
                     'start_date'=>'required',
                     'end_date'=>'required',
                     'venue'=>'required',
-                    'function'=>'required','user'=>'required'
+                    'function'=>'required',
+                    'user'=>'required'
                 ]
             );
             if ($validator->fails()) {
@@ -301,6 +290,8 @@ class LeadController extends Controller
             $lead['status']             = $request->status;
             $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;
+            $lead['spcl_req']        = $request->special_requirements;
+            $lead['allergies']        = $request->allergies;
             $lead['created_by']         = \Auth::user()->creatorId();
             $lead->update();
 

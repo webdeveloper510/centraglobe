@@ -46,7 +46,6 @@ $(document).ready(function() {
             $(this).addClass('text-primary');
         });
     });
-
     $(function() {
         $(document).on("click", ".show_confirm", function() {
             var form = $(this).closest("form");
@@ -72,99 +71,95 @@ $(document).ready(function() {
             })
         });
     });
-    $(document).ready(function() {
-        $('.event_show_confirm').click(function(event) {
-           
-            var url = $(this).data('url');
-            var badgeContainer = $(this).closest('.badge');
-            var badgeText = badgeContainer.text().trim();
-            var token = $(this).data('token');
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-            })
-            swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "This action can not be undone. Do you want to continue?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        data: {
-                            "badge":badgeText,
-                            "_token": token,
-                        },
-                        success: function (result) {
-                            // console.log(result);
-                            if (result == true) {
-                                swal.fire("Done!", result.message, "success");
-                                setTimeout(function(){
-                                    location.reload();
-                                },1000);
-                            } else {
-                                swal.fire("Error!", result.message, "error");
-                            }
+    $('.event_show_confirm').click(function(event) {
+        
+        var url = $(this).data('url');
+        var badgeContainer = $(this).closest('.badge');
+        var badgeText = badgeContainer.text().trim();
+        var token = $(this).data('token');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "This action can not be undone. Do you want to continue?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "badge":badgeText,
+                        "_token": token,
+                    },
+                    success: function (result) {
+                        // console.log(result);
+                        if (result == true) {
+                            swal.fire("Done!", result.message, "success");
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        } else {
+                            swal.fire("Error!", result.message, "error");
                         }
-                    });
-                }
-            })
-        });
+                    }
+                });
+            }
+        })
     });
-    $(document).ready(function() {
-        $('.venue_show_confirm').click(function(event) {
-           
-            var url = $(this).data('url');
-            var badgeContainer = $(this).closest('.badge');
-            var badgeText = badgeContainer.text().trim();
-            var token = $(this).data('token');
-            const swalWithBootstrapButtons = Swal.mixin({
-                customClass: {
-                    confirmButton: 'btn btn-success',
-                    cancelButton: 'btn btn-danger'
-                },
-                buttonsStyling: false
-            })
-            swalWithBootstrapButtons.fire({
-                title: 'Are you sure?',
-                text: "This action can not be undone. Do you want to continue?",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Yes',
-                cancelButtonText: 'No',
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        data: {
-                            "badge":badgeText,
-                            "_token": token,
-                        },
-                        success: function (result) {
-                            // console.log(result);
-                            if (result == true) {
-                                swal.fire("Done!", result.message, "success");
-                                setTimeout(function(){
-                                    location.reload();
-                                },1000);
-                            } else {
-                                swal.fire("Error!", result.message, "error");
-                            }
+    $('.venue_show_confirm').click(function(event) {
+        
+        var url = $(this).data('url');
+        var badgeContainer = $(this).closest('.badge');
+        var badgeText = badgeContainer.text().trim();
+        var token = $(this).data('token');
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "This action can not be undone. Do you want to continue?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "badge":badgeText,
+                        "_token": token,
+                    },
+                    success: function (result) {
+                        // console.log(result);
+                        if (result == true) {
+                            swal.fire("Done!", result.message, "success");
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        } else {
+                            swal.fire("Error!", result.message, "error");
                         }
-                    });
-                }
-            })
-        });
+                    }
+                });
+            }
+        })
     });
     $(function() {
         $(document).on("click", ".duplicate_confirm", function() {
@@ -268,8 +263,6 @@ function select2() {
     }
 
 }
-
-
 
 $(document).on('click', 'a[data-ajax-popup="true"], button[data-ajax-popup="true"], div[data-ajax-popup="true"]', function() {
     var title = $(this).data('title');

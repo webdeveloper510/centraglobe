@@ -293,9 +293,26 @@
                                                     </p>
                                                     <p class="col-6">{{ __('Contract End_Date') }} : <span
                                                             class="pull-right text-primary">{contract_end_date}</span></p>
-
-
                                                 </div>
+                                                <!-- @elseif($emailTemplate->slug == 'floor_plan')
+                                                <div class="row">
+                                                    <p class="col-6">{{ __('App Name') }} : <span
+                                                            class="pull-end text-primary">{app_name}</span></p>
+                                                    <p class="col-6">{{ __('Company Name') }} : <span
+                                                            class="pull-right text-primary">{company_name}</span></p>
+                                                    <p class="col-6">{{ __('App Url') }} : <span
+                                                            class="pull-right text-primary">{app_url}</span></p>
+                                                    <p class="col-6">{{ __('Event Type') }} : <span
+                                                            class="pull-right text-primary">{task_name}</span></p>
+                                                    <p class="col-6">{{ __('Event Start Date') }} : <span
+                                                            class="pull-right text-primary">{task_start_date}</span></p>
+                                                    <p class="col-6">{{ __('Event End Date') }} : <span
+                                                            class="pull-right text-primary">{task_due_date}</span></p>
+                                                    <p class="col-6">{{ __('Task Assign User') }} : <span
+                                                            class="pull-right text-primary">{task_assign_user}</span></p>
+                                                    <p class="col-6">{{ __('Task Description') }} : <span
+                                                            class="pull-right text-primary">{task_description}</span></p>
+                                                </div> -->
                                             @endif
                                         </div>
                                     </div>

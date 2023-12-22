@@ -81,29 +81,16 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-
-        echo "<pre>";
-        print_r($_REQUEST);
-
-        // die;
-
         $venueString = implode(',', $request->venue); echo "</br>";
-
         $functionString = implode(',', $request->function); echo "</br>";
-    
         $allPackages = array_merge(
             isset($request->break_package) ? $request->break_package : [],
             isset($request->lunch_package) ? $request->lunch_package : [],
             isset($request->dinner_package) ? $request->dinner_package : [],
             isset($request->wedding_package) ? $request->wedding_package : []
         );
-        
         $uniquePackages = array_unique($allPackages);
-        
         $packagesString = implode(',', $uniquePackages);
-
-        // die;
-     
         if (\Auth::user()->can('Create Meeting')) {
             $type = 
             $validator = \Validator::make(
@@ -139,13 +126,12 @@ class MeetingController extends Controller
             $meeting['relationship']       = $request->relationship;
             $meeting['type']               = $request->type;
             $meeting['venue_selection']    = $venueString ;
-            $meeting['food_package']       = $packagesString;
+            $meeting['func_package']       = $packagesString;
             $meeting['function']            = $functionString;
             $meeting['guest_count']         = $request->guest_count;
             $meeting['room']                = $request->room;
             $meeting['meal']                = $request->meal;
             $meeting['bar']                 = $request->bar;
-            // $meeting['bar_package']         = $request->bar_package;
             $meeting['spcl_request']        = $request->spcl_request;
             $meeting['alter_name']          = $request->alter_name;
             $meeting['alter_email']         = $request->alter_email;
@@ -236,7 +222,6 @@ class MeetingController extends Controller
     {
         if (\Auth::user()->can('Show Meeting')) {
             $status = Meeting::$status;
-
             return view('meeting.view', compact('meeting', 'status'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
@@ -252,27 +237,16 @@ class MeetingController extends Controller
      */
     public function edit(Meeting $meeting)
     {
-        // echo "<pre>";
-        // print_r($meeting);
-        // die;
-        // $user_id = $meeting->user_id;
-        
+
         $function_p = explode(',', $meeting->function);
-        // print_r($function_p);
         $venue_function = explode(',', $meeting->venue_selection);
-
         $food_package = explode(',', $meeting->food_package);
-
         $lead_address = $meeting->lead_address;
-        // print_r($food_package);
-        // die;
-
-        // die;
         if (\Auth::user()->can('Edit Meeting')) {
             $status            = Meeting::$status;
             $attendees_contact = Contact::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $attendees_contact->prepend('--', 0);
-            $attendees_lead    = Lead::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            $attendees_lead    = Lead::where('created_by', \Auth::user()->creatorId())->get()->pluck('name');
             // $attendees_lead->prepend('--', 0);
             $user              = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             // $user->prepend('Select User', 0);
@@ -302,19 +276,10 @@ class MeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting)
     {      
-
-        echo "<pre>";
-        // print_r($meeting);
-        // $meeting['function']    = implode(',',$request->venue);
         $function = $meeting['function'];
-        // print_r($function);
-        // echo "</br>";
         $venue_function = $meeting->venue_selection;
-        // print_r($venue_function);
         $food_package = $meeting->food_package;
-        // print_r($food_package);
 
-        // die;
         if (\Auth::user()->can('Edit Meeting')) {
             $validator = \Validator::make(
                 $request->all(),
@@ -350,7 +315,7 @@ class MeetingController extends Controller
             $meeting['lead_address']      = $request->lead_address;
             $meeting['function']           = $function;
             $meeting['venue_selection']    = $venue_function ;
-            $meeting['food_package']       = $food_package;
+            $meeting['func_package']       = $food_package;
             $meeting['status']             = $request->status;
             $meeting['guest_count']        = $request->guest_count;
             $meeting['room']                = $request->room;
@@ -467,28 +432,6 @@ class MeetingController extends Controller
         $lead = Lead::where('id',$request->venue)->first();
         return $lead;
     }
-    // public function get_calender_date(Request $request){
-    //     $data = Meeting::where('start_date',$request->start)
-    //     ->orWhere('end_date',$request->start)  ->orWhere('end_date',$request->end)  ->orWhere('end_date',$request->end)
-    //     ->get();
-       
-    //     // foreach ($data as $val) {
-    //     //     $end_date = date_create($val->end_date);
-    //     //     date_add($end_date, date_interval_create_from_date_string("1 days"));
-    //         // $arrayJson[] = [
-    //         //     "id" => $val->id,
-    //         //     "title" => $val->name,
-    //         //     "start" => $val->start_date,
-    //         //     "end" => date_format($end_date, "Y-m-d H:i:s"),
-    //         //     "className" => $val->color,
-    //         //     "url" => route('meeting.show', $val['id']),
-    //         //     "textColor" => '#FFF',
-    //         //     "allDay" => true,
-    //         // ];
-    //     // }
-    //     // return $arrayJson;
-        
-    // }
     public function block_date(Request $request)
     {
         if (\Auth::user()->can('Create Meeting')) {
@@ -530,7 +473,21 @@ class MeetingController extends Controller
         ->orWhere('end_date',$request->start)->get();
         foreach($booked as $val){
             Blockdate::where('id',$val->id)->delete();
+        }  
+    }
+    public function view_floor(Meeting $meeting){
+        if (\Auth::user()->can('Show Meeting')) {
+            return view('floor_plan.view', compact('meeting'));
+        } else {
+            return redirect()->back()->with('error', 'permission Denied');
         }
-        
+        // if (\Auth::user()->can('Show Meeting')) {
+        //     echo"<pre>";
+        //     print_r($meeting);die;
+        //     return view('floor_plan.view',compact('meeting'));
+        // }
+        // else {
+        //     return redirect()->back()->with('error', 'permission Denied');
+        // }
     }
 }

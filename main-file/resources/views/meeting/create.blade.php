@@ -147,12 +147,6 @@
                                             {{Form::text('relationship',null,array('class'=>'form-control','placeholder'=>__('Enter Relationship')))}}
                                         </div>
                                     </div>
-                                    <div class="col-12 text-end mt-3">
-                                        <button  data-bs-toggle="tooltip" onclick="myFunction()"
-                                                title="{{ __('Create') }}" class="btn btn-sm btn-primary btn-icon m-1">
-                                                <i class="ti ti-plus"></i>
-                                        </button>
-                                    </div>
                                     <div id = "contact-info" style = "display:none">
                                         <div class="row">
                                         <div class="col-12  p-0 modaltitle pb-3 mb-3">
@@ -176,12 +170,8 @@
                                                 {{Form::text('alter_email',null,array('class'=>'form-control','placeholder'=>__('Enter Email')))}}
                                             </div>
                                         </div>
-                                        <div class="col-6">
-                                            <div class="form-group">
-                                                {{Form::label('alter_lead_address',__('Address'),['class'=>'form-label']) }}
-                                                {{Form::text('alter_lead_address',null,array('class'=>'form-control','placeholder'=>__('Address')))}}
-                                            </div>
-                                        </div>
+                                       
+                                        
                                         <div class="col-6">
                                             <div class="form-group">
                                                 {{Form::label('alter_relationship',__('Relationship'),['class'=>'form-label']) }}
@@ -189,6 +179,12 @@
                                             </div>
                                         </div>
                                         </div>
+                                    </div>
+                                    <div class="col-12 text-end mt-3">
+                                        <button  data-bs-toggle="tooltip" id="opencontact" 
+                                                title="{{ __('Add Contact') }}" class="btn btn-sm btn-primary btn-icon m-1">
+                                                <i class="ti ti-plus"></i>
+                                        </button>
                                     </div>
                                     @if (isset($setting['is_enabled']) && $setting['is_enabled'] == 'on')
                                         <div class="form-group col-md-6">
@@ -221,19 +217,7 @@
                                             {!! Form::select('type', $type_arr, null,array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
-                                    <!-- VENUE -->
-                                     <!-- <div class="col-6">
-                                        <div class="form-group">
-                                          {{ Form::label('venue_selection', __('Venue'), ['class' => 'form-label']) }}
-                                            @foreach($venue as $key => $label)
-                                                <div>
-                                                    {{ Form::checkbox('venue[]', 'option' . ($key + 1) , false, ['id' => 'venue' . ($key + 1)]) }}
-                                                    {{ Form::label('venue' . ($key + 1), $label) }}
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>  -->
-
+                                   
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="venue_selection" class="form-label">Venue</label>
@@ -284,7 +268,6 @@
                                             {!! Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')) !!}
                                         </div>
                                     </div> -->  
-                                   
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
@@ -296,8 +279,6 @@
                                             @endforeach
                                         </div>
                                     </div>                                   
-
-
                                     <div class="col-6" id ="breakfast" style ="display:none">
                                         <div class="form-group">
                                             {{ Form::label('break_package', __('Breakfast Package'), ['class' => 'form-label']) }}
@@ -320,8 +301,8 @@
                                             @endforeach  
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="form-group" id ="dinner" style ="display:none">
+                                    <div class="col-6" id ="dinner" style ="display:none">
+                                        <div class="form-group">
                                             {{ Form::label('dinner_package', __('Dinner Package'), ['class' => 'form-label']) }}
                                             @foreach($dinner as $key => $label)
                                                 <div>
@@ -331,8 +312,8 @@
                                             @endforeach  
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="form-group" id ="wedding" style ="display:none">
+                                    <div class="col-6"  id ="wedding" style ="display:none">
+                                        <div class="form-group">
                                             {{ Form::label('wedding_package', __('Wedding Package'), ['class' => 'form-label']) }}
                                             @foreach($wedding as $key => $label)
                                                 <div>
@@ -342,7 +323,12 @@
                                             @endforeach  
                                         </div>
                                     </div>
-                                    <!-- IMAGES -->
+                                    <div class="col-12" id ='add_opts' style ="display:none" >
+                                            <div class="form-group">
+                                                {{Form::label('add_opts',__('Additional Options'),['class'=>'form-label']) }}
+                                                {{Form::text('add_opts',null,array('class'=>'form-control','placeholder'=>__('Any Additional Optionas')))}}
+                                            </div>
+                                        </div>
                                     <div class="col-12">
                                         <div class="row">
                                             <label><b>Select Floor Plans</b></label>
@@ -357,7 +343,7 @@
                                             @endforeach
                                         </div>
                                     </div>
-                                    <!-- /IMAGES  -->
+                                    
                                 </div>
                             </div>
                         </div>
@@ -492,14 +478,16 @@
             target: '#useradd-sidenav',
             offset: 300
         })
-        function myFunction() {
+        document.getElementById('opencontact').addEventListener('click', function(event) {
             var x = document.getElementById("contact-info");
             if (x.style.display === "none") {
                 x.style.display = "block";
             } else {
                 x.style.display = "none";
             }
-        }
+            event.stopPropagation();
+            event.preventDefault();
+        });
         $('select[name= "attendees_lead"]').on('change', function() {
             $('#breakfast').hide();
             $('#lunch').hide();
@@ -574,11 +562,12 @@
             var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
                         return $(this).val();
                     }).get();
-                    console.log("check",checkedFunctions);
+                    // console.log("check",checkedFunctions);
 
                     if(checkedFunctions.includes('Breakfast') || checkedFunctions.includes('Brunch')){
                         // console.log("fdsfdsfds")
                         $('#breakfast').show();
+                      
                     }
                     if(checkedFunctions.includes('Lunch') ){
                         $('#lunch').show();
@@ -597,39 +586,25 @@
                     $('#package').show();
                 }
         });
-    </script>
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-<script>
-    $(document).ready(function () {
-        $('input[name="uploadedImage"]').change(function () {
-            $('.floorimages').removeClass('selected-image');
-            
-            if ($(this).is(':checked')) {
-                var imageId = $(this).attr('id');
-                $('label[for="' + imageId + '"] img').addClass('selected-image');
-            }
+        $('input[type=radio][name="lunch_package[]"]').change(function() {
+            var val = $(this).val();
+                if(val == 'Additional Options'){
+                  $('#add_opts').show();
+                }
         });
-    });
-</script>
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('input[name="uploadedImage"]').change(function () {
+                $('.floorimages').removeClass('selected-image');
+                
+                if ($(this).is(':checked')) {
+                    var imageId = $(this).attr('id');
+                    $('label[for="' + imageId + '"] img').addClass('selected-image');
+                }
+            });
+        });
+    </script>
 @endpush
-<!-- <script>
-    function deleteImage(icon) {
-        var imageName = icon.getAttribute('data-image');
-
-        if (confirm('Are you sure you want to delete this image?')) {
-            // Send an AJAX request to delete the image
-            axios.delete(`/delete-image/${imageName}`)
-                .then(function (response) {
-                    // Handle success, e.g., remove the image from the DOM
-                    icon.parentElement.parentElement.remove();
-                    alert('Image deleted successfully.');
-                })
-                .catch(function (error) {
-                    // Handle errors
-                    console.error('Error deleting image:', error);
-                    alert('Error deleting image.');
-                });
-        }
-    }
-</script> -->
 
