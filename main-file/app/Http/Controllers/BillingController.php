@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Billing;
 
 class BillingController extends Controller
 {
@@ -12,12 +13,10 @@ class BillingController extends Controller
      */
     public function index()
     {
-            // if(\Auth::user()->type == 'owner'){
-           
-            // }
-            // else{
-            // }
-            return view('billing.index');
+        if(\Auth::user()->type == 'owner'){
+            $billing = Billing::first();
+            return view('billing.index',compact('billing'));
+        }   
     }
 
     /**
@@ -57,14 +56,17 @@ class BillingController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        
     }
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         //
+    }
+    public function get_user_info(Request $request){
+        $event_info = Lead::where('assigned_user',$request->user)->get();
+        print_r($event_info);
     }
 }

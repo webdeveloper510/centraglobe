@@ -391,6 +391,7 @@ Route::group(['middleware' => ['verified']], function () {
         ],
         function () {
           Route::resource('billing',BillingController::class);
+          Route::post('billing/user_selected',[BillingController::class,'get_user_info'])->name('billing.user_info');
         }
     );
     Route::group(
@@ -472,7 +473,7 @@ Route::group(['middleware' => ['verified']], function () {
             Route::post('meeting/block-date/',[MeetingController::class,'block_date'])->name('meeting.blockdate');
             Route::post('meeting/unblock-date/',[MeetingController::class,'unblock_date'])->name('meeting.unblock');
             Route::get('meeting/share_floor_plan/{meeting}', [MeetingController::class, 'view_floor'])->name('meeting.floor_plan');
-
+            Route::post('meeting/share_event_info', [MeetingController::class, 'get_event_info'])->name('meeting.event_info');
         }
     );
     

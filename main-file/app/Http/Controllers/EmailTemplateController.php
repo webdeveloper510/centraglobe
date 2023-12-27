@@ -170,8 +170,6 @@ class EmailTemplateController extends Controller
 				$emailTemplate     = $settings['owner_name'];
 			}
             $EmailTemplates = EmailTemplate::all();
-
-
             return view('email_templates.show', compact('emailTemplate', 'languages', 'currEmailTempLang','EmailTemplates'));
         }
         else

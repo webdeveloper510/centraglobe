@@ -14,7 +14,8 @@ use App\Models\Utility;
 use App\Models\User;
 use App\Models\UserDefualtView;
 use Illuminate\Http\Request;
-USE App\Models\Blockdate;
+use App\Models\Blockdate;
+USE App\Models\Billing;
 use DateTime;
 
 
@@ -476,18 +477,70 @@ class MeetingController extends Controller
         }  
     }
     public function view_floor(Meeting $meeting){
-        if (\Auth::user()->can('Show Meeting')) {
-            return view('floor_plan.view', compact('meeting'));
-        } else {
-            return redirect()->back()->with('error', 'permission Denied');
+      
+        return view('floor_plan.view', compact('meeting'));
+    }
+    public function get_event_info(Request $request){
+        $email = $request->email;
+        $event = Meeting::where('email', $email)->first();
+        echo "<pre>";print_r($event);
+        // $billing = Billing::first();
+        // $labels = [ 'venue_rental' => 'Venue Rental',
+        //             'hotel_rooms'=>'Hotel Rooms',
+        //             'equipment'=>'Requirements',
+        //             'setup' =>'Setup',
+        //             'gold_2hrs'=>'Bar Package',
+        //             'special_req' =>'Special Request /Other',
+        //             'classic_brunch'=>'Brunch/Lunch/Dinner Package',
+        //  ];
+        // $to = $request->email;
+        $to = "sonali@codenomad.net"; 
+        $from = 'harjot@codenomad.net'; 
+    //     $fromName = 'Developer'; 
+        $subject = "Event Details";
+        $message = '';
+        $message .= "<strong>Centraverse</strong>";
+        $message .= "<p>Hey,Following are the event details </p>";
+        $message .= "<div class='row'>
+        <div class='col-sm-12'>
+            <div class='card'>
+                <div class='card-body table-border-style'>
+                    <div class='table-responsive overflow_hidden'>
+                        <table class='table datatable align-items-center'>
+                            <thead class='thead-light'>
+                                <tr>
+                                    <th scope='col' >Description</th>
+                                    <th scope='col'>Cost</th>
+                                </tr>
+                            </thead>
+                            <tbody>";
+                            $message .=  "<tr>
+                                <td><label class='ischeck'>Event name:</label>{$event->name}</td>
+                                <td><label class='ischeck'>Start Date:</label>{$event->start_date}</td>
+                                <td><label class='ischeck'>End Date:</label>{$event->end_date}</td>
+                                <td><label class='ischeck'>Guest Count:</label>{$event->guest_count}</td>
+                                <td><label class='ischeck'>Function:</label>{$event->function}</td>
+                                <td><label class='ischeck'>Venue:</label>{$event->venue_selection}</td>
+                                <td><label class='ischeck'>Special Requests:</label>{$event->spcl_request}</td>
+                            </tr>";
+                            $message .= "</tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>"; 
+        // Set content-type header for sending HTML email 
+        $headers = "MIME-Version: 1.0" . "\r\n"; 
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
+        $headers .= 'From: '.$fromName.'<'.$from.'>' . "\r\n"; 
+        $headers .= 'Cc: welcome@example.com' . "\r\n"; 
+        $headers .= 'Bcc: welcome2@example.com' . "\r\n"; 
+        // Send email 
+        if(@mail($to, $subject, $message, $headers)){ 
+            return redirect()->back()->with('success', 'Email Sent successfully');
+        }else{ 
+            return redirect()->back()->with('success', 'Email Sent successfully');
         }
-        // if (\Auth::user()->can('Show Meeting')) {
-        //     echo"<pre>";
-        //     print_r($meeting);die;
-        //     return view('floor_plan.view',compact('meeting'));
-        // }
-        // else {
-        //     return redirect()->back()->with('error', 'permission Denied');
-        // }
     }
 }

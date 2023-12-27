@@ -47,7 +47,7 @@
   $LangName = $currEmailTempLang->language;
 ?>
 <?php $__env->startSection('action-btn'); ?>
-    <div class="text-end mb-3">
+    <!-- <div class="text-end mb-3">
         <div class="d-flex justify-content-end drp-languages">
             <ul class="list-unstyled mb-0 m-2">
                 <li class="dropdown dash-h-item drp-language" style="list-style-type: none;">
@@ -73,13 +73,6 @@
                             <?php echo e($emailTemplate->name); ?></span>
                         <i class="ti ti-chevron-down drp-arrow nocolor"></i>
                     </a>
-
-                    <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true"
-                        data-size="md" data-title="<?php echo e(__('Generate content with AI')); ?>"
-                        data-url="<?php echo e(route('generate', ['email template'])); ?>" data-toggle="tooltip"
-                        title="<?php echo e(__('Generate')); ?>">
-                        <i class="fas fa-robot"></span><span class="robot"><?php echo e(__('Generate With AI')); ?></span></i>
-                    </a>
                     <div class="dropdown-menu dash-h-dropdown dropdown-menu-end">
                         <?php $__currentLoopData = $EmailTemplates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $EmailTemplate): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <a href="<?php echo e(route('manage.email.language', [$EmailTemplate->id, Request::segment(3) ? Request::segment(3) : \Auth::user()->lang])); ?>"
@@ -87,12 +80,13 @@
 
                             </a>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
                     </div>
                 </li>
             </ul>
         </div>
-    </div>
+    </div> -->
+    <?php echo e($EmailTemplates); ?>
+
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
     <div class="row">
@@ -297,8 +291,25 @@
                                                     </p>
                                                     <p class="col-6"><?php echo e(__('Contract End_Date')); ?> : <span
                                                             class="pull-right text-primary">{contract_end_date}</span></p>
-
-
+                                                </div>
+                                                <?php elseif($emailTemplate->slug == 'event_description'): ?>
+                                                <div class="row">
+                                                    <p class="col-6"><?php echo e(__('App Name')); ?> : <span
+                                                            class="pull-end text-primary">{app_name}</span></p>
+                                                    <p class="col-6"><?php echo e(__('Company Name')); ?> : <span
+                                                            class="pull-right text-primary">{company_name}</span></p>
+                                                    <p class="col-6"><?php echo e(__('App Url')); ?> : <span
+                                                            class="pull-right text-primary">{app_url}</span></p>
+                                                    <p class="col-6"><?php echo e(__('Event Type')); ?> : <span
+                                                            class="pull-right text-primary">{task_name}</span></p>
+                                                    <p class="col-6"><?php echo e(__('Event Start Date')); ?> : <span
+                                                            class="pull-right text-primary">{task_start_date}</span></p>
+                                                    <p class="col-6"><?php echo e(__('Event End Date')); ?> : <span
+                                                            class="pull-right text-primary">{task_due_date}</span></p>
+                                                    <p class="col-6"><?php echo e(__('Task Assign User')); ?> : <span
+                                                            class="pull-right text-primary">{task_assign_user}</span></p>
+                                                    <p class="col-6"><?php echo e(__('Task Description')); ?> : <span
+                                                            class="pull-right text-primary">{task_description}</span></p>
                                                 </div>
                                             <?php endif; ?>
                                         </div>

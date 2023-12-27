@@ -70,25 +70,18 @@
                             {{ $emailTemplate->name }}</span>
                         <i class="ti ti-chevron-down drp-arrow nocolor"></i>
                     </a>
-
-                    <a href="#" data-size="md" class="btn btn-sm btn-primary" data-ajax-popup-over="true"
-                        data-size="md" data-title="{{ __('Generate content with AI') }}"
-                        data-url="{{ route('generate', ['email template']) }}" data-toggle="tooltip"
-                        title="{{ __('Generate') }}">
-                        <i class="fas fa-robot"></span><span class="robot">{{ __('Generate With AI') }}</span></i>
-                    </a>
                     <div class="dropdown-menu dash-h-dropdown dropdown-menu-end">
                         @foreach ($EmailTemplates as $EmailTemplate)
                             <a href="{{ route('manage.email.language', [$EmailTemplate->id, Request::segment(3) ? Request::segment(3) : \Auth::user()->lang]) }}"
                                 class="dropdown-item {{ $emailTemplate->name == $EmailTemplate->name ? 'text-primary' : '' }}">{{ $EmailTemplate->name }}
                             </a>
                         @endforeach
-
                     </div>
                 </li>
             </ul>
         </div>
-    </div>
+    </div> 
+   
 @endsection
 @section('content')
     <div class="row">
@@ -294,7 +287,7 @@
                                                     <p class="col-6">{{ __('Contract End_Date') }} : <span
                                                             class="pull-right text-primary">{contract_end_date}</span></p>
                                                 </div>
-                                                <!-- @elseif($emailTemplate->slug == 'floor_plan')
+                                                @elseif($emailTemplate->slug == 'event_description')
                                                 <div class="row">
                                                     <p class="col-6">{{ __('App Name') }} : <span
                                                             class="pull-end text-primary">{app_name}</span></p>
@@ -312,7 +305,7 @@
                                                             class="pull-right text-primary">{task_assign_user}</span></p>
                                                     <p class="col-6">{{ __('Task Description') }} : <span
                                                             class="pull-right text-primary">{task_description}</span></p>
-                                                </div> -->
+                                                </div>
                                             @endif
                                         </div>
                                     </div>
