@@ -121,6 +121,13 @@ Route::any('/all-data', [DashboardController::class, 'get_data'])->middleware(
         'XSS',
     ]
 );
+// UPCOMING EVENTS AND COMPLETED EVENTS ROUTES //   <
+Route::get('/meeting-upcoming',[DashboardController::class,'upcomingevents']);    
+
+Route::get('/meeting-completed',[DashboardController::class,'completedevents']);
+// UPCOMING EVENTS AND COMPLETED EVENTS ROUTES //   >
+
+
 Route::resource('plan', PlanController::class)->middleware(['XSS']);
 Route::get('quote/pdf/{id}', [QuoteController::class, 'pdf'])->name('quote.pdf')->middleware(['XSS']);
 Route::get('salesorder/pdf/{id}', [SalesOrderController::class, 'pdf'])->name('salesorder.pdf')->middleware(['XSS']);
@@ -1243,5 +1250,3 @@ Route::group(['middleware' => ['verified']], function () {
     // Storage setting
     Route::post('storage-settings', [SettingController::class, 'storageSettingStore'])->name('storage.setting.store')->middleware(['auth', 'XSS']);
 });
-
-

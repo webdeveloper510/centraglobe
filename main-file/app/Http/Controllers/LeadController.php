@@ -84,9 +84,6 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-
-        // echo "<pre>";
-        // print_r($_REQUEST);
         // $user = User::where('id',$request->user)->get();
 
         // echo "" $user->username;
@@ -264,6 +261,13 @@ class LeadController extends Controller
      */
     public function update(Request $request, Lead $lead)
     {
+        // echo "<pre>";
+        // print_r($_REQUEST);
+        $venue_function = implode(',',$_REQUEST['venue']);
+        // print_r($venue_function);
+        $function = implode(',',$_REQUEST['function']);
+        // print_r($function);
+        // die;
         if (\Auth::user()->can('Edit Lead')) {
             $validator = \Validator::make(
                 $request->all(),
@@ -295,9 +299,8 @@ class LeadController extends Controller
             $lead['start_date']         = $request->start_date;
             $lead['end_date']           = $request->end_date;
             $lead['type']               = $request->type;
-            $lead['venue_selection']    = implode(',',$request->venue);
-            $lead['function']           = $request->function;
-            // $lead['function']           = implode(',',$request->function);
+            $lead['venue_selection']    = $venue_function;
+            $lead['function']           = $function;
             $lead['status']             = $request->status;
             $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;

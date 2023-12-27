@@ -14,26 +14,71 @@
 @endsection
 
 @section('content')
-<div class="row">
+<style>
+    #optionsContainer {
+        display: none;
+        margin-top: 10px;
+    }
 
+    button {
+        background-color: #007bff;
+        color: #fff;
+        padding: 8px 16px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+    #optionsContainer{
+    display: block;
+    margin-left: 288px;
+    margin-top: -16px;
+    padding: 10px;
+    }
+    .upcmg{
+    margin-left: 256px;
+    margin-top: -201px;
+    }
+    .cmplt{
+    margin-left: 539px;
+    margin-top: -206px;
+    }
+    /* #popup-form {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      border-radius:2px
+    }
+
+    #overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 999;
+    } */
+</style>
+<div class="row">
     <!-- [ sample-page ] start -->
-        <div class="col-sm-12">
-            <div class="row">
-                @if (\Auth::user()->type == 'owner')
-                <div class="col-xxl-12">
+    <div class="col-sm-12">
+        <div class="row">
+            @if (\Auth::user()->type == 'owner')
+            <div class="col-xxl-12">
                     <div class="row">
-                        <div class="col-lg-3 col-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="theme-avtar bg-warning">
-                                                <i class="ti ti-user"></i>
-                                            </div>
-                                            <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3">{{ __('No. of Staff') }}</h6>
-                                            <h3 class="mb-0">{{ $data['totalUser'] }} </h3>
-                                        </div>
-                                    </div>
-                                </div>
+                        
                                 <div class="col-lg-3 col-6">
                                     <div class="card">
                                         <div class="card-body">
@@ -46,6 +91,57 @@
                                         </div>
                                     </div>
                                 </div>
+
+<div class="col-lg-3 col-6" id="toggleDiv">
+    <div class="card">
+        <div class="card-body" onclick="toggleOptions()">
+            <div class="theme-avtar bg-warning">
+                <i class="ti ti-user"></i>
+            </div>
+            <p class="text-muted text-sm mt-4 mb-2"></p>
+            <h6 class="mb-3">{{ __('Total Events') }}</h6>
+            <h3 class="mb-0">{{ $data['totalUser'] }} </h3>
+        </div>
+    </div>
+</div>
+
+<div id="optionsContainer" style="display: none;">
+    <!-- <div class="option" onclick="showUpcoming()">
+        <h6 class="mb-3">{{ __('Upcoming Events') }}</h6>
+    </div> -->
+    <div class="col-lg-3 col-6 upcmg">
+        <div class="card option" onclick="showUpcoming()">
+            <div class="card-body">
+                    <div class="theme-avtar bg-info">
+                        <i class="fas fa-address-card"></i>
+                    </div>
+                    <p class="text-muted text-sm mt-4 mb-2"></p>
+                    <h6 class="mb-3">{{ __('Upcoming Events') }}</h6>
+                    <h4 class="mb-0">{{ @$upcoming }}</h4>
+                </div>
+            </div>
+        </div>
+    <!-- <div class="option" onclick="showCompleted()">
+        <h6 class="mb-3">{{ __('Completed Events') }}</h6>
+    </div> -->
+    <div class="col-lg-3 col-6 cmplt">
+    <div class="card option" onclick="showCompleted()">
+            <div class="card-body">
+                    <div class="theme-avtar bg-info">
+                        <i class="fas fa-address-card"></i>
+                    </div>
+                    <p class="text-muted text-sm mt-4 mb-2"></p>
+                    <h6 class="mb-3">{{ __('Completed Events') }}</h6>
+                    <h4 class="mb-0">{{ @$completed }}</h4>
+                </div>
+            </div>
+        </div>
+</div>    
+<!-- <div id="optionsContainer" style="display: none;">
+    <button onclick="showUpcoming()">Upcoming</button>
+    <button onclick="showCompleted()">Completed</button>
+</div> -->
+
                                 <!-- <div class="col-lg-3 col-6">
                                     <div class="card">
                                         <div class="card-body">
@@ -349,7 +445,53 @@
             <!-- [ sample-page ] end -->
         </div>
     <!-- [ Main Content ] end -->
+  
 </div>
+<!-- <div id="overlay"></div>
+    <div id="popup-form">
+        <div class="row">
+        <div  class ="card">
+            <div class="col-md-12">
+                <div class="card-header">
+                    {{ Form::open(['route' => 'meeting.blockdate', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+                    <div class="row">
+                        <div class="col-lg-8 col-md-8 col-sm-8">
+                            <h5>{{ __('Block Date') }}</h5>
+                        </div>
+                    </div>
+                </div>
+                <p style="float:right;"><font style="color:red;">&nbsp;&nbsp;BLOCKED BY : </font>admin</p>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="form-group">
+                                {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
+                                {!! Form::date('start_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                {{ Form::label('end_date', __('End Date'), ['class' => 'form-label']) }}
+                                {!! Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-group">
+                                {{Form::label('purpose',__('Purpose'),['class'=>'form-label']) }}
+                                {{Form::textarea('purpose',null,array('class'=>'form-control','rows'=>2))}}
+                            </div>
+                        </div> 
+                    </div>
+                </div>
+                <div class="card-footer text-end">
+                    {{ Form::submit(__('Block'), ['id'=>'block','class' => 'btn  btn-primary ']) }}
+                    {{Form::close()}}
+                    <button class="btn  btn-primary" id= "unblock" data-bs-toggle="tooltip" title="{{__('Close')}}" style ="display:none">Unblock</button> 
+                <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="{{__('Close')}}">Close</button> 
+                </div>
+            </div>
+        </div>
+    </div> -->
 @endsection
 
 @push('script-page')
@@ -486,7 +628,9 @@
     })();
 </script> -->
 
-
+<script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dc4641f860664c6e824b093274f50291"}'></script>
+<script src="{{ asset('assets/js/plugins/main.min.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script type="text/javascript">
     (function () {
         var options = {
@@ -571,14 +715,13 @@
         if(calender_type == undefined){
             calender_type = 'local_calender';
         }
-
         $('#calendar').addClass(calender_type);
         $.ajax({
             url: urls ,
             method:"POST",
             data: {"_token": "{{ csrf_token() }}",'calender_type':calender_type},
             success: function(data) {
-                // console.log(data);
+                console.log(data);
                 (function() {
                     var etitle;
                     var etype;
@@ -600,34 +743,72 @@
                                     hour12: false,
                                 },
                         themeSystem: 'bootstrap',
-                        // slotDuration: '00:10:00',
                         navLinks: true,
-                        droppable: true,
+                        droppable: false,
                         selectable: true,
                         selectMirror: true,
-                        editable: true,
+                        editable: false,
                         dayMaxEvents: true,
                         handleWindowResize: true,
                         height: 'auto',
                         timeFormat: 'H(:mm)',
                         events: data,
-                        // eventContent: function(event, element, view) {
-                        //             var customHtml = event.event._def.extendedProps.html;
-                        //             return {
-                        //                 html: customHtml
-                        //             }
-                        //     }
-
+                        select: function(info) {
+                            var startDate = info.startStr;
+                            var endDate =  info.endStr;
+                            openPopupForm(startDate,endDate);
+                        },                
                     });
                     calendar.render();
                 })();
             }
         });
-        }
+    $('#close-popup').on('click', function() {
+        closePopupForm();
+    });
+    function openPopupForm(start,end) {
+        $("#block").show();
+        $("#unblock").hide();
+        $( ".blockd_dates input" ).each(function( index ) {
+            if($(this).val() == start || $(this).val() == end){
+                $("#unblock").show();
+                $("#block").hide();
+            }
+        });
+        var enddate = moment(end).subtract(1, 'days').format('yyyy-MM-DD');     
+        $("input[name = 'start_date']").attr('value',start);
+        $("input[name = 'end_date']").attr('value',enddate);
+        $('#popup-form').show();
+        $('#overlay').show();
+    }
+    function closePopupForm() {
+      $('#popup-form').hide();
+      $('#overlay').hide();
+    }
+    }
+    $('#unblock').on('click', function() {
+        var start = $('#popup-form input[name = "start_date"]').val();
+        var end = $('#popup-form input[name = "end_date"]').val();
+        var purpose = $('#popup-form textarea[name = "purpose"]').val();
+        var url = "{{route('meeting.unblock')}}";
+        $.ajax({
+            url : url,
+            method:"POST",
+            data: {
+                "_token": "{{ csrf_token() }}",
+                'start':start,
+                'end':end,
+            },
+            success: function(data) {
+                location.reload();
+                // console.log(data);
+            }
+        })
+    });
 </script> 
 
 
-     <script>
+     <!-- <script>
         var options = {
             series: [
                 {
@@ -707,5 +888,19 @@
         chart.render();
 
 
-    </script>  
+    </script>   -->
+<script>
+    function toggleOptions() {
+        var optionsContainer = document.getElementById('optionsContainer');
+        optionsContainer.style.display = optionsContainer.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showUpcoming() {
+       window.location.href = "{{ url('/meeting-upcoming') }}";
+    }
+
+    function showCompleted() {
+        window.location.href = "{{ url('/meeting-completed') }}";
+    }
+</script>
 @endpush

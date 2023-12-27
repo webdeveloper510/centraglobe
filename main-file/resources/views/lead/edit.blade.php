@@ -111,7 +111,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             <label for="venue" class="form-label">{{ __('Venue') }}</label>
             @foreach($venue as $key => $label)
@@ -122,6 +122,19 @@
                 </div>
             @endforeach  
         </div>
+    </div> -->
+
+    <div class="col-6">
+       <div class="form-group">
+           <label for="venue" class="form-label">{{ __('Venue') }}</label>
+           @foreach($venue as $key => $label)
+               <div>
+                   <input type="checkbox" name="venue[]" id="{{ $label }}" value="{{ $label }}" 
+                       {{ in_array($label, @$venue_function) ? 'checked' : '' }}>
+                   <label for="{{ $label }}">{{ $label }}</label>
+               </div>
+           @endforeach  
+       </div>
     </div>
 
     <div class="col-6">
@@ -165,14 +178,13 @@
             <div class="checkbox-group">
                 @foreach($function as $key => $value)
                     <label>
-                        <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $key }}" class="function-checkbox" {{ in_array($value, $function_package) ? 'checked' : '' }}>
+                        <input type="checkbox" id="{{ $value }}" name="function[]" value="{{ $value }}" class="function-checkbox" {{ in_array($value, $function_package) ? 'checked' : '' }}>
                         {{ $value }}
                     </label><br>
                 @endforeach
             </div>
         </div>
     </div>
-
 
 
 

@@ -82,14 +82,13 @@ class MeetingController extends Controller
     public function store(Request $request)
     {
 
-        echo "<pre>";
-        print_r($_REQUEST);
-
+        // echo "<pre>";
+        // print_r($_REQUEST);
         // die;
 
-        $venueString = implode(',', $request->venue); echo "</br>";
-
-        $functionString = implode(',', $request->function); echo "</br>";
+        $meal = implode(',', $_REQUEST['meal']);
+        $venueString = implode(',', $request->venue);
+        $functionString = implode(',', $request->function); 
     
         $allPackages = array_merge(
             isset($request->break_package) ? $request->break_package : [],
@@ -119,14 +118,13 @@ class MeetingController extends Controller
                     'guest_count' => 'required', 
                     'start_time' => 'required',
                     'end_time' => 'required',
-
                 ]);
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
                 return redirect()->back()->with('error', $messages->first());
             }
             $meeting                      = new Meeting();
-            $meeting['user_id']           = $request->user;
+            $meeting['user_id']           = $_REQUEST['user'];
             $meeting['name']              = $request->name;
             $meeting['status']            = $request->status;
             $meeting['start_date']        = $request->start_date;
@@ -135,6 +133,7 @@ class MeetingController extends Controller
             $meeting['lead_address']       = $request->lead_address;
             $meeting['parent']             = $request->parent;
             $meeting['parent_id']         = $request->parent_id ?? '0';
+            $meeting['company_name']      = $_REQUEST['company_name'];
             $meeting['relationship']       = $request->relationship;
             $meeting['type']               = $request->type;
             $meeting['venue_selection']    = $venueString ;
@@ -142,9 +141,8 @@ class MeetingController extends Controller
             $meeting['function']            = $functionString;
             $meeting['guest_count']         = $request->guest_count;
             $meeting['room']                = $request->room;
-            $meeting['meal']                = $request->meal;
+            $meeting['meal']                = $meal;
             $meeting['bar']                 = $request->bar;
-            // $meeting['bar_package']         = $request->bar_package;
             $meeting['spcl_request']        = $request->spcl_request;
             $meeting['alter_name']          = $request->alter_name;
             $meeting['alter_email']         = $request->alter_email;
@@ -277,7 +275,7 @@ class MeetingController extends Controller
             // $user->prepend('Select User', 0);
             $users = User::pluck('name', 'id');
             $user_id = $meeting->user_id;
-            $account_name      = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            $account_name = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $previous = Meeting::where('id', '<', $meeting->id)->max('id');
             $next = Meeting::where('id', '>', $meeting->id)->min('id');
             $function = Meeting::$function;
@@ -301,19 +299,49 @@ class MeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting)
     {      
-
-        echo "<pre>";
+        // echo "<pre>";
         // print_r($meeting);
-        // $meeting['function']    = implode(',',$request->venue);
-        $function = $meeting['function'];
-        // print_r($function);
-        // echo "</br>";
-        $venue_function = $meeting->venue_selection;
-        // print_r($venue_function);
-        $food_package = $meeting->food_package;
-        // print_r($food_package);
-
         // die;
+        $break_package = $lunch_package = $dinner_package = $wedding_package = '';
+        if(isset($_REQUEST['venue'])){
+            $venue = implode(',',$_REQUEST['venue']);
+            // print_r($venue);
+        }
+        if(isset($_REQUEST['function'])){
+            $function = implode(',',$_REQUEST['function']);
+            // print_r($function);
+        }
+        if(isset($_REQUEST['meal'])){
+            $meal = implode(',',$_REQUEST['meal']);
+            // print_r($function);
+        }
+
+        // $break_package = implode(',', $_REQUEST['break_package']);
+        // $lunch_package = implode(',', $_REQUEST['lunch_package']);
+        // $dinner_package = implode(',', $_REQUEST['dinner_package']);
+        // $wedding_package = implode(',', $_REQUEST['wedding_package']);
+        // $packagesArray = implode(',', array($break_package, $lunch_package, $dinner_package, $wedding_package));
+        // print_r($packagesArray);
+        if (isset($_REQUEST['break_package']))
+        {
+            $break_package = implode(',', $_REQUEST['break_package']);
+        }
+        if (isset($_REQUEST['lunch_package']))
+        {
+            $lunch_package = implode(',', $_REQUEST['lunch_package']);
+        }
+        if (isset($_REQUEST['dinner_package']))
+        {
+            $dinner_package = implode(',', $_REQUEST['dinner_package']);
+        }
+        if (isset($_REQUEST['wedding_package']))
+        {
+            $wedding_package = implode(',', $_REQUEST['wedding_package']);
+        }        
+            $packagesArray = implode(',', array($break_package, $lunch_package, $dinner_package, $wedding_package));
+            // print_r($packagesArray);
+        // die;            
+            
         if (\Auth::user()->can('Edit Meeting')) {
             $validator = \Validator::make(
                 $request->all(),
@@ -337,7 +365,7 @@ class MeetingController extends Controller
                 return redirect()->back()->with('error', $messages->first());
             }
             
-            $meeting['user_id']           = $request->user_id;
+            $meeting['user_id']           = $meeting->user_id;
             $meeting['name']              = $request->name;
             $meeting['status']            = $request->status;
             $meeting['start_date']        = $request->start_date;
@@ -348,12 +376,12 @@ class MeetingController extends Controller
             $meeting['email']              = $request->email;
             $meeting['lead_address']      = $request->lead_address;
             $meeting['function']           = $function;
-            $meeting['venue_selection']    = $venue_function ;
-            $meeting['food_package']       = $food_package;
+            $meeting['venue_selection']    = $venue ;
+            $meeting['food_package']       = $packagesArray;
             $meeting['status']             = $request->status;
             $meeting['guest_count']        = $request->guest_count;
             $meeting['room']                = $request->room;
-            $meeting['meal']                = $request->meal;
+            $meeting['meal']                = $meal;
             $meeting['bar']                 = $request->bar;
             $meeting['spcl_request']        = $request->spcl_request;
             $meeting['alter_name']          = $request->alter_name;

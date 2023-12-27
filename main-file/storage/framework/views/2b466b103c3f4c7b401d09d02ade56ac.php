@@ -64,22 +64,12 @@
                                             <?php echo Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
 
                                         </div>
-                                    </div>
-
-                                        <!-- <div class="col-6">
-                                            <div class="form-group">
-                                                <?php echo e(Form::label('attendees_lead', __('Lead'), ['class' => 'form-label'])); ?>
-
-                                                <?php echo Form::text('attendees_lead', 'Default Value', ['class' => 'form-control']); ?>
-
-                                            </div>
-                                        </div> -->
-
+                                    </div>            
                                         <!-- <div class="col-6">
                                             <div class="form-group">
                                                 <?php echo e(Form::label('Assign User', __('Assign User'), ['class' => 'form-label'])); ?>
 
-                                                <?php echo Form::select('user', $user, null,array('class' => 'form-control')); ?>
+                                                <?php echo Form::select('user', $users, $user_id, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
 
                                             </div>
                                         </div> -->
@@ -87,10 +77,11 @@
                                             <div class="form-group">
                                                 <?php echo e(Form::label('Assign User', __('Assign User'), ['class' => 'form-label'])); ?>
 
-                                                <?php echo Form::select('user', $users, $user_id, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+                                                <?php echo Form::text('user_text', isset($users[$user_id]) ? $users[$user_id] : '', ['class' => 'form-control', 'disabled' => 'disabled']); ?>
 
                                             </div>
                                         </div>
+
 
                                         <div class="col-6">
                                             <div class="form-group">
@@ -257,7 +248,7 @@
                                                 <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
                                                 <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <div>
-                                                        <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="venue<?php echo e($key + 1); ?>" 
+                                                        <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="<?php echo e($label); ?>" 
                                                             <?php echo e(in_array($label, $venue_function) ? 'checked' : ''); ?>>
                                                         <label for="<?php echo e($label); ?>"><?php echo e($label); ?></label>
                                                     </div>
@@ -351,13 +342,13 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-6" id="breakfast">
+<div class="col-6" id="breakfast">
     <div class="form-group">
         <?php echo e(Form::label('break_package', __('Breakfast Package'), ['class' => 'form-label'])); ?>
 
         <?php $__currentLoopData = $breakfast; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div>
-                <?php echo e(Form::radio('break_package[]', $label, in_array($label, $food_package), ['id' => 'break_package' . ($key + 1)])); ?>
+                <?php echo e(Form::radio('break_package[]', $label, in_array($label, $food_package), ['id' => $label])); ?>
 
                 <?php echo e(Form::label($label, $label)); ?>
 
@@ -440,7 +431,7 @@
 
                                                 <?php $__currentLoopData = $meal; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div>
-                                                        <?php echo e(Form::radio('meal[]', 'option' . ($key + 1), false, ['id' => 'meal' . ($key + 1)])); ?>
+                                                        <?php echo e(Form::radio('meal[]', $label , false, ['id' => $label])); ?>
 
                                                         <?php echo e(Form::label('meal' . ($key + 1), $label)); ?>
 
@@ -448,13 +439,13 @@
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <?php echo Form::label('bar', 'Bar'); ?>
 
                                             <?php $__currentLoopData = $bar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div>
-                                                    <?php echo e(Form::radio('bar', 'option' . ($key + 1), false, ['id' => 'bar' . ($key + 1)])); ?>
+                                                    <?php echo e(Form::radio('bar', $label, false, ['id' => $label])); ?>
 
                                                     <?php echo e(Form::label('bar' . ($key + 1), $label)); ?>
 

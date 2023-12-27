@@ -377,7 +377,7 @@
                                             {!! Form::checkbox('room', 1, null, ['id'=>'room', 'class' => 'checkbox']) !!}
                                             {!! Form::label('room', 'Rooms at the hotel') !!} 
                                         </div>
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                         {!! Form::label('meal', 'Meal Preference') !!}
                                             @foreach($meal as $key => $label)
@@ -387,13 +387,35 @@
                                             </div>
                                             @endforeach
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-6">
+                                            <div class="form-group">
+                                            {!! Form::label('meal', 'Meal Preference') !!}
+                                                @foreach($meal as $key => $label)
+                                                <div>
+                                                        {{ Form::radio('meal[]', $label , false, ['id' => $label]) }}
+                                                        {{ Form::label('meal' . ($key + 1), $label) }}
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             {!! Form::label('bar', 'Bar') !!}
                                             @foreach($bar as $key => $label)
                                                 <div>
                                                     {{ Form::radio('bar', 'option' . ($key + 1), false, ['id' => 'bar' . ($key + 1)]) }}
+                                                    {{ Form::label('bar' . ($key + 1), $label) }}
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div> -->
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            {!! Form::label('bar', 'Bar') !!}
+                                            @foreach($bar as $key => $label)
+                                                <div>
+                                                    {{ Form::radio('bar', $label, false, ['id' => $label]) }}
                                                     {{ Form::label('bar' . ($key + 1), $label) }}
                                                 </div>
                                             @endforeach

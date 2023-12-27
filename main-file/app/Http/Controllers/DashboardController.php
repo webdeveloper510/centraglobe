@@ -54,7 +54,9 @@ class DashboardController extends Controller
                 $data['totalOpportunities'] = Opportunities::where('created_by', \Auth::user()->creatorId())->count();
                 $data['totalProduct']       = Product::where('created_by', \Auth::user()->creatorId())->count();
                 $data['invoiceColor']       = Invoice::$statuesColor;
-
+                $date = today()->format('Y-m-d');
+                $upcoming = Meeting::where('start_date', '>=', $date)->get()->count();;
+                $completed = Meeting::where('start_date', '<=', $date)->get()->count();;
 
                 $statuss  = Invoice::$status;
                 $invoices = [];
@@ -117,7 +119,7 @@ class DashboardController extends Controller
                 } else {
                     $storage_limit = 0;
                 }
-                return view('home', compact('data','users','plan','storage_limit'));
+                return view('home', compact('data','users','plan','storage_limit','upcoming','completed'));
             }
         } else {
 
@@ -329,5 +331,22 @@ class DashboardController extends Controller
             $arrayJson = array_merge($arrCall, $arrMeeting, $arrTask);
         }
         return $arrayJson;
+    }
+    public function upcomingevents(){
+        // echo "upcomingevents";
+        // echo "<pre>";
+        $date = today()->format('Y-m-d');
+        // // $meeting = Meeting::all();
+        $meetings = Meeting::where('start_date', '>=', $date)->get();
+        // print_r($meeting);
+        return view('meeting.index',compact('meetings'));
+    }
+    public function completedevents(){
+        // echo "completedevents";
+        // echo "<pre>";
+        $date = today()->format('Y-m-d');
+        // $meeting = Meeting::all();
+        $meetings = Meeting::where('start_date', '<=', $date)->get();
+        return view('meeting.index',compact('meetings'));
     }
 }
