@@ -86,7 +86,6 @@
                                     hour12: false,
                                 },
                         themeSystem: 'bootstrap',
-                        // slotDuration: '00:10:00',
                         navLinks: true,
                         droppable: false,
                         selectable: true,
@@ -101,19 +100,7 @@
                             var startDate = info.startStr;
                             var endDate =  info.endStr;
                             openPopupForm(startDate,endDate);
-                        },
-                        // eventClick: function(event) {
-                        //    alert('hy');
-                        // },
-                        // eventDisplay:'background',
-                        // eventColor: '#378006' ,
-                        // backgroundColor :'#000',
-                        // eventContent: function(event, element, view) {
-                        //             var customHtml = event.event._def.extendedProps.html;
-                        //             return {
-                        //                 html: customHtml
-                        //             }
-                        //     }
+                        },                
                     });
                     calendar.render();
                 })();
@@ -233,18 +220,19 @@ $setting = App\Models\Utility::settings();
         <!-- [ sample-page ] end -->
     </div>
     <div id="overlay"></div>
- <div id="popup-form">
-    <div class="row">
+    <div id="popup-form">
+        <div class="row">
         <div  class ="card">
             <div class="col-md-12">
                 <div class="card-header">
-                {{ Form::open(['route' => 'meeting.blockdate', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
+                    {{ Form::open(['route' => 'meeting.blockdate', 'method' => 'post', 'enctype' => 'multipart/form-data']) }}
                     <div class="row">
                         <div class="col-lg-8 col-md-8 col-sm-8">
                             <h5>{{ __('Block Date') }}</h5>
                         </div>
                     </div>
                 </div>
+                <p style="float:right;"><font style="color:red;">&nbsp;&nbsp;BLOCKED BY : </font>{{ $blockedby }}</p>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
@@ -347,7 +335,7 @@ $setting = App\Models\Utility::settings();
         function getparents(bid) {
             console.log(bid);
             $.ajax({
-                url: '{{route('task.getparent')}}',
+                url: '{{route("task.getparent")}}',
                 type: 'POST',
                 data: {
                     "parent": bid, "_token": "{{ csrf_token() }}",
@@ -366,7 +354,5 @@ $setting = App\Models\Utility::settings();
                 }
             });
         }
-
-
     </script>
     @endpush

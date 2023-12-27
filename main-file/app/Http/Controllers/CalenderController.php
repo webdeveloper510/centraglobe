@@ -7,6 +7,7 @@ use App\Models\Meeting;
 use App\Models\Task;
 use App\Models\Utility;
 use App\Models\Blockdate;
+use App\Models\User;
 
 use Illuminate\Http\Request;
 
@@ -21,19 +22,28 @@ class CalenderController extends Controller
     {
         $transdate = date('Y-m-d', time());
         $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
+        // echo "<pre>";
+        // echo $blockeddate[0]['created_by'];
+        // print_r($blockeddate);
+        $query = User::where('id',$blockeddate[0]['created_by'])->get();
+        // print_r($query);
+        $blockedby = $query[0]['name'];
         if(\Auth::user()->type == 'owner'){
             $calls    = Call::where('created_by', \Auth::user()->creatorId())->get();
-            $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();
-            $tasks    = Task::where('created_by', \Auth::user()->creatorId())->get();
-            
+            $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();     
+            // echo "<pre>";
+            // print_r($meetings);
+            // echo "++++++++++++++++++++++++".$meetings[0]['created_by'];
+            // die;      
+            $tasks    = Task::where('created_by', \Auth::user()->creatorId())->get();            
         }
         else
         {
             $calls    = Call::where('user_id', \Auth::user()->id)->get();
-            $meetings = Meeting::where('user_id', \Auth::user()->id)->get();
+            $meetings = Meeting::where('user_id', \Auth::user()->id)->get();            
             $tasks    = Task::where('user_id', \Auth::user()->id)->get();
         }
-        return view('calendar.index', compact('transdate','blockeddate'));
+        return view('calendar.index', compact('transdate','blockeddate','blockedby'));
     }
 
     /**
@@ -143,6 +153,7 @@ class CalenderController extends Controller
             if(\Auth::user()->type == 'owner'){
                 $calls    = Call::where('created_by', \Auth::user()->creatorId())->get();
                 $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();
+                // $meetings = Meeting::all();
                 $tasks    = Task::where('created_by', \Auth::user()->creatorId())->get();
                 $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
             }
@@ -150,6 +161,7 @@ class CalenderController extends Controller
             {
                 $calls    = Call::where('user_id', \Auth::user()->id)->get();
                 $meetings = Meeting::where('user_id', \Auth::user()->id)->get();
+                // $meetings = Meeting::all();
                 $tasks    = Task::where('user_id', \Auth::user()->id)->get();
                 $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
             }

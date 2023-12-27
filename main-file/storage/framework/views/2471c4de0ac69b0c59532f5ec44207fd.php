@@ -128,7 +128,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
             <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -139,6 +139,19 @@
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
         </div>
+    </div> -->
+
+    <div class="col-6">
+       <div class="form-group">
+           <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
+           <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+               <div>
+                   <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="<?php echo e($label); ?>" 
+                       <?php echo e(in_array($label, @$venue_function) ? 'checked' : ''); ?>>
+                   <label for="<?php echo e($label); ?>"><?php echo e($label); ?></label>
+               </div>
+           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
+       </div>
     </div>
 
     <div class="col-6">
@@ -192,7 +205,7 @@
             <div class="checkbox-group">
                 <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <label>
-                        <input type="checkbox" id="<?php echo e($value); ?>" name="function[]" value="<?php echo e($key); ?>" class="function-checkbox" <?php echo e(in_array($value, $function_package) ? 'checked' : ''); ?>>
+                        <input type="checkbox" id="<?php echo e($value); ?>" name="function[]" value="<?php echo e($value); ?>" class="function-checkbox" <?php echo e(in_array($value, $function_package) ? 'checked' : ''); ?>>
                         <?php echo e($value); ?>
 
                     </label><br>
@@ -200,7 +213,6 @@
             </div>
         </div>
     </div>
-
 
 
 

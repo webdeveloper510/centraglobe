@@ -441,7 +441,7 @@
 
                                             <?php echo Form::label('room', 'Rooms at the hotel'); ?> 
                                         </div>
-                                    <div class="col-6">
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                         <?php echo Form::label('meal', 'Meal Preference'); ?>
 
@@ -454,14 +454,42 @@
                                             </div>
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="col-6">
+                                            <div class="form-group">
+                                            <?php echo Form::label('meal', 'Meal Preference'); ?>
+
+                                                <?php $__currentLoopData = $meal; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div>
+                                                        <?php echo e(Form::radio('meal[]', $label , false, ['id' => $label])); ?>
+
+                                                        <?php echo e(Form::label('meal' . ($key + 1), $label)); ?>
+
+                                                </div>
+                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                            </div>
+                                        </div>
+                                    <!-- <div class="col-6">
                                         <div class="form-group">
                                             <?php echo Form::label('bar', 'Bar'); ?>
 
                                             <?php $__currentLoopData = $bar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div>
                                                     <?php echo e(Form::radio('bar', 'option' . ($key + 1), false, ['id' => 'bar' . ($key + 1)])); ?>
+
+                                                    <?php echo e(Form::label('bar' . ($key + 1), $label)); ?>
+
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </div>
+                                    </div> -->
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <?php echo Form::label('bar', 'Bar'); ?>
+
+                                            <?php $__currentLoopData = $bar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                                <div>
+                                                    <?php echo e(Form::radio('bar', $label, false, ['id' => $label])); ?>
 
                                                     <?php echo e(Form::label('bar' . ($key + 1), $label)); ?>
 
