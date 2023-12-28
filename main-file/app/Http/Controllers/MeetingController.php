@@ -82,25 +82,15 @@ class MeetingController extends Controller
      */
     public function store(Request $request)
     {
-
-        // echo "<pre>";
-        // print_r($_REQUEST);
-        // die;
-
-        $meal = implode(',', $_REQUEST['meal']);
-        $venueString = implode(',', $request->venue);
-        $functionString = implode(',', $request->function); 
-    
+        
         $allPackages = array_merge(
             isset($request->break_package) ? $request->break_package : [],
             isset($request->lunch_package) ? $request->lunch_package : [],
             isset($request->dinner_package) ? $request->dinner_package : [],
             isset($request->wedding_package) ? $request->wedding_package : []
         );
-        $uniquePackages = array_unique($allPackages);
-        $packagesString = implode(',', $uniquePackages);
+        $packagesString = implode(',', $allPackages);
         if (\Auth::user()->can('Create Meeting')) {
-            $type = 
             $validator = \Validator::make(
                 $request->all(),
                 [
@@ -115,13 +105,16 @@ class MeetingController extends Controller
                     'guest_count' => 'required', 
                     'start_time' => 'required',
                     'end_time' => 'required',
+                    'start_date'=>'required',
+                    'end_date'=>'required',
+                    'user' => 'required|unique:meetings,user_id',
                 ]);
             if ($validator->fails()) {
                 $messages = $validator->getMessageBag();
                 return redirect()->back()->with('error', $messages->first());
             }
             $meeting                      = new Meeting();
-            $meeting['user_id']           = $_REQUEST['user'];
+            $meeting['user_id']           = $request->user;
             $meeting['name']              = $request->name;
             $meeting['status']            = $request->status;
             $meeting['start_date']        = $request->start_date;
@@ -130,15 +123,15 @@ class MeetingController extends Controller
             $meeting['lead_address']       = $request->lead_address;
             $meeting['parent']             = $request->parent;
             $meeting['parent_id']         = $request->parent_id ?? '0';
-            $meeting['company_name']      = $_REQUEST['company_name'];
+            $meeting['company_name']      = $request->company_name;
             $meeting['relationship']       = $request->relationship;
             $meeting['type']               = $request->type;
-            $meeting['venue_selection']    = $venueString ;
+            $meeting['venue_selection']    = implode(',', $request->venue);
             $meeting['func_package']       = $packagesString;
-            $meeting['function']            = $functionString;
+            $meeting['function']            = implode(',', $request->function); 
             $meeting['guest_count']         = $request->guest_count;
             $meeting['room']                = $request->room;
-            $meeting['meal']                = $meal;
+            $meeting['meal']                = implode(',', $request->meal);
             $meeting['bar']                 = $request->bar;
             $meeting['spcl_request']        = $request->spcl_request;
             $meeting['alter_name']          = $request->alter_name;
@@ -151,66 +144,45 @@ class MeetingController extends Controller
             $meeting['end_time']            = $request->end_time;
             $meeting['created_by']        = \Auth::user()->creatorId();
             $meeting->save();
-            // Stream::create(
-            //     [
-            //         'user_id' => \Auth::user()->id, 'created_by' => \Auth::user()->creatorId(),
-            //         'log_type' => 'created',
-            //         'remark' => json_encode(
-            //             [
-            //                 'owner_name' => \Auth::user()->username,
-            //                 'title' => 'meeting',
-            //                 'stream_comment' => '',
-            //                 'user_name' => $meeting->name,
-            //             ]
-            //         ),
-            //     ]
-            // );
-            // $Assign_user_phone = User::where('id', $request->user)->first();
+            $Assign_user_phone = User::where('id', $request->user)->first();
+            $setting  = Utility::settings(\Auth::user()->creatorId());
+            $uArr = [
+                // 'meeting_assign_user' => $request->name,
+                'meeting_name' => $request->name,
+                'meeting_start_date' => $request->start_date,
+                'meeting_due_date' => $request->end_date,
+                'attendees_user' => $request->attendees_user,
+                'attendees_contact' => $request->attendees_contact,
+            ];
+            $resp = Utility::sendEmailTemplate('meeting_assigned', [$meeting->id => $Assign_user_phone->email], $uArr);
+            if (isset($setting['twilio_meeting_create']) && $setting['twilio_meeting_create'] == 1) {
+                $uArr = [
+                    'meeting_name' => $request->name,
+                    'meeting_start_date' => $request->start_date,
+                    'meeting_due_date' => $request->end_date,
+                    'user_name' => \Auth::user()->name,
 
-            // echo "<pre>";
-            // print_r($Assign_user_phone);
-            // die;
-            // $setting  = Utility::settings(\Auth::user()->creatorId());
-
-            // $uArr = [
-            //     // 'meeting_assign_user' => $request->name,
-            //     'meeting_name' => $request->name,
-            //     'meeting_start_date' => $request->start_date,
-            //     'meeting_due_date' => $request->end_date,
-            //     'attendees_user' => $request->attendees_user,
-            //     'attendees_contact' => $request->attendees_contact,
-            // ];
-            // $resp = Utility::sendEmailTemplate('meeting_assigned', [$meeting->id => $Assign_user_phone->email], $uArr);
-            // if (isset($setting['twilio_meeting_create']) && $setting['twilio_meeting_create'] == 1) {
-            // //  $msg = "New Meeting" . " " . $request->name . " created by " . \Auth::user()->name . '.';
-            //     $uArr = [
-            //         'meeting_name' => $request->name,
-            //         'meeting_start_date' => $request->start_date,
-            //         'meeting_due_date' => $request->end_date,
-            //         'user_name' => \Auth::user()->name,
-
-            //     ];
-            //     Utility::send_twilio_msg($Assign_user_phone->phone, 'new_meeting', $uArr);
-            // }
-            // if ($request->get('is_check')  == '1') {
-            //     $type = 'meeting';
-            //     $request1 = new Meeting();
-            //     $request1->title = $request->name;
-            //     $request1->start_date = $request->start_date;
-            //     $request1->end_date = $request->end_date;
-            //     Utility::addCalendarData($request1, $type);
-            // }
-            //webhook
-            // $module = 'New Meeting';
-            // $webhook =  Utility::webhookSetting($module);
-            // if ($webhook) {
-            //     $parameter = json_encode($meeting);
-            //     // 1 parameter is  URL , 2 parameter is data , 3 parameter is method
-            //     $status = Utility::WebhookCall($webhook['url'], $parameter, $webhook['method']);
-            //     if ($status != true) {
-            //         $msg = "Webhook call failed.";
-            //     }
-            // }
+                ];
+                Utility::send_twilio_msg($Assign_user_phone->phone, 'new_meeting', $uArr);
+            }
+            if ($request->get('is_check')  == '1') {
+                $type = 'meeting';
+                $request1 = new Meeting();
+                $request1->title = $request->name;
+                $request1->start_date = $request->start_date;
+                $request1->end_date = $request->end_date;
+                Utility::addCalendarData($request1, $type);
+            }
+            $module = 'New Meeting';
+            $webhook =  Utility::webhookSetting($module);
+            if ($webhook) {
+                $parameter = json_encode($meeting);
+                // 1 parameter is  URL , 2 parameter is data , 3 parameter is method
+                $status = Utility::WebhookCall($webhook['url'], $parameter, $webhook['method']);
+                if ($status != true) {
+                    $msg = "Webhook call failed.";
+                }
+            }
             if (\Auth::user()) {
                 return redirect()->back()->with('success', __('Meeting successfully created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
             } else {
@@ -249,14 +221,13 @@ class MeetingController extends Controller
         $function_p = explode(',', $meeting->function);
         $venue_function = explode(',', $meeting->venue_selection);
         $food_package = explode(',', $meeting->food_package);
-        $lead_address = $meeting->lead_address;
         if (\Auth::user()->can('Edit Meeting')) {
             $status            = Meeting::$status;
             $attendees_contact = Contact::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             $attendees_contact->prepend('--', 0);
             $attendees_lead    = Lead::where('created_by', \Auth::user()->creatorId())->get()->pluck('name');
             // $attendees_lead->prepend('--', 0);
-            $user              = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
+            $user  = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             // $user->prepend('Select User', 0);
             $users = User::pluck('name', 'id');
             $user_id = $meeting->user_id;
@@ -268,7 +239,7 @@ class MeetingController extends Controller
             $lunch = Meeting::$lunch;
             $dinner = Meeting::$dinner;
             $wedding = Meeting::$wedding;
-            return view('meeting.edit', compact('user_id', 'users','lead_address','food_package','function_p','venue_function','meeting', 'account_name', 'breakfast', 'lunch', 'dinner', 'wedding','attendees_contact', 'status', 'user', 'function','attendees_lead', 'previous', 'next'))->with('start_date', $meeting->start_date)->with('end_date', $meeting->end_date);
+            return view('meeting.edit', compact('user_id', 'users','food_package','function_p','venue_function','meeting', 'account_name', 'breakfast', 'lunch', 'dinner', 'wedding','attendees_contact', 'status', 'user', 'function','attendees_lead', 'previous', 'next'))->with('start_date', $meeting->start_date)->with('end_date', $meeting->end_date);
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -301,12 +272,6 @@ class MeetingController extends Controller
             // print_r($function);
         }
 
-        // $break_package = implode(',', $_REQUEST['break_package']);
-        // $lunch_package = implode(',', $_REQUEST['lunch_package']);
-        // $dinner_package = implode(',', $_REQUEST['dinner_package']);
-        // $wedding_package = implode(',', $_REQUEST['wedding_package']);
-        // $packagesArray = implode(',', array($break_package, $lunch_package, $dinner_package, $wedding_package));
-        // print_r($packagesArray);
         if (isset($_REQUEST['break_package']))
         {
             $break_package = implode(',', $_REQUEST['break_package']);
@@ -362,7 +327,7 @@ class MeetingController extends Controller
             $meeting['lead_address']      = $request->lead_address;
             $meeting['function']           = $function;
             $meeting['venue_selection']    = $venue ;
-            $meeting['food_package']       = $packagesArray;
+            $meeting['func_package']       = $packagesArray;
             $meeting['status']             = $request->status;
             $meeting['guest_count']        = $request->guest_count;
             $meeting['room']                = $request->room;
@@ -451,7 +416,6 @@ class MeetingController extends Controller
     public function get_meeting_data(Request $request)
     {
         $arrayJson = [];
-
         if ($request->get('calender_type') == 'goggle_calender') {
             $type = 'meeting';
             $arrayJson =  Utility::getCalendarData($type);
@@ -477,6 +441,7 @@ class MeetingController extends Controller
     }
     public function get_lead_data(Request $request){
         $lead = Lead::where('id',$request->venue)->first();
+        
         return $lead;
     }
     public function block_date(Request $request)
@@ -509,6 +474,7 @@ class MeetingController extends Controller
                 $block->save();
                 return redirect()->back()->with('success', __('Date Blocked'));
             }
+        
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }

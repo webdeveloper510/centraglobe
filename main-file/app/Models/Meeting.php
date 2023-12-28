@@ -39,13 +39,11 @@ class Meeting extends Model
     public static $breakfast = [
         'Premium Breakfast',
         'Classic Brunch',
-        'Additional Options'
     ];
     public static $lunch = [
         'Hot Luncheon',
         'Cold Luncheon',
         'Barbecue',
-        'Additional Options'
     ];
     public static $dinner = [
         'Adirondack Premium Dinner',

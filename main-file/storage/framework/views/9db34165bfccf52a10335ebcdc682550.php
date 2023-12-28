@@ -66,8 +66,7 @@
             url: urls ,
             method:"POST",
             data: {"_token": "<?php echo e(csrf_token()); ?>",'calender_type':calender_type},
-            success: function(data) {
-                console.log(data);
+            success: function(data) {                
                 (function() {
                     var etitle;
                     var etype;
@@ -154,7 +153,6 @@
 </script>
 <?php $__env->stopPush(); ?>
 <?php
-
 $setting = App\Models\Utility::settings();
 ?>
 
@@ -167,8 +165,7 @@ $setting = App\Models\Utility::settings();
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
     <div class="row">
-        <!-- [ sample-page ] start -->
-         <div class="col-lg-8">
+         <div class="col-lg-9">
             <div class="card">
                 <div class="card-header">
                     <h5 style="width: 150px;"><?php echo e(__('Calendar')); ?></h5>
@@ -179,7 +176,7 @@ $setting = App\Models\Utility::settings();
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
                     <h4 class="mb-4">Next events</h4>
@@ -236,7 +233,6 @@ $setting = App\Models\Utility::settings();
                         </div>
                     </div>
                 </div>
-                <p style="float:right;"><font style="color:red;">&nbsp;&nbsp;BLOCKED BY : </font><?php echo e($blockedby); ?></p>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
@@ -270,7 +266,7 @@ $setting = App\Models\Utility::settings();
 
                     <?php echo e(Form::close()); ?>
 
-                    <button class="btn  btn-primary" id= "unblock" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>" style ="display:none">Unblock</button> 
+                    <button class="btn btn-primary" id= "unblock" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>" style ="display:none">Unblock</button> 
                 <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>">Close</button> 
                 </div>
             </div>

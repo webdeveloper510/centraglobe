@@ -128,7 +128,7 @@
         </div>
     </div>
 
-    <div class="col-6">
+    <!-- <div class="col-6">
         <div class="form-group">
             <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
             <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -139,6 +139,19 @@
                 </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
         </div>
+    </div> -->
+
+    <div class="col-6">
+       <div class="form-group">
+           <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
+           <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+               <div>
+                   <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="<?php echo e($label); ?>" 
+                       <?php echo e(in_array($label, @$venue_function) ? 'checked' : ''); ?>>
+                   <label for="<?php echo e($label); ?>"><?php echo e($label); ?></label>
+               </div>
+           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
+       </div>
     </div>
 
     <div class="col-6">
@@ -169,16 +182,21 @@
 
     <div class="col-6">
         <div class="form-group">
-        <label for="function" class="form-label"><?php echo e(__('Function')); ?></label>
-            <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <div>
-                <input type="checkbox" id="<?php echo e($value); ?>" name="function[]" value="<?php echo e($value); ?>" 
-                class="function-checkbox" <?php echo e(in_array($value, $function_package) ? 'checked' : ''); ?>>
-                <label for="<?php echo e($value); ?>"><?php echo e($value); ?></label>
+            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
+
+            <div class="checkbox-group">
+                <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <label>
+                        <input type="checkbox" id="<?php echo e($value); ?>" name="function[]" value="<?php echo e($value); ?>" class="function-checkbox" <?php echo e(in_array($value, $function_package) ? 'checked' : ''); ?>>
+                        <?php echo e($value); ?>
+
+                    </label><br>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
         </div>
     </div>
+
+
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('status',__('Status'),['class'=>'form-label'])); ?>
@@ -209,9 +227,9 @@
     </div>
     <div class="col-6">
         <div class="form-group">
-            <?php echo e(Form::label('special_requirements',__('Any Special Requirements'),['class'=>'form-label'])); ?>
+            <?php echo e(Form::label('spcl_req',__('Any Special Requirements'),['class'=>'form-label'])); ?>
 
-            <?php echo e(Form::textarea('special_requirements',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))); ?>
+            <?php echo e(Form::textarea('spcl_req',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))); ?>
 
         </div>
     </div>

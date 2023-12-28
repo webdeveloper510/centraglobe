@@ -11,6 +11,7 @@
     $plansettings = App\Models\Utility::plansettings();
     $setting = App\Models\Utility::settings();
     $type_arr= explode(',',$setting['event_type']);
+    $type_arr = array_combine($type_arr, $type_arr);
     $venue = explode(',',$setting['venue']);
     $meal = ['Formal Plated' ,'Buffet Style' , 'Family Style'];
     $bar = ['Open Bar', 'Cash Bar', 'Package Choice'];
@@ -22,44 +23,33 @@
 ?>
 <?php $__env->startSection('content'); ?>
 <style>
-.floorimages{
-    height: 183px;
-    width: 256px;
-    margin: 26px;
-}
+    .floorimages{
+        height: 183px;
+        width: 256px;
+        margin: 26px;
+    }
 
-/* input[type="radio"] {
-    display: none;
-} */
-/* .floor-radio-buttons input[type="radio"] {
-    display: none;
-} */
+    .selected-image {
+        border: 2px solid #3498db; 
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); 
+        transition: border-color 0.3s, box-shadow 0.3s; 
+    }
 
-.selected-image {
-    border: 2px solid #3498db; 
-    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); 
-    transition: border-color 0.3s, box-shadow 0.3s; 
-}
+    .selected-image:hover {
+        border-color: #2980b9; 
+        box-shadow: 0 0 15px rgba(41, 128, 185, 0.8);
+    }
 
-.selected-image:hover {
-    border-color: #2980b9; 
-    box-shadow: 0 0 15px rgba(41, 128, 185, 0.8);
-}
+    .zoom {
+    background-color: none;
+    transition: transform .2s;
+    }
 
-.zoom {
-  /* padding: 50px; */
-  background-color: none;
-  transition: transform .2s;
-  /* width: 200px;
-  height: 200px; */
-  /* margin: 0 auto; */
-}
-
-.zoom:hover {
-  -ms-transform: scale(1.5); 
-  -webkit-transform: scale(1.5); 
-  transform: scale(1.2); 
-}
+    .zoom:hover {
+    -ms-transform: scale(1.5); 
+    -webkit-transform: scale(1.5); 
+    transform: scale(1.2); 
+    }
 </style>
 <meta name="csrf-token" content="<?php echo e(csrf_token()); ?>" />
     <div class="row">
@@ -106,6 +96,14 @@
                                             <?php echo e(Form::label('Assign User',__('Assign User'),['class'=>'form-label'])); ?>
 
                                             <?php echo Form::select('user', $user, null,array('class' => 'form-control','required'=>'required')); ?>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <?php echo e(Form::label('type',__('Event Type'),['class'=>'form-label'])); ?>
+
+                                            <?php echo Form::select('type', $type_arr, null,array('class' => 'form-control')); ?>
 
                                         </div>
                                     </div>
@@ -197,7 +195,14 @@
 
                                             </div>
                                         </div>
-                                       
+                                        <div class="col-6">
+                                        <div class="form-group">
+                                            <?php echo e(Form::label('alter_lead_address',__('Address'),['class'=>'form-label'])); ?>
+
+                                            <?php echo e(Form::text('alter_lead_address',null,array('class'=>'form-control','placeholder'=>__('Address')))); ?>
+
+                                        </div>
+                                    </div>
                                         
                                         <div class="col-6">
                                             <div class="form-group">
@@ -240,15 +245,15 @@
                             <div class="card-body">
                                 <div class="row">
                                 
+                                    
                                     <div class="col-6">
                                         <div class="form-group">
-                                            <?php echo e(Form::label('type',__('Event Type'),['class'=>'form-label'])); ?>
+                                            <?php echo e(Form::label('guest_count',__('Guest Count'),['class'=>'form-label'])); ?>
 
-                                            <?php echo Form::select('type', $type_arr, null,array('class' => 'form-control')); ?>
+                                            <?php echo Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)); ?>
 
                                         </div>
-                                    </div>
-                                   
+                                    </div>   
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="venue_selection" class="form-label">Venue</label>
@@ -283,7 +288,7 @@
                                         <div class="form-group">
                                             <?php echo e(Form::label('start_time', __('Start Time'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo Form::input('time', 'start_time', date('H:i'), ['class' => 'form-control', 'required' => 'required']); ?>
+                                            <?php echo Form::input('time', 'start_time', '00:00', ['class' => 'form-control', 'required' => 'required']); ?>
 
                                         </div>
                                     </div>
@@ -291,26 +296,12 @@
                                         <div class="form-group">
                                             <?php echo e(Form::label('end_time', __('End Time'), ['class' => 'form-label'])); ?>
 
-                                            <?php echo Form::input('time', 'end_time', date('H:i'), ['class' => 'form-control', 'required' => 'required']); ?>
+                                            <?php echo Form::input('time', 'end_time', '00:00', ['class' => 'form-control', 'required' => 'required']); ?>
 
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('guest_count',__('Guest Count'),['class'=>'form-label'])); ?>
-
-                                            <?php echo Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)); ?>
-
-                                        </div>
-                                    </div>                                    
-                                    <!-- <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')); ?>
-
-                                        </div>
-                                    </div> -->  
+                                                                    
+                                   
                                     <div class="col-6">
                                         <div class="form-group">
                                             <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
@@ -381,17 +372,21 @@
                                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
                                         </div>
                                     </div>
+                                    <div class = "col-12">
+                                        <?php echo e(Form::label('add_opts',__('Additional Options'),['class'=>'form-label'])); ?>
+
+                                        <button  data-bs-toggle="tooltip" id = "ad_opt" class="btn btn-sm  btn-icon m-1">
+                                            <i class="ti ti-plus"></i></button>
+                                    </div>
                                     <div class="col-12" id ='add_opts' style ="display:none" >
                                             <div class="form-group">
-                                                <?php echo e(Form::label('add_opts',__('Additional Options'),['class'=>'form-label'])); ?>
-
                                                 <?php echo e(Form::text('add_opts',null,array('class'=>'form-control','placeholder'=>__('Any Additional Optionas')))); ?>
 
                                             </div>
-                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="row">
-                                            <label><b>Select Floor Plans</b></label>
+                                            <label><b>Setup</b></label>
                                             <?php $__currentLoopData = File::files(public_path('floor_images')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                             <div class="col-6">    
                                                     <input type="radio" id="image_<?php echo e($loop->index); ?>" name="uploadedImage" class="form-check-input " value="<?php echo e(asset('/public/floor_images/' . basename($image))); ?>" style="display:none;">
@@ -424,20 +419,6 @@
 
                                             <?php echo Form::label('room', 'Rooms at the hotel'); ?> 
                                         </div>
-                                    <!-- <div class="col-6">
-                                        <div class="form-group">
-                                        <?php echo Form::label('meal', 'Meal Preference'); ?>
-
-                                            <?php $__currentLoopData = $meal; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                            <div>
-                                                    <?php echo e(Form::radio('meal', 'option' . ($key + 1), false, ['id' => 'meal' . ($key + 1)])); ?>
-
-                                                    <?php echo e(Form::label('meal' . ($key + 1), $label)); ?>
-
-                                            </div>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </div>
-                                    </div> -->
                                     <div class="col-6">
                                             <div class="form-group">
                                             <?php echo Form::label('meal', 'Meal Preference'); ?>
@@ -452,20 +433,6 @@
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                         </div>
-                                    <!-- <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo Form::label('bar', 'Bar'); ?>
-
-                                            <?php $__currentLoopData = $bar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                <div>
-                                                    <?php echo e(Form::radio('bar', 'option' . ($key + 1), false, ['id' => 'bar' . ($key + 1)])); ?>
-
-                                                    <?php echo e(Form::label('bar' . ($key + 1), $label)); ?>
-
-                                                </div>
-                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                        </div>
-                                    </div> -->
                                     <div class="col-6">
                                         <div class="form-group">
                                             <?php echo Form::label('bar', 'Bar'); ?>
@@ -563,7 +530,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             <?php echo e(Form::label('allergies',__('Allergies'),['class'=>'form-label'])); ?>
 
@@ -615,9 +582,6 @@
                     "_token": "<?php echo e(csrf_token()); ?>",
                 },
                 success: function(data) {
-                    console.log(data)
-                    // alert("yes");
-                    // alert(data.function);
                     venue_str = data.venue_selection;
                     venue_arr = venue_str.split(",");
                     func_str = data.function;
@@ -632,9 +596,7 @@
                     $('input[name ="lead_address"]').val(data.lead_address);
                     $("select[name='type'] option[value='"+data.type+"']").prop("selected", true);
                     $("select[name='user'] option[value='"+data.assigned_user+"']").prop("selected", true);
-                    // $("select[name='function'] option[value='"+data.function+"']").prop("selected", true);                    
                     $.each(venue_arr, function(i, val){
-                        // console.log(i,val)
                         $("input[name='venue[]'][value='" + val + "']").prop('checked', true);
                     });
                     
@@ -664,8 +626,7 @@
                     }
                 }
             });          
-        });;
-
+        });
         $('input[name= "function[]"]').on('change', function() {
             $('#breakfast').hide();
             $('#lunch').hide();
@@ -673,40 +634,34 @@
             $('#wedding').hide();
             // var fun = $('input[name = "function[]"]').val();
             var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
-                        return $(this).val();
-                    }).get();
-                    // console.log("check",checkedFunctions);
-
-                    if(checkedFunctions.includes('Breakfast') || checkedFunctions.includes('Brunch')){
-                        // console.log("fdsfdsfds")
-                        $('#breakfast').show();
-                      
-                    }
-                    if(checkedFunctions.includes('Lunch') ){
-                        $('#lunch').show();
-                    }
-                    if(checkedFunctions.includes('Dinner') ){
-                        $('#dinner').show();
-                    }
-                    if(checkedFunctions.includes('Wedding')){
-                        $('#wedding').show();
-                    }
+                    return $(this).val();
+                }).get();
+                if(checkedFunctions.includes('Breakfast') || checkedFunctions.includes('Brunch')){
+                    $('#breakfast').show();
+                }
+                if(checkedFunctions.includes('Lunch') ){
+                    $('#lunch').show();
+                }
+                if(checkedFunctions.includes('Dinner') ){
+                    $('#dinner').show();
+                }
+                if(checkedFunctions.includes('Wedding')){
+                    $('#wedding').show();
+                }
         });
         $('input[type=radio][name=bar]').change(function() {
             $('#package').hide();
                 var val = $(this).val();
-                if(val == 'option3'){
+                if(val == 'Package Choice'){
                     $('#package').show();
                 }
         });
-        $('input[type=radio][name="lunch_package[]"]').change(function() {
-            var val = $(this).val();
-                if(val == 'Additional Options'){
-                  $('#add_opts').show();
-                }
+        document.getElementById('ad_opt').addEventListener('click', function(event) {
+            $('#add_opts').toggle();
+            event.stopPropagation();
+            event.preventDefault();
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
             $('input[name="uploadedImage"]').change(function () {

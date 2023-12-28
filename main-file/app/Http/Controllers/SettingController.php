@@ -1634,20 +1634,13 @@ class SettingController extends Controller
 
     public function storeImage(Request $request)
     {
-        // echo "<pre>";
-        // print_r($_FILES);
         $request->validate([
-            'venue' => 'required|image',
+            'setup' => 'required|image',
         ]);
-    
-        $image = $request->file('venue');
-
+        $image = $request->file('setup');
         $imageName = time() . '.' . $image->getClientOriginalExtension();
-    
         $image->move(public_path('floor_images'), $imageName);
-    
         $filePath = 'floor_images/' . $imageName;
-    
         return redirect()->back()->with('success', __('Image Successfully Uploaded'));;
     }
 

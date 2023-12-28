@@ -399,6 +399,7 @@ Route::group(['middleware' => ['verified']], function () {
         function () {
           Route::resource('billing',BillingController::class);
           Route::post('billing/user_selected',[BillingController::class,'get_user_info'])->name('billing.user_info');
+          Route::post('billing/calculation_details',[BillingController::class,'billing_details'])->name('billing.details');
         }
     );
     Route::group(

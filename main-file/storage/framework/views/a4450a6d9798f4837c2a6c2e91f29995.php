@@ -4025,8 +4025,8 @@ unset($__errorArgs, $__bag); ?>
                                         <form method="POST" action="<?php echo e(url('/floor-images')); ?>" enctype="multipart/form-data">
                                             <?php echo csrf_field(); ?>
                                             <div class="form-group col-md-12">
-                                                <label for="venue" class="form-label">Choose Image</label></br>
-                                                <input type="file" name="venue"  class="form-control" />
+                                                <label for="setup" class="form-label">Choose Image</label></br>
+                                                <input type="file" name="setup"  class="form-control" />
                                             </div>
                                             <div class="text-end">
                                                 <button type="submit" class="btn-submit btn btn-primary">Submit</button>
@@ -4074,22 +4074,60 @@ unset($__errorArgs, $__bag); ?>
 <script>
   function deleteImage(icon) {    
         var imageName = icon.getAttribute('data-image');
-        if (confirm('Are you sure you want to delete this image?')) {
-        $.ajax({
-            type: 'POST',
-            url : " <?php echo e(url('/delete-image')); ?>",
-            data: { 
-                "_token": "<?php echo e(csrf_token()); ?>",
-                 imageName: imageName },
-            success: function(response) {
-                alert('Image deleted successfully');
-                window.location.reload();
+    //     if (confirm('Are you sure you want to delete this image?')) {
+    //     $.ajax({
+    //         type: 'POST',
+    //         url : " <?php echo e(url('/delete-image')); ?>",
+    //         data: { 
+    //             "_token": "<?php echo e(csrf_token()); ?>",
+    //              imageName: imageName },
+    //         success: function(response) {
+    //             alert('Image deleted successfully');
+    //             window.location.reload();
+    //         },
+    //         error: function(error) {
+    //             alert('Error deleting image');
+    //         }
+    //     });
+    // }
+        var url =  "<?php echo e(url('/delete-image')); ?>";
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
             },
-            error: function(error) {
-                alert('Error deleting image');
+            buttonsStyling: false
+        })
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "This action can not be undone. Do you want to continue?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: {
+                        "imageName":imageName,
+                        "_token": "<?php echo e(csrf_token()); ?>",
+                    },
+                    success: function (result) {
+                        if (result.success == true) {
+                            swal.fire("Done!", result.message, "success");
+                            setTimeout(function(){
+                                location.reload();
+                            },1000);
+                        } else {
+                            swal.fire("Error!", result.message, "error");
+                        }
+                    }
+                });
             }
-        });
-    }
+        })
 }
 </script>
 

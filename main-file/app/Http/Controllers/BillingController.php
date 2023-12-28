@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Billing;
+use App\Models\Meeting;
+use App\Models\Billingdetail;
 
 class BillingController extends Controller
 {
@@ -14,8 +16,9 @@ class BillingController extends Controller
     public function index()
     {
         if(\Auth::user()->type == 'owner'){
+            $assigned_user = Meeting::all();
             $billing = Billing::first();
-            return view('billing.index',compact('billing'));
+            return view('billing.index',compact('billing','assigned_user'));
         }   
     }
 
@@ -32,7 +35,7 @@ class BillingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       
     }
 
     /**
@@ -66,7 +69,25 @@ class BillingController extends Controller
         //
     }
     public function get_user_info(Request $request){
-        $event_info = Lead::where('assigned_user',$request->user)->get();
-        print_r($event_info);
+        $event_info = Meeting::where('user_id',$request->user)->get();
+        return $event_info;
+    }
+    public function billing_details(Request $request){
+        // $event_id = Meeting::where('user_id',$request->user)->pluck('id')->first();
+        // $billingdetails = new Billingdetail();
+        // $billingdetails['user_id'] = $request->user;
+        // $billingdetails['event_id'] = $event_id;
+        // $billingdetails['venue_rental'] = $request->user;
+        // $billingdetails['hotel_rooms'] = $request->user;
+        // $billingdetails['equipment'] = $request->user;
+        // $billingdetails['setup'] = $request->user;
+        // $billingdetails['bar'] = $request->user;
+        // $billingdetails['special_req'] = $request->user;
+        // $billingdetails['food'] = $request->user;
+        // echo "<pre>";
+        // $data = serialize($request->billing); 
+        // $dataa = unserialize($data); 
+        // print_r($data);
+        // print_r($dataa);
     }
 }

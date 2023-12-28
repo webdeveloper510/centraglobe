@@ -9,6 +9,7 @@
     $plansettings = App\Models\Utility::plansettings();
     $setting = App\Models\Utility::settings();
     $type_arr= explode(',',$setting['event_type']);
+    $type_arr = array_combine($type_arr, $type_arr);
     $venue = explode(',',$setting['venue']);
     $meal = ['Formal Plated' ,'Buffet Style' , 'Family Style'];
     $bar = ['Open Bar', 'Cash Bar', 'Package Choice'];
@@ -20,44 +21,33 @@
 @endphp
 @section('content')
 <style>
-.floorimages{
-    height: 183px;
-    width: 256px;
-    margin: 26px;
-}
+    .floorimages{
+        height: 183px;
+        width: 256px;
+        margin: 26px;
+    }
 
-/* input[type="radio"] {
-    display: none;
-} */
-/* .floor-radio-buttons input[type="radio"] {
-    display: none;
-} */
+    .selected-image {
+        border: 2px solid #3498db; 
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); 
+        transition: border-color 0.3s, box-shadow 0.3s; 
+    }
 
-.selected-image {
-    border: 2px solid #3498db; 
-    box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); 
-    transition: border-color 0.3s, box-shadow 0.3s; 
-}
+    .selected-image:hover {
+        border-color: #2980b9; 
+        box-shadow: 0 0 15px rgba(41, 128, 185, 0.8);
+    }
 
-.selected-image:hover {
-    border-color: #2980b9; 
-    box-shadow: 0 0 15px rgba(41, 128, 185, 0.8);
-}
+    .zoom {
+    background-color: none;
+    transition: transform .2s;
+    }
 
-.zoom {
-  /* padding: 50px; */
-  background-color: none;
-  transition: transform .2s;
-  /* width: 200px;
-  height: 200px; */
-  /* margin: 0 auto; */
-}
-
-.zoom:hover {
-  -ms-transform: scale(1.5); 
-  -webkit-transform: scale(1.5); 
-  transform: scale(1.2); 
-}
+    .zoom:hover {
+    -ms-transform: scale(1.5); 
+    -webkit-transform: scale(1.5); 
+    transform: scale(1.2); 
+    }
 </style>
 <meta name="csrf-token" content="{{ csrf_token() }}" />
     <div class="row">
@@ -100,6 +90,12 @@
                                         <div class="form-group">
                                             {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}
                                             {!! Form::select('user', $user, null,array('class' => 'form-control','required'=>'required')) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            {{Form::label('type',__('Event Type'),['class'=>'form-label']) }}
+                                            {!! Form::select('type', $type_arr, null,array('class' => 'form-control')) !!}
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -170,7 +166,12 @@
                                                 {{Form::text('alter_email',null,array('class'=>'form-control','placeholder'=>__('Enter Email')))}}
                                             </div>
                                         </div>
-                                       
+                                        <div class="col-6">
+                                        <div class="form-group">
+                                            {{Form::label('alter_lead_address',__('Address'),['class'=>'form-label']) }}
+                                            {{Form::text('alter_lead_address',null,array('class'=>'form-control','placeholder'=>__('Address')))}}
+                                        </div>
+                                    </div>
                                         
                                         <div class="col-6">
                                             <div class="form-group">
@@ -211,13 +212,13 @@
                             <div class="card-body">
                                 <div class="row">
                                 
+                                    
                                     <div class="col-6">
                                         <div class="form-group">
-                                            {{Form::label('type',__('Event Type'),['class'=>'form-label']) }}
-                                            {!! Form::select('type', $type_arr, null,array('class' => 'form-control')) !!}
+                                            {{Form::label('guest_count',__('Guest Count'),['class'=>'form-label']) }}
+                                            {!! Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)) !!}
                                         </div>
-                                    </div>
-                                   
+                                    </div>   
                                     <div class="col-6">
                                         <div class="form-group">
                                             <label for="venue_selection" class="form-label">Venue</label>
@@ -247,27 +248,17 @@
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('start_time', __('Start Time'), ['class' => 'form-label']) }}
-                                            {!! Form::input('time', 'start_time', date('H:i'), ['class' => 'form-control', 'required' => 'required']) !!}
+                                            {!! Form::input('time', 'start_time', '00:00', ['class' => 'form-control', 'required' => 'required']) !!}
                                         </div>
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('end_time', __('End Time'), ['class' => 'form-label']) }}
-                                            {!! Form::input('time', 'end_time', date('H:i'), ['class' => 'form-control', 'required' => 'required']) !!}
+                                            {!! Form::input('time', 'end_time', '00:00', ['class' => 'form-control', 'required' => 'required']) !!}
                                         </div>
                                     </div>
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            {{Form::label('guest_count',__('Guest Count'),['class'=>'form-label']) }}
-                                            {!! Form::number('guest_count', null,array('class' => 'form-control','min'=> 0)) !!}
-                                        </div>
-                                    </div>                                    
-                                    <!-- <div class="col-6">
-                                        <div class="form-group">
-                                            {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
-                                            {!! Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')) !!}
-                                        </div>
-                                    </div> -->  
+                                                                    
+                                   
                                     <div class="col-6">
                                         <div class="form-group">
                                             {{ Form::label('function', __('Function'), ['class' => 'form-label']) }}
@@ -323,15 +314,19 @@
                                             @endforeach  
                                         </div>
                                     </div>
+                                    <div class = "col-12">
+                                        {{Form::label('add_opts',__('Additional Options'),['class'=>'form-label']) }}
+                                        <button  data-bs-toggle="tooltip" id = "ad_opt" class="btn btn-sm  btn-icon m-1">
+                                            <i class="ti ti-plus"></i></button>
+                                    </div>
                                     <div class="col-12" id ='add_opts' style ="display:none" >
                                             <div class="form-group">
-                                                {{Form::label('add_opts',__('Additional Options'),['class'=>'form-label']) }}
                                                 {{Form::text('add_opts',null,array('class'=>'form-control','placeholder'=>__('Any Additional Optionas')))}}
                                             </div>
-                                        </div>
+                                    </div>
                                     <div class="col-12">
                                         <div class="row">
-                                            <label><b>Select Floor Plans</b></label>
+                                            <label><b>Setup</b></label>
                                             @foreach(File::files(public_path('floor_images')) as $image)
                                             <div class="col-6">    
                                                     <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input " value="{{ asset('/public/floor_images/' . basename($image)) }}" style="display:none;">
@@ -363,17 +358,6 @@
                                             {!! Form::checkbox('room', 1, null, ['id'=>'room', 'class' => 'checkbox']) !!}
                                             {!! Form::label('room', 'Rooms at the hotel') !!} 
                                         </div>
-                                    <!-- <div class="col-6">
-                                        <div class="form-group">
-                                        {!! Form::label('meal', 'Meal Preference') !!}
-                                            @foreach($meal as $key => $label)
-                                            <div>
-                                                    {{ Form::radio('meal', 'option' . ($key + 1), false, ['id' => 'meal' . ($key + 1)]) }}
-                                                    {{ Form::label('meal' . ($key + 1), $label) }}
-                                            </div>
-                                            @endforeach
-                                        </div>
-                                    </div> -->
                                     <div class="col-6">
                                             <div class="form-group">
                                             {!! Form::label('meal', 'Meal Preference') !!}
@@ -385,17 +369,6 @@
                                                 @endforeach
                                             </div>
                                         </div>
-                                    <!-- <div class="col-6">
-                                        <div class="form-group">
-                                            {!! Form::label('bar', 'Bar') !!}
-                                            @foreach($bar as $key => $label)
-                                                <div>
-                                                    {{ Form::radio('bar', 'option' . ($key + 1), false, ['id' => 'bar' . ($key + 1)]) }}
-                                                    {{ Form::label('bar' . ($key + 1), $label) }}
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div> -->
                                     <div class="col-6">
                                         <div class="form-group">
                                             {!! Form::label('bar', 'Bar') !!}
@@ -475,7 +448,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="row">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <div class="form-group">
                                             {{Form::label('allergies',__('Allergies'),['class'=>'form-label']) }}
                                             {{Form::text('allergies',null,array('class'=>'form-control','placeholder'=>__('Enter Allergies(if any)')))}}
@@ -524,9 +497,6 @@
                     "_token": "{{ csrf_token() }}",
                 },
                 success: function(data) {
-                    console.log(data)
-                    // alert("yes");
-                    // alert(data.function);
                     venue_str = data.venue_selection;
                     venue_arr = venue_str.split(",");
                     func_str = data.function;
@@ -541,9 +511,7 @@
                     $('input[name ="lead_address"]').val(data.lead_address);
                     $("select[name='type'] option[value='"+data.type+"']").prop("selected", true);
                     $("select[name='user'] option[value='"+data.assigned_user+"']").prop("selected", true);
-                    // $("select[name='function'] option[value='"+data.function+"']").prop("selected", true);                    
                     $.each(venue_arr, function(i, val){
-                        // console.log(i,val)
                         $("input[name='venue[]'][value='" + val + "']").prop('checked', true);
                     });
                     
@@ -573,8 +541,7 @@
                     }
                 }
             });          
-        });;
-
+        });
         $('input[name= "function[]"]').on('change', function() {
             $('#breakfast').hide();
             $('#lunch').hide();
@@ -582,40 +549,34 @@
             $('#wedding').hide();
             // var fun = $('input[name = "function[]"]').val();
             var checkedFunctions = $('input[name="function[]"]:checked').map(function() {
-                        return $(this).val();
-                    }).get();
-                    // console.log("check",checkedFunctions);
-
-                    if(checkedFunctions.includes('Breakfast') || checkedFunctions.includes('Brunch')){
-                        // console.log("fdsfdsfds")
-                        $('#breakfast').show();
-                      
-                    }
-                    if(checkedFunctions.includes('Lunch') ){
-                        $('#lunch').show();
-                    }
-                    if(checkedFunctions.includes('Dinner') ){
-                        $('#dinner').show();
-                    }
-                    if(checkedFunctions.includes('Wedding')){
-                        $('#wedding').show();
-                    }
+                    return $(this).val();
+                }).get();
+                if(checkedFunctions.includes('Breakfast') || checkedFunctions.includes('Brunch')){
+                    $('#breakfast').show();
+                }
+                if(checkedFunctions.includes('Lunch') ){
+                    $('#lunch').show();
+                }
+                if(checkedFunctions.includes('Dinner') ){
+                    $('#dinner').show();
+                }
+                if(checkedFunctions.includes('Wedding')){
+                    $('#wedding').show();
+                }
         });
         $('input[type=radio][name=bar]').change(function() {
             $('#package').hide();
                 var val = $(this).val();
-                if(val == 'option3'){
+                if(val == 'Package Choice'){
                     $('#package').show();
                 }
         });
-        $('input[type=radio][name="lunch_package[]"]').change(function() {
-            var val = $(this).val();
-                if(val == 'Additional Options'){
-                  $('#add_opts').show();
-                }
+        document.getElementById('ad_opt').addEventListener('click', function(event) {
+            $('#add_opts').toggle();
+            event.stopPropagation();
+            event.preventDefault();
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function () {
             $('input[name="uploadedImage"]').change(function () {

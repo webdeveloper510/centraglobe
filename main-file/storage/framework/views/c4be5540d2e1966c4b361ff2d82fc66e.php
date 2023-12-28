@@ -11,8 +11,9 @@
     $plansettings = App\Models\Utility::plansettings();
     $setting = App\Models\Utility::settings();  
     $type_arr= explode(',',$setting['event_type']);
+    $type_arr = array_combine($type_arr, $type_arr);
     $venue = explode(',',$setting['venue']);
-    $meal = ['Formal Plated' ,'Formal Buffet Style' , 'Other'];
+    $meal = ['Formal Plated' ,'Buffet Style' , 'Family Style'];
     $bar = ['Open Bar', 'Cash Bar', 'Package Choice'];
     $platinum = ['Platinum - 4 Hours', 'Platinum - 3 Hours', 'Platinum - 2 Hours'];
     $gold = ['Gold - 4 Hours', 'Gold - 3 Hours', 'Gold - 2 Hours'];
@@ -57,40 +58,22 @@
                                 </div>
                                 <div class="card-body"> 
                                     <div class="row">
-                                    <div class="col-6">
-                                        <div class="form-group">
-                                            <?php echo e(Form::label('attendees_lead', __('Lead'), ['class' => 'form-label'])); ?>
-
-                                            <?php echo Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
-
-                                        </div>
-                                    </div>
-                                        <!-- <div class="col-6">
+                                        <div class="col-6">
                                             <div class="form-group">
                                                 <?php echo e(Form::label('attendees_lead', __('Lead'), ['class' => 'form-label'])); ?>
 
-                                                <?php echo Form::text('attendees_lead', 'Default Value', ['class' => 'form-control']); ?>
+                                                <?php echo Form::select('attendees_lead', $attendees_lead, null, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
 
                                             </div>
-                                        </div> -->
-
-                                        <!-- <div class="col-6">
-                                            <div class="form-group">
-                                                <?php echo e(Form::label('Assign User', __('Assign User'), ['class' => 'form-label'])); ?>
-
-                                                <?php echo Form::select('user', $user, null,array('class' => 'form-control')); ?>
-
-                                            </div>
-                                        </div> -->
+                                        </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <?php echo e(Form::label('Assign User', __('Assign User'), ['class' => 'form-label'])); ?>
 
-                                                <?php echo Form::select('user', $users, $user_id, ['class' => 'form-control', 'disabled' => 'disabled']); ?>
+                                                <?php echo Form::text('user_text', isset($users[$user_id]) ? $users[$user_id] : '', ['class' => 'form-control', 'disabled' => 'disabled']); ?>
 
                                             </div>
                                         </div>
-
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <?php echo e(Form::label('company_name',__('Company Name'),['class'=>'form-label'])); ?>
@@ -150,12 +133,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-12 text-end mt-3">
-                                            <button  data-bs-toggle="tooltip" onclick="myFunction()"
-                                                    title="<?php echo e(__('Create')); ?>" class="btn btn-sm btn-primary btn-icon m-1">
-                                                    <i class="ti ti-plus"></i>
-                                            </button>
-                                        </div>
+                                        
                                         <div id = "contact-info" style = "display:none">
                                             <div class="row">
                                             <div class="col-12  p-0 modaltitle pb-3 mb-3">
@@ -203,6 +181,12 @@
                                             </div>
                                             </div>
                                         </div>
+                                        <div class="col-12 text-end mt-3">
+                                            <button  data-bs-toggle="tooltip" id="opencontact" 
+                                                title="<?php echo e(__('Add Contact')); ?>" class="btn btn-sm btn-primary btn-icon m-1">
+                                                <i class="ti ti-plus"></i>
+                                        </button>
+                                        </div>
                                         <?php if(isset($setting['is_enabled']) && $setting['is_enabled'] == 'on'): ?>
                                             <div class="form-group col-md-6">
                                                 <label><?php echo e(__('Synchronize in Google Calendar')); ?></label>
@@ -236,27 +220,12 @@
 
                                             </div>
                                         </div>
-                                        <!-- <div class="col-6">
-                                            <div class="form-group">
-                                            <?php echo e(Form::label('venue_selection', __('Venue'), ['class' => 'form-label'])); ?>
-
-                                                <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                                    <div>
-                                                        <?php echo e(Form::checkbox('venue[]', 'option' . ($key + 1), false, ['id' => 'venue' . ($key + 1)])); ?>
-
-                                                        <?php echo e(Form::label('venue' . ($key + 1), $label)); ?>
-
-                                                    </div>
-                                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                                            </div>
-                                        </div> -->
-
                                         <div class="col-6">
                                             <div class="form-group">
                                                 <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
                                                 <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <div>
-                                                        <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="venue<?php echo e($key + 1); ?>" 
+                                                        <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="<?php echo e($label); ?>" 
                                                             <?php echo e(in_array($label, $venue_function) ? 'checked' : ''); ?>>
                                                         <label for="<?php echo e($label); ?>"><?php echo e($label); ?></label>
                                                     </div>
@@ -284,7 +253,7 @@
                                             <div class="form-group">
                                                 <?php echo e(Form::label('start_time', __('Start Time'), ['class' => 'form-label'])); ?>
 
-                                                <?php echo Form::input('time', 'start_time', date('H:i'), ['class' => 'form-control', 'required' => 'required']); ?>
+                                                <?php echo Form::input('time', 'start_time',null, ['class' => 'form-control', 'required' => 'required']); ?>
 
                                             </div>
                                         </div>
@@ -292,7 +261,7 @@
                                             <div class="form-group">
                                                 <?php echo e(Form::label('end_time', __('End Time'), ['class' => 'form-label'])); ?>
 
-                                                <?php echo Form::input('time', 'end_time', date('H:i'), ['class' => 'form-control', 'required' => 'required']); ?>
+                                                <?php echo Form::input('time', 'end_time', null, ['class' => 'form-control', 'required' => 'required']); ?>
 
                                             </div>
                                         </div>
@@ -314,7 +283,8 @@
                                                         <input type="checkbox" id="<?php echo e($value); ?>" name="function[]" value="<?php echo e($value); ?>" class="function-checkbox" <?php echo e(in_array($value, $function_p) ? 'checked' : ''); ?> onchange="toggleDiv('<?php echo e($value); ?>')">
                                                         <?php echo e($value); ?>
 
-                                                    </label><br>
+                                                    </label>
+                                                    <br>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                         </div>
@@ -324,7 +294,7 @@
 
                                                 <?php $__currentLoopData = $breakfast; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                     <div>
-                                                        <?php echo e(Form::radio('break_package[]', $label, in_array($label, $food_package), ['id' => 'break_package' . ($key + 1)])); ?>
+                                                        <?php echo e(Form::radio('break_package[]', $label, in_array($label, $food_package), ['id' => $label])); ?>
 
                                                         <?php echo e(Form::label($label, $label)); ?>
 
@@ -346,6 +316,7 @@
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
                                             </div>
                                         </div>
+
                                         <div class="col-6" id="dinner">
                                             <div class="form-group">
                                                 <?php echo e(Form::label('dinner_package', __('Dinner Package'), ['class' => 'form-label'])); ?>
@@ -360,6 +331,7 @@
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
                                             </div>
                                         </div>
+
                                         <div class="col-6" id="wedding">
                                             <div class="form-group">
                                                 <?php echo e(Form::label('wedding_package', __('Wedding Package'), ['class' => 'form-label'])); ?>
@@ -373,8 +345,19 @@
                                                     </div>
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>  
                                             </div>
-                                        </div>
+                                        </div> 
+                                        <div class = "col-12">
+                                            <?php echo e(Form::label('add_opts',__('Additional Options'),['class'=>'form-label'])); ?>
 
+                                            <button  data-bs-toggle="tooltip" id = "ad_opt" class="btn btn-sm  btn-icon m-1">
+                                                <i class="ti ti-plus"></i></button>
+                                        </div>
+                                        <div class="col-12" id ='add_opts' style ="display:none" >
+                                            <div class="form-group">
+                                                <?php echo e(Form::text('add_opts',null,array('class'=>'form-control','placeholder'=>__('Any Additional Optionas')))); ?>
+
+                                            </div>
+                                        </div>                                  
                                     </div>
                                 </div>
                             </div>
@@ -401,7 +384,7 @@
 
                                                 <?php $__currentLoopData = $meal; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div>
-                                                        <?php echo e(Form::radio('meal[]', 'option' . ($key + 1), false, ['id' => 'meal' . ($key + 1)])); ?>
+                                                        <?php echo e(Form::radio('meal[]', $label , false, ['id' => $label])); ?>
 
                                                         <?php echo e(Form::label('meal' . ($key + 1), $label)); ?>
 
@@ -409,13 +392,13 @@
                                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                             </div>
                                         </div>
-                                        <div class="col-6">
+                                    <div class="col-6">
                                         <div class="form-group">
                                             <?php echo Form::label('bar', 'Bar'); ?>
 
                                             <?php $__currentLoopData = $bar; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                                 <div>
-                                                    <?php echo e(Form::radio('bar', 'option' . ($key + 1), false, ['id' => 'bar' . ($key + 1)])); ?>
+                                                    <?php echo e(Form::radio('bar', $label, false, ['id' => $label])); ?>
 
                                                     <?php echo e(Form::label('bar' . ($key + 1), $label)); ?>
 
@@ -507,7 +490,7 @@
                                 <div class="card-body">
                                     <div class="row">
                                     
-                                        <div class="col-6">
+                                        <div class="col-12">
                                             <div class="form-group">
                                                 <?php echo e(Form::label('allergies',__('Allergies'),['class'=>'form-label'])); ?>
 
@@ -551,12 +534,26 @@
     </script>
 
 <script>
+     document.getElementById('opencontact').addEventListener('click', function(event) {
+            var x = document.getElementById("contact-info");
+            if (x.style.display === "none") {
+                x.style.display = "block";
+            } else {
+                x.style.display = "none";
+            }
+            event.stopPropagation();
+            event.preventDefault();
+        });
     document.addEventListener("DOMContentLoaded", function () {
         var checkboxes = document.querySelectorAll('.function-checkbox');
         checkboxes.forEach(function (checkbox) {
             toggleDiv(checkbox.id);
         });
-
+        document.getElementById('ad_opt').addEventListener('click', function(event) {
+            $('#add_opts').toggle();
+            event.stopPropagation();
+            event.preventDefault();
+        });
         function toggleDiv(value) {
             var divId = value.toLowerCase();
             var div = document.getElementById(divId);

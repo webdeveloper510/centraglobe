@@ -168,10 +168,8 @@
                     </label><br>
                 @endforeach
             </div>
-            @endforeach  
         </div>
     </div>
-
 
 
     <div class="col-6">
@@ -198,8 +196,8 @@
     </div>
     <div class="col-6">
         <div class="form-group">
-            {{Form::label('special_requirements',__('Any Special Requirements'),['class'=>'form-label']) }}
-            {{Form::textarea('special_requirements',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))}}
+            {{Form::label('spcl_req',__('Any Special Requirements'),['class'=>'form-label']) }}
+            {{Form::textarea('spcl_req',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))}}
         </div>
     </div>
     <div class="col-12">

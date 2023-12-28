@@ -59,22 +59,14 @@ class LeadController extends Controller
     {
         if (\Auth::user()->can('Create Lead')) {
             $user       = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $user->prepend('--', 0);
-            $leadsource = LeadSource::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $campaign   = Campaign::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $campaign->prepend('--', 0);
-            $industry   = AccountIndustry::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $account    = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $account->prepend('--', 0);
+            $user->prepend('Select user', 0);
             $status     = Lead::$status;
             $function = Lead::$function;
-
-            return view('lead.create', compact('status', 'leadsource', 'user', 'account', 'industry', 'campaign','function', 'id'));
+            return view('lead.create', compact('status', 'user', 'function', 'id'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -84,16 +76,7 @@ class LeadController extends Controller
      */
     public function store(Request $request)
     {
-<<<<<<< HEAD
-        // $user = User::where('id',$request->user)->get();
-
-        // echo "" $user->username;
-        // print_r($user);
-        // die;
-
->>>>>>> dev
         if (\Auth::user()->can('Create Lead')) {
-            print_r($request->function) ;die;
             $validator = \Validator::make(
                 $request->all(),
                 [
@@ -131,7 +114,7 @@ class LeadController extends Controller
             $lead['status']             = $request->status;
             $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;
-            $lead['spcl_req']        = $request->special_requirements;
+            $lead['spcl_req']        = $request->spcl_req;
             $lead['allergies']        = $request->allergies;
             $lead['created_by']         = \Auth::user()->creatorId();
             $lead->save();
@@ -175,15 +158,14 @@ class LeadController extends Controller
                 'lead_email' => $lead->email,
                 // 'lead_assign_user' => $Assign_user_phone->name,
             ];
-            // $resp = Utility::sendEmailTemplate('lead_assigned', [$lead->id => $Assign_user_phone->email], $uArr);
+            $resp = Utility::sendEmailTemplate('lead_assigned', [$lead->id => $Assign_user_phone->email], $uArr);
             if (isset($setting['twilio_lead_create']) && $setting['twilio_lead_create'] == 1) {
-                //$msg = __("New Lead created by") . ' ' . \Auth::user()->name . '.';
                 $uArr = [
                     // 'company_name'  => $lead->name,
                     'lead_email' => $lead->email,
                     'lead_name' => $lead->name
                 ];
-                Utility::send_twilio_msg('+919882240722', 'new_lead', $uArr);
+                Utility::send_twilio_msg($Assign_user_phone->phone, 'new_lead', $uArr);
                 
             }
             // if (Auth::user()) {
@@ -260,13 +242,8 @@ class LeadController extends Controller
      */
     public function update(Request $request, Lead $lead)
     {
-        // echo "<pre>";
-        // print_r($_REQUEST);
         $venue_function = implode(',',$_REQUEST['venue']);
-        // print_r($venue_function);
         $function = implode(',',$_REQUEST['function']);
-        // print_r($function);
-        // die;
         if (\Auth::user()->can('Edit Lead')) {
             $validator = \Validator::make(
                 $request->all(),
@@ -304,7 +281,7 @@ class LeadController extends Controller
             $lead['status']             = $request->status;
             $lead['guest_count']        = $request->guest_count;
             $lead['description']        = $request->description;
-            $lead['spcl_req']        = $request->special_requirements;
+            $lead['spcl_req']        = $request->spcl_req;
             $lead['allergies']        = $request->allergies;
             $lead['created_by']         = \Auth::user()->creatorId();
             $lead->update();

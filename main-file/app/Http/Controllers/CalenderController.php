@@ -22,19 +22,11 @@ class CalenderController extends Controller
     {
         $transdate = date('Y-m-d', time());
         $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
-        // echo "<pre>";
-        // echo $blockeddate[0]['created_by'];
-        // print_r($blockeddate);
         $query = User::where('id',$blockeddate[0]['created_by'])->get();
-        // print_r($query);
         $blockedby = $query[0]['name'];
         if(\Auth::user()->type == 'owner'){
             $calls    = Call::where('created_by', \Auth::user()->creatorId())->get();
-            $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();     
-            // echo "<pre>";
-            // print_r($meetings);
-            // echo "++++++++++++++++++++++++".$meetings[0]['created_by'];
-            // die;      
+            $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();         
             $tasks    = Task::where('created_by', \Auth::user()->creatorId())->get();            
         }
         else
@@ -151,37 +143,15 @@ class CalenderController extends Controller
             $arrCall    = [];
 
             if(\Auth::user()->type == 'owner'){
-                $calls    = Call::where('created_by', \Auth::user()->creatorId())->get();
                 $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();
-                // $meetings = Meeting::all();
-                $tasks    = Task::where('created_by', \Auth::user()->creatorId())->get();
                 $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
             }
             else
             {
-                $calls    = Call::where('user_id', \Auth::user()->id)->get();
                 $meetings = Meeting::where('user_id', \Auth::user()->id)->get();
-                // $meetings = Meeting::all();
-                $tasks    = Task::where('user_id', \Auth::user()->id)->get();
                 $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
             }
 
-        foreach($tasks as $val)
-
-                {
-                    $end_date=date_create($val->end_date);
-                    date_add($end_date,date_interval_create_from_date_string("1 days"));
-                    $arrTask[] = [
-                        "id"=> $val->id,
-                        "title" => $val->name,
-                        "start" => $val->start_date,
-                        "end" => date_format($end_date,"Y-m-d H:i:s"),
-                        "className" => $val->color,
-                        "textColor" => '#FFF',
-                        "url" => route('task.show', $val['id']),
-                        "allDay" => true,
-                    ];
-                }
                 foreach($meetings as $val)
                 {
                     $end_date=date_create($val->end_date);
@@ -214,22 +184,22 @@ class CalenderController extends Controller
                         "display" =>'background',
                     ];
                 }
-                foreach($calls as $val)
-                {
-                    $end_date=date_create($val->end_date);
-                    date_add($end_date,date_interval_create_from_date_string("1 days"));
-                    $arrCall[] = [
-                        "id"=> $val->id,
-                        "title" => $val->name,
-                        "start" => $val->start_date,
-                        "end" => date_format($end_date,"Y-m-d H:i:s"),
-                        "className" => $val->color,
-                        "textColor" => '#FFF',
-                        "url" => route('call.show', $val['id']),
-                        "allDay" => true,
-                    ];
-                }
-                        $arrayJson = array_merge($arrCall, $arrMeeting, $arrTask,$arrblock);
+                // foreach($calls as $val)
+                // {
+                //     $end_date=date_create($val->end_date);
+                //     date_add($end_date,date_interval_create_from_date_string("1 days"));
+                //     $arrCall[] = [
+                //         "id"=> $val->id,
+                //         "title" => $val->name,
+                //         "start" => $val->start_date,
+                //         "end" => date_format($end_date,"Y-m-d H:i:s"),
+                //         "className" => $val->color,
+                //         "textColor" => '#FFF',
+                //         "url" => route('call.show', $val['id']),
+                //         "allDay" => true,
+                //     ];
+                // }
+                        $arrayJson = array_merge($arrMeeting,$arrblock);
 
 
                 }
