@@ -81,8 +81,27 @@ class MeetingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        
+    {       
+        $start_date = $_REQUEST['start_date'];
+        $end_date = $_REQUEST['end_date'];
+
+        $meeting_overlap = Meeting::where(function ($query) use ($start_date, $end_date) {
+            $query->where('start_date', '<=', $end_date)
+                ->where('end_date', '>=', $start_date);
+        })->exists();
+
+        $blockdate_overlap = Blockdate::where(function ($query) use ($start_date, $end_date) {
+            $query->where('start_date', '<=', $end_date)
+                ->where('end_date', '>=', $start_date);
+        })->exists();
+
+        if ($meeting_overlap || $blockdate_overlap) {
+            echo "Date is blocked!";
+            // return redirect()->back()->with('success', __('Date is blocked!'));
+        } else 
+        {
+            // echo "Event Created Successfully ";
+
         $allPackages = array_merge(
             isset($request->break_package) ? $request->break_package : [],
             isset($request->lunch_package) ? $request->lunch_package : [],
@@ -189,6 +208,7 @@ class MeetingController extends Controller
                 return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
             }
         }
+    }
     }
 
     /**
@@ -446,6 +466,20 @@ class MeetingController extends Controller
     }
     public function block_date(Request $request)
     {
+        // echo "<pre>";
+        // print_r($_REQUEST);
+        $get_start_date = $request->input('start_date');
+        $get_end_date = $request->input('end_date');
+    
+        $overlapping_dates = Meeting::where(function ($query) use ($get_start_date, $get_end_date) {
+            $query->where('start_date', '<=', $get_end_date)
+                  ->where('end_date', '>=', $get_start_date);
+        })->get();
+    
+        if ($overlapping_dates->isNotEmpty()) {
+            return redirect()->back()->with('error', 'Event is Already Booked For this date');
+        } else {           
+            echo "Dates booked successfully!";    
         if (\Auth::user()->can('Create Meeting')) {
             $blocked_date = Blockdate::where('start_date',$request->start_date)
                 ->orWhere('start_date',$request->end_date)->orWhere('end_date',$request->end_date)
@@ -479,8 +513,9 @@ class MeetingController extends Controller
             return redirect()->back()->with('error', 'permission Denied');
         }
     }
+    }
     public function unblock_date(Request $request)
-    {
+    {       
         $booked = Blockdate::where('start_date',$request->start)->orWhere('end_date',$request->end_date)
         ->orWhere('start_date',$request->end_date)
         ->orWhere('end_date',$request->start)->get();

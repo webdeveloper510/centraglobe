@@ -52,8 +52,9 @@
         }
 
         var calender_type=$('#calender_type :selected').val();
-        $('#calendar').removeClass('local_calender');
-        $('#calendar').removeClass('goggle_calender');
+        console.log("calender_type"+calender_type)
+        // $('#calendar').removeClass('local_calender');
+        // $('#calendar').removeClass('goggle_calender');
 
         if(calender_type == undefined){
             calender_type = 'local_calender';
@@ -96,6 +97,8 @@
                         timeFormat: 'H(:mm)',
                         events: data,
                         select: function(info) {
+                            // console.log(info)
+                            // var startDate = info.startStr;
                             var startDate = info.startStr;
                             var endDate =  info.endStr;
                             openPopupForm(startDate,endDate);
@@ -112,6 +115,9 @@
         $("#block").show();
         $("#unblock").hide();
         $( ".blockd_dates input" ).each(function( index ) {
+            // console.log(`here: ${index}`);
+            // console.log(`this value: ${$(this).val()}`);
+            // console.log(`start | end: ${start} | ${end}`);
             if($(this).val() == start || $(this).val() == end){
                 $("#unblock").show();
                 $("#block").hide();
@@ -127,6 +133,7 @@
       $('#popup-form').hide();
       $('#overlay').hide();
     }
+    
     }
    $('#unblock').on('click', function() {
         var start = $('#popup-form input[name = "start_date"]').val();
@@ -255,7 +262,7 @@ $setting = App\Models\Utility::settings();
                     {{ Form::submit(__('Block'), ['id'=>'block','class' => 'btn  btn-primary ']) }}
                     {{Form::close()}}
                     <button class="btn btn-primary" id= "unblock" data-bs-toggle="tooltip" title="{{__('Close')}}" style ="display:none">Unblock</button> 
-                <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="{{__('Close')}}">Close</button> 
+                    <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="{{__('Close')}}">Close</button> 
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-lg-12">
-
             <div class="">
                 <dl class="row">
                     <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Name')); ?></span></dt>
@@ -15,6 +14,15 @@
                     <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('lead Address')); ?></span></dt>
                     <dd class="col-md-8"><span class="text-md"><?php echo e($lead->lead_address); ?></span></dd>
 
+                    <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Start Date')); ?></span></dt>
+                    <dd class="col-md-8"><span class="text-md"><?php echo e($lead->start_date); ?></span></dd>
+
+                    <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('End Date')); ?></span></dt>
+                    <dd class="col-md-8"><span class="text-md"><?php echo e($lead->end_date); ?></span></dd>
+
+                    <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Venue')); ?></span></dt>
+                    <dd class="col-md-8"><span class="text-md"><?php echo e($lead->venue_selection); ?></span></dd>
+
                     <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Assigned User')); ?></span></dt>
                     <dd class="col-md-8"><span class="text-md"><?php echo e(!empty($lead->assign_user)?$lead->assign_user->name:''); ?></span></dd>
 
@@ -28,20 +36,12 @@
 
                     <dt class="col-md-4"><span class="h6 text-md mb-0"><?php echo e(__('Status')); ?></span></dt>
                     <dd class="col-md-8"><span class="text-md">
-                            <?php if($lead  ->status == 0): ?>
-                                <span class="badge bg-success p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
-                            <?php elseif($lead->status == 1): ?>
-                                <span class="badge bg-info p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
-                            <?php elseif($lead->status == 2): ?>
-                                <span class="badge bg-warning p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
-                            <?php elseif($lead->status == 3): ?>
-                                <span class="badge bg-danger p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
-                            <?php elseif($lead->status == 4): ?>
-                                <span class="badge bg-danger p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
-                            <?php elseif($lead->status == 5): ?>
-                                <span class="badge bg-warning p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
-                            <?php endif; ?>
-                        </span></dd>
+                        <?php if($lead  ->status == 0): ?>
+                            <span class="badge bg-success p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
+                        <?php else: ?>
+                            <span class="badge bg-info p-2 px-3 rounded"><?php echo e(__(\App\Models\Lead::$status[$lead->status])); ?></span>
+                        <?php endif; ?>
+                    </dd>
                 </dl>
             </div>
     <div class="w-100 text-end pr-2">
