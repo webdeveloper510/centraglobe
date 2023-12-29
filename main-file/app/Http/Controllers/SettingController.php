@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Validator;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use App\Models\Webhook;
+use App\Models\Billing;
 use Google\Service\ServiceControl\Auth;
 use DB;
 
@@ -1656,6 +1657,19 @@ class SettingController extends Controller
             return response()->json(['success' => false, 'error' => 'Image not found']);
         }
     }
+    public function billing_cost(Request $request){
+        $billing = Billing::first();
+        Billing::where('id',$billing->id)->update([
+            'venue_rental'=>$request->venue_rental,
+            'hotel_rooms'=>$request->hotel_rooms,
+            'equipment'=>$request->equipment,
+            'setup'=>$request->setup,
+            'special_req'=>$request->special_req,
+            'classic_brunch'=>$request->food,
+            'gold_2hrs'=>$request->bar_package
+        ]);
+        return redirect()->back()->with('success', __('Billing Cost Successfully added'));;
+    } 
     
 }
 function get_device_type($user_agent)

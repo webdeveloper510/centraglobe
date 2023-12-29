@@ -368,43 +368,40 @@
                                 <a href="#company-email-setting"
                                     class="list-group-item list-group-item-action border-0">{{ __('Email Settings') }} <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            @endif
-                           
-                            @if (\Auth::user()->type == 'owner')
+                            
                                 <a href="#twilio-settings"
                                     class="list-group-item list-group-item-action border-0">{{ __('Twilio Settings') }}
                                     <div class="float-end"><i class="ti ti-chevron-right"></i></div>
                                 </a>
-                            @endif
+                           
                             <!-- @if (\Auth::user()->type == 'owner')
                                 <a href="#email-notification-settings"
                                     class="list-group-item list-group-item-action border-0">{{ __('Email Notification Settings') }}
                                     <div class="float-end"><i class="ti ti-chevron-right"></i></div>
                                 </a>
                             @endif -->
-                            @if (\Auth::user()->type == 'owner')
+                            
                                 <a href="#notification-settings"
                                     class="list-group-item list-group-item-action border-0">{{ __('Notification Settings') }} <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            @endif
-                            @if (\Auth::user()->type == 'owner')
+                           
                                 <a href="#role-settings"
                                     class="list-group-item list-group-item-action border-0">{{ __('Role Settings') }} <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            @endif
-                            @if (\Auth::user()->type == 'owner')
+                           
                                 <a href="#eventtype-settings"
                                     class="list-group-item list-group-item-action border-0">{{ __('Event-Type Settings') }} <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            @endif
-                            @if (\Auth::user()->type == 'owner')
+                           
                                 <a href="#venue-settings"
                                     class="list-group-item list-group-item-action border-0">{{ __('Venue Settings') }} <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
-                            @endif
-                            @if (\Auth::user()->type == 'owner')
+                           
                                 <a href="#floor-plan-setting"
                                     class="list-group-item list-group-item-action border-0">{{ __('Floor Plan Settings') }} <div
+                                        class="float-end"><i class="ti ti-chevron-right"></i></div></a>
+                                <a href="#billing-setting"
+                                    class="list-group-item list-group-item-action border-0">{{ __('Billing Settings') }} <div
                                         class="float-end"><i class="ti ti-chevron-right"></i></div></a>
                             @endif
                         </div>
@@ -3782,45 +3779,102 @@
                     </div>
                     <!--  -->
                     <div id="floor-plan-setting" class="card">
+                        <div class="col-md-12">
+                            <div class="card-header">
+                                <div class="row">
+                                    <div id="floor-plan-setting" class="col-lg-8 col-md-8 col-sm-8">
+                                        <h5>{{ __('Upload Floor Plan') }}</h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mt-3">
+                                    <form method="POST" action="{{ url('/floor-images') }}" enctype="multipart/form-data">
+                                        @csrf
+                                        <div class="form-group col-md-12">
+                                            <label for="setup" class="form-label">Choose Image</label></br>
+                                            <input type="file" name="setup"  class="form-control" />
+                                        </div>
+                                        <div class="text-end">
+                                            <button type="submit" class="btn-submit btn btn-primary">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                                <div class="col-12">
+                                <div class="row">
+                                    @foreach(File::files(public_path('floor_images')) as $image)
+                                        <div class="col-6">    
+                                            <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input" value="{{ asset('/public/floor_images/' . basename($image)) }}">
+                                            <label for="image_{{ $loop->index }}" class="form-check-label">
+                                                <img src="{{URL::asset('/floor_images/'. basename($image))}}" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
+                                                <i class="ti ti-trash" data-image="{{ basename($image) }}" onclick="deleteImage(this)"></i>
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div id="billing-setting" class="card">
                             <div class="col-md-12">
                                 <div class="card-header">
                                     <div class="row">
-                                        <div id="floor-plan-setting" class="col-lg-8 col-md-8 col-sm-8">
-                                            <h5>{{ __('Upload Floor Plan') }}</h5>
+                                        <div class="col-lg-8 col-md-8 col-sm-8">
+                                            <h5>{{ __('Billing Settings') }}</h5>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card-body">
+                                <div class="card-body">                          
                                     <div class="row mt-3">
-                                        <form method="POST" action="{{ url('/floor-images') }}" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="form-group col-md-12">
-                                                <label for="setup" class="form-label">Choose Image</label></br>
-                                                <input type="file" name="setup"  class="form-control" />
+                                        
+                                        {{ Form::open(['route' => 'billing.setting', 'method' => 'post']) }}
+                                        @csrf
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('venue_rental', __('Venue Rental'), ['class' => 'form-label']) }}
+                                                {{ Form::number('venue_rental',null,['class' => 'form-control ', 'placeholder' => __('Enter Venue Rental Cost'), 'required' => 'required']) }}
                                             </div>
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('hotel_rooms', __('Hotel Rooms'), ['class' => 'form-label']) }}
+                                                {{ Form::number('hotel_rooms',null,['class' => 'form-control ', 'placeholder' => __('Enter Hotel Rooms Cost'), 'required' => 'required']) }}
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('equipment', __('Tent, Tables, Chairs, AV Equipment'), ['class' => 'form-label']) }}
+                                                {{ Form::number('equipment',null,['class' => 'form-control ', 'placeholder' => __('Enter Equipments Cost'), 'required' => 'required']) }}
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('setup', __('Welcome/Rehearsel/Special Setup'), ['class' => 'form-label']) }}
+                                                {{ Form::number('setup',null,['class' => 'form-control ', 'placeholder' => __('Enter Setup Cost'), 'required' => 'required']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('bar_package', __('Bar Package'), ['class' => 'form-label']) }}
+                                                {{ Form::number('bar_package',null,['class' => 'form-control ', 'placeholder' => __('Enter Bar Package Cost'), 'required' => 'required']) }}
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('special_req', __('Special Request/Others'), ['class' => 'form-label']) }}
+                                                {{ Form::number('special_req',null,['class' => 'form-control ', 'placeholder' => __('Enter Cost'), 'required' => 'required']) }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                {{ Form::label('food', __('Brunch/Lunch/Dinner Package'), ['class' => 'form-label']) }}
+                                                {{ Form::number('food',null,['class' => 'form-control ', 'placeholder' => __('Enter Food Package Cost'), 'required' => 'required']) }}
+                                            </div>
+                                        </div>
                                             <div class="text-end">
-                                                <button type="submit" class="btn-submit btn btn-primary">Submit</button>
+                                                {{ Form::submit(__('Save'), ['class' => 'btn-submit btn btn-primary']) }}
                                             </div>
-                                        </form>
-                                    </div>
-                                </div>
-                                <!-- IMAGE -->
-                                 <div class="col-12">
-                                    <div class="row">
-                                        @foreach(File::files(public_path('floor_images')) as $image)
-                                            <div class="col-6">    
-                                                <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input" value="{{ asset('/public/floor_images/' . basename($image)) }}">
-                                                <label for="image_{{ $loop->index }}" class="form-check-label">
-                                                    <img src="{{URL::asset('/floor_images/'. basename($image))}}" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
-                                                    <i class="ti ti-trash" data-image="{{ basename($image) }}" onclick="deleteImage(this)"></i>
-                                                </label>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                 </div>
+                                        {{ Form::close() }}
+                                    </div>         
+                                </div>  
                             </div>
-                        </div>
-                            <!-- IMAGE -->
+                    </div>
                 @endif
                 </div>
             </div>
