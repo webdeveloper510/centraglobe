@@ -55,8 +55,9 @@
         }
 
         var calender_type=$('#calender_type :selected').val();
-        $('#calendar').removeClass('local_calender');
-        $('#calendar').removeClass('goggle_calender');
+        console.log("calender_type"+calender_type)
+        // $('#calendar').removeClass('local_calender');
+        // $('#calendar').removeClass('goggle_calender');
 
         if(calender_type == undefined){
             calender_type = 'local_calender';
@@ -66,8 +67,7 @@
             url: urls ,
             method:"POST",
             data: {"_token": "<?php echo e(csrf_token()); ?>",'calender_type':calender_type},
-            success: function(data) {
-                console.log(data);
+            success: function(data) {                
                 (function() {
                     var etitle;
                     var etype;
@@ -100,6 +100,8 @@
                         timeFormat: 'H(:mm)',
                         events: data,
                         select: function(info) {
+                            // console.log(info)
+                            // var startDate = info.startStr;
                             var startDate = info.startStr;
                             var endDate =  info.endStr;
                             openPopupForm(startDate,endDate);
@@ -116,6 +118,9 @@
         $("#block").show();
         $("#unblock").hide();
         $( ".blockd_dates input" ).each(function( index ) {
+            // console.log(`here: ${index}`);
+            // console.log(`this value: ${$(this).val()}`);
+            // console.log(`start | end: ${start} | ${end}`);
             if($(this).val() == start || $(this).val() == end){
                 $("#unblock").show();
                 $("#block").hide();
@@ -131,6 +136,7 @@
       $('#popup-form').hide();
       $('#overlay').hide();
     }
+    
     }
    $('#unblock').on('click', function() {
         var start = $('#popup-form input[name = "start_date"]').val();
@@ -154,7 +160,6 @@
 </script>
 <?php $__env->stopPush(); ?>
 <?php
-
 $setting = App\Models\Utility::settings();
 ?>
 
@@ -167,8 +172,7 @@ $setting = App\Models\Utility::settings();
 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 </div>
     <div class="row">
-        <!-- [ sample-page ] start -->
-         <div class="col-lg-8">
+         <div class="col-lg-9">
             <div class="card">
                 <div class="card-header">
                     <h5 style="width: 150px;"><?php echo e(__('Calendar')); ?></h5>
@@ -179,7 +183,7 @@ $setting = App\Models\Utility::settings();
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-3">
             <div class="card">
                 <div class="card-body">
                     <h4 class="mb-4">Next events</h4>
@@ -236,7 +240,6 @@ $setting = App\Models\Utility::settings();
                         </div>
                     </div>
                 </div>
-                <p style="float:right;"><font style="color:red;">&nbsp;&nbsp;BLOCKED BY : </font><?php echo e($blockedby); ?></p>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12">
@@ -270,8 +273,8 @@ $setting = App\Models\Utility::settings();
 
                     <?php echo e(Form::close()); ?>
 
-                    <button class="btn  btn-primary" id= "unblock" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>" style ="display:none">Unblock</button> 
-                <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>">Close</button> 
+                    <button class="btn btn-primary" id= "unblock" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>" style ="display:none">Unblock</button> 
+                    <button class="btn  btn-primary" id= "close-popup" data-bs-toggle="tooltip" title="<?php echo e(__('Close')); ?>">Close</button> 
                 </div>
             </div>
         </div>

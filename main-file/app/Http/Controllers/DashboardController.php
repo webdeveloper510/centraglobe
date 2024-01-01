@@ -56,7 +56,8 @@ class DashboardController extends Controller
                 $data['invoiceColor']       = Invoice::$statuesColor;
                 $date = today()->format('Y-m-d');
                 $upcoming = Meeting::where('start_date', '>=', $date)->get()->count();;
-                $completed = Meeting::where('start_date', '<=', $date)->get()->count();;
+                $completed = Meeting::where('start_date', '<', $date)->get()->count();;
+                $totalevent = Meeting::all()->count();
 
                 $statuss  = Invoice::$status;
                 $invoices = [];
@@ -119,7 +120,7 @@ class DashboardController extends Controller
                 } else {
                     $storage_limit = 0;
                 }
-                return view('home', compact('data','users','plan','storage_limit','upcoming','completed'));
+                return view('home', compact('data','users','plan','storage_limit','upcoming','completed','totalevent'));
             }
         } else {
 
@@ -332,6 +333,7 @@ class DashboardController extends Controller
         }
         return $arrayJson;
     }
+
     public function upcomingevents(){
         // echo "upcomingevents";
         // echo "<pre>";
@@ -346,7 +348,7 @@ class DashboardController extends Controller
         // echo "<pre>";
         $date = today()->format('Y-m-d');
         // $meeting = Meeting::all();
-        $meetings = Meeting::where('start_date', '<=', $date)->get();
+        $meetings = Meeting::where('start_date', '<', $date)->get();
         return view('meeting.index',compact('meetings'));
     }
 }

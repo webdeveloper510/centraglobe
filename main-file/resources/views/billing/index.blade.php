@@ -31,7 +31,7 @@ $labels =
         <div class = "col-md-12">
             <div class="form-group">
                 <label class="form-label">Select User</label>
-                <select class="form-select" id = "userinfo" name = "user">
+                <select class="form-select" id = "userinfo" name = "user" required>
                     <option value = "-1" selected disabled>Select user</option>
                     @foreach($assigned_user as $user)
                         <option value="{{$user->user_id}}">{{App\Models\User::where('id',$user->user_id)->pluck('name')->first()}}</option>
@@ -57,11 +57,11 @@ $labels =
                                 <tr>
                                     <td>{{ucfirst($label)}}</td>
                                     <td>
-                                        <input type = "number" name ="billing[{{$key}}]['cost']" value="{{$billing->$key}}" class= "form-control" readonly></td>
+                                        <input type = "number" name ="billing[{{$key}}][cost]" value="{{$billing->$key}}" class= "form-control" readonly></td>
                                     <td> 
-                                    <input type = "number" name ="billing[{{$key}}]['quantity']" min = '0' class= "form-control" required>
+                                    <input type = "number" name ="billing[{{$key}}][quantity]" min = '0' class= "form-control" required>
                                     </td>
-                                    <td><input type = "text" name ="billing[{{$key}}]['notes']" class= "form-control"></td>
+                                    <td><input type = "text" name ="billing[{{$key}}][notes]" class= "form-control"></td>
                                 </tr>
                             @endforeach
                         </tbody>

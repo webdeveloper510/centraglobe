@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Billing;
 use App\Models\Meeting;
 use App\Models\Billingdetail;
+use Mpdf\Mpdf;
 
 class BillingController extends Controller
 {
@@ -73,21 +74,46 @@ class BillingController extends Controller
         return $event_info;
     }
     public function billing_details(Request $request){
-        // $event_id = Meeting::where('user_id',$request->user)->pluck('id')->first();
-        // $billingdetails = new Billingdetail();
-        // $billingdetails['user_id'] = $request->user;
-        // $billingdetails['event_id'] = $event_id;
-        // $billingdetails['venue_rental'] = $request->user;
-        // $billingdetails['hotel_rooms'] = $request->user;
-        // $billingdetails['equipment'] = $request->user;
-        // $billingdetails['setup'] = $request->user;
-        // $billingdetails['bar'] = $request->user;
-        // $billingdetails['special_req'] = $request->user;
-        // $billingdetails['food'] = $request->user;
-        // echo "<pre>";
-        // $data = serialize($request->billing); 
-        // $dataa = unserialize($data); 
-        // print_r($data);
-        // print_r($dataa);
+        $validator = \Validator::make(
+            $request->all(),
+            [
+                'user' => 'required',
+            ]
+        );
+        if ($validator->fails()) {
+            $messages = $validator->getMessageBag();
+
+            return redirect()->back()->with('error', $messages->first());
+        }
+        $event_id = Meeting::where('user_id',$request->user)->first();
+        $billingdetails = new Billingdetail();
+        $billingdetails['user_id'] = $request->user;
+        $billingdetails['event_id'] = $event_id->id;
+        $billingdetails['venue_rental'] = serialize($request->billing['venue_rental']);
+        $billingdetails['hotel_rooms'] = serialize($request->billing['hotel_rooms']);
+        $billingdetails['equipment'] = serialize($request->billing['equipment']);
+        $billingdetails['setup'] = serialize($request->billing['setup']);
+        $billingdetails['bar'] = serialize($request->billing['gold_2hrs']);
+        $billingdetails['special_req'] = serialize($request->billing['special_req']);
+        $billingdetails['food'] = serialize($request->billing['classic_brunch']);
+        $billingdetails['created_by'] = \Auth::user()->creatorId();
+        $billingdetails->save();
+        $data['data'] = [
+            'billingdetails' => $billingdetails->user_id,
+            'hotel_rooms' => unserialize($billingdetails->hotel_rooms),
+            'venue_rental' => unserialize($billingdetails->venue_rental),
+            'equipment' => unserialize($billingdetails->equipment),
+            'setup' => unserialize($billingdetails->setup),
+            'bar' => unserialize($billingdetails->bar),
+            'special_req' => unserialize($billingdetails->special_req),
+            'food' => unserialize($billingdetails->food),
+            'deposit'=>$request->deposits,
+                'type'=>$event_id->type
+        ];
+        
+        $view = view('billing.view',$data);
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($view);
+        return $mpdf->Output();
     }
 }

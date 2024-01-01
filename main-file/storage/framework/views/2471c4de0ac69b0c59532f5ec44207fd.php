@@ -39,7 +39,7 @@
     <li class="breadcrumb-item"><?php echo e(__('Details')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
-    <div class="row">
+<div class="row">
         <div class="col-sm-12">
             <div class="row">
                 <div class="col-xl-3">
@@ -133,7 +133,7 @@
             <label for="venue" class="form-label"><?php echo e(__('Venue')); ?></label>
             <?php $__currentLoopData = $venue; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $label): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <div>
-                    <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="venue<?php echo e($key + 1); ?>" 
+                    <input type="checkbox" name="venue[]" id="<?php echo e($label); ?>" value="<?php echo e($label); ?>" 
                         <?php echo e(in_array($label, $venue_function) ? 'checked' : ''); ?>>
                     <label for="<?php echo e($label); ?>"><?php echo e($label); ?></label>
                 </div>
@@ -179,24 +179,6 @@
 
         </div>
     </div>
-    
-
-    <!-- <div class="col-6">
-        <div class="form-group">
-            <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
-
-            <div class="checkbox-group">
-                <?php $__currentLoopData = $function; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $key => $value): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <label>
-                        <?php echo Form::checkbox('function[]', $key, in_array($value, $function), ['class' => 'function-checkbox']); ?>
-
-                        <?php echo e($value); ?>
-
-                    </label><br>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            </div>
-        </div>
-    </div> -->
 
     <div class="col-6">
         <div class="form-group">
@@ -215,7 +197,6 @@
     </div>
 
 
-
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('status',__('Status'),['class'=>'form-label'])); ?>
@@ -224,19 +205,11 @@
 
         </div>
     </div> 
-    <!-- <div class="col-6">
-        <div class="form-group">
-            <?php echo e(Form::label('Assign User',__('Assign User'),['class'=>'form-label'])); ?>
-
-            <?php echo Form::select('user', $user, null,array('class' => 'form-control')); ?>
-
-        </div>
-    </div> -->
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('Assign User', __('Assign User'), ['class' => 'form-label'])); ?>
 
-            <?php echo Form::select('user', $user, $leadUserId, ['class' => 'form-control']); ?>
+            <?php echo Form::select('user', $user,$lead->assigned_user, ['class' => 'form-control']); ?>
 
         </div>
     </div>
@@ -254,9 +227,9 @@
     </div>
     <div class="col-6">
         <div class="form-group">
-            <?php echo e(Form::label('special_requirements',__('Any Special Requirements'),['class'=>'form-label'])); ?>
+            <?php echo e(Form::label('spcl_req',__('Any Special Requirements'),['class'=>'form-label'])); ?>
 
-            <?php echo e(Form::textarea('special_requirements',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))); ?>
+            <?php echo e(Form::textarea('spcl_req',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))); ?>
 
         </div>
     </div>

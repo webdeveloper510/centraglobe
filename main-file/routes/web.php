@@ -1186,6 +1186,9 @@ Route::group(['middleware' => ['verified']], function () {
     //=======================================Floor Plans=======================//
     Route::post('/floor-images',[SettingController::class,'storeImage']);
     Route::post('/delete-image', [SettingController::class, 'deleteImage']);
+    //=======================================Floor Plans=======================//
+    Route::post('/setting/billing',[SettingController::class,'billing_cost'])->name('billing.setting');
+
 
     //========================================================================================//
     Route::any('user-reset-password/{id}', [UserController::class, 'employeePassword'])->name('user.reset');
