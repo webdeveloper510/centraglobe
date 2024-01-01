@@ -22,6 +22,17 @@
 
 
 @push('script-page')
+<style>
+.blocked-by-tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 1000; 
+}
+
+</style>
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dc4641f860664c6e824b093274f50291"}'></script>
 <script src="{{ asset('assets/js/plugins/main.min.js') }}"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
@@ -52,7 +63,7 @@
         }
 
         var calender_type=$('#calender_type :selected').val();
-        console.log("calender_type"+calender_type)
+        // console.log("calender_type"+calender_type)
         // $('#calendar').removeClass('local_calender');
         // $('#calendar').removeClass('goggle_calender');
 
@@ -97,17 +108,35 @@
                         timeFormat: 'H(:mm)',
                         events: data,
                         select: function(info) {
-                            // console.log(info)
-                            // var startDate = info.startStr;
                             var startDate = info.startStr;
+                            // var endDate =  info.endStr+'T12:30:00';
                             var endDate =  info.endStr;
+                            console.log(endDate)
                             openPopupForm(startDate,endDate);
-                        },                
-                    });
-                    calendar.render();
-                })();
-            }
-        });
+                        },       
+                    eventContent: function(arg) {
+                        return {
+                            html: arg.event.title,
+                        };
+                    },
+
+                    eventMouseEnter: function(arg) {
+                        if (arg.event.extendedProps.blocked_by) {
+                            arg.el.innerHTML += '<div class="blocked-by-tooltip">' + 'By:' + arg.event.extendedProps.blocked_by + '</div>';
+                        }
+                    },
+
+                    eventMouseLeave: function(arg) {
+                        var tooltip = arg.el.querySelector('.blocked-by-tooltip');
+                        if (tooltip) {
+                            tooltip.remove();
+                        }
+                    },
+                            });
+                            calendar.render();s
+                        })();
+                    }
+                });
     $('#close-popup').on('click', function() {
         closePopupForm();
     });
@@ -307,7 +336,7 @@ $setting = App\Models\Utility::settings();
         });
 
         function getparent(bid) {
-            console.log(bid);
+            // console.log(bid);
             $.ajax({
                 url: '{{route('call.getparent')}}',
                 type: 'POST',
@@ -315,7 +344,7 @@ $setting = App\Models\Utility::settings();
                     "parent": bid, "_token": "{{ csrf_token() }}",
                 },
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#parent_id').empty();
                     {{--$('#parent_id').append('<option value="">{{__('Select Parent')}}</option>');--}}
 
@@ -330,13 +359,13 @@ $setting = App\Models\Utility::settings();
         }
 
         $(document).on('change', '#parents', function () {
-            console.log('h');
+            // console.log('h');
             var parent = $(this).val();
             getparents(parent);
         });
 
         function getparents(bid) {
-            console.log(bid);
+            // console.log(bid);
             $.ajax({
                 url: '{{route("task.getparent")}}',
                 type: 'POST',
@@ -344,7 +373,7 @@ $setting = App\Models\Utility::settings();
                     "parent": bid, "_token": "{{ csrf_token() }}",
                 },
                 success: function (data) {
-                    console.log(data);
+                    // console.log(data);
                     $('#parent_id').empty();
                     {{--$('#parent_id').append('<option value="">{{__('Select Parent')}}</option>');--}}
 
