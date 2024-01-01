@@ -21,9 +21,8 @@ class CalenderController extends Controller
     public function index()
     {
         $transdate = date('Y-m-d', time());
-        $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
-        $query = User::where('id',$blockeddate[0]['created_by'])->get();
-        $blockedby = $query[0]['name'];
+        $blockeddate = Blockdate::all();
+   
         if(\Auth::user()->type == 'owner'){
             $calls    = Call::where('created_by', \Auth::user()->creatorId())->get();
             $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();         
@@ -35,8 +34,16 @@ class CalenderController extends Controller
             $meetings = Meeting::where('user_id', \Auth::user()->id)->get();            
             $tasks    = Task::where('user_id', \Auth::user()->id)->get();
         }
-        return view('calendar.index', compact('transdate','blockeddate','blockedby'));
-    }
+        return view('calendar.index', compact('transdate','blockeddate'));
+    }    
+
+    // public function index()
+    // {
+    //     $transdate = date('Y-m-d', time());
+    //     $blockeddate = Blockdate::all();               
+    //     return view('calendar.index', compact('transdate','blockeddate'));
+    // }  
+
 
     /**
      * Show the form for creating a new resource.
@@ -114,16 +121,18 @@ class CalenderController extends Controller
     }
 
     public function get_data(Request $request){
-
+        
             $arrMeeting = [];
             $arrTask    = [];
             $arrCall    = [];
             $arrblock   = [];
 
-        if($request->get('calender_type') == 'goggle_calender')
-        {
-            if($type ='task'){
-            $arrTask =  Utility::getCalendarData($type);
+            // echo "+++++++++++++++++++++".$request->get('calender_type');
+            
+            if($request->get('calender_type') == 'goggle_calender')
+            {
+                if($type ='task'){
+                    $arrTask =  Utility::getCalendarData($type);
             }
 
             if($type ='meeting'){
@@ -144,64 +153,45 @@ class CalenderController extends Controller
 
             if(\Auth::user()->type == 'owner'){
                 $meetings = Meeting::where('created_by', \Auth::user()->creatorId())->get();
-                $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
+                $blockeddate = Blockdate::all();
             }
             else
             {
                 $meetings = Meeting::where('user_id', \Auth::user()->id)->get();
-                $blockeddate = Blockdate::where('created_by', \Auth::user()->creatorId())->get();
+                $blockeddate = Blockdate::all();
             }
 
                 foreach($meetings as $val)
-                {
+                {                   
                     $end_date=date_create($val->end_date);
-                    date_add($end_date,date_interval_create_from_date_string("1 days"));
+                    // date_add($end_date,date_interval_create_from_date_string("1 day"));
                     $arrMeeting[] = [
                         "id"=> $val->id,
                         "title" => $val->name,
                         "start" => $val->start_date,
-                        "end" => date_format($end_date,"Y-m-d H:i:s"),
+                        "end" => date_format($end_date,"Y-m-d"),
                         "className" => $val->color,
                         "textColor" => '#fff',
                         "url" => route('meeting.show', $val['id']),
                         "allDay" => true,
-                        // "display" =>'background'
                     ];
                 }
                 foreach($blockeddate as $val)
                 {
                     $end_date=date_create($val->end_date);
-                    date_add($end_date,date_interval_create_from_date_string("1 days"));
+                    // date_add($end_date,date_interval_create_from_date_string("1 day"));
                     $arrblock[] = [
                         "id"=> $val->id,
                         "title" => $val->purpose,
                         "start" => $val->start_date,
-                        "end" => date_format($end_date,"Y-m-d H:i:s"),
+                        "end" => date_format($end_date,"Y-m-d"),
                         "className" => $val->color,
                         "textColor" => '#000',
-                        // "url" => route('meeting.show', $val['id']),
                         "allDay" => true,
                         "display" =>'background',
                     ];
-                }
-                // foreach($calls as $val)
-                // {
-                //     $end_date=date_create($val->end_date);
-                //     date_add($end_date,date_interval_create_from_date_string("1 days"));
-                //     $arrCall[] = [
-                //         "id"=> $val->id,
-                //         "title" => $val->name,
-                //         "start" => $val->start_date,
-                //         "end" => date_format($end_date,"Y-m-d H:i:s"),
-                //         "className" => $val->color,
-                //         "textColor" => '#FFF',
-                //         "url" => route('call.show', $val['id']),
-                //         "allDay" => true,
-                //     ];
-                // }
-                        $arrayJson = array_merge($arrMeeting,$arrblock);
-
-
+                }                
+                    $arrayJson = array_merge($arrMeeting,$arrblock);
                 }
                 return $arrayJson;
     }

@@ -76,6 +76,17 @@
                                         </td>
                                         <?php if(Gate::check('Show Meeting') || Gate::check('Edit Meeting') || Gate::check('Delete Meeting')): ?>
                                             <td class="text-end">
+                                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Meeting')): ?>
+                                                    <div class="action-btn bg-success ms-2">
+                                                        <a href="#" data-size="md"
+                                                            data-url="<?php echo e(route('meeting.floor_plan', $meeting->id)); ?>"
+                                                            data-ajax-popup="true" data-bs-toggle="tooltip"
+                                                            data-title="<?php echo e(__('Event Details')); ?>"title="<?php echo e(__('Share')); ?>"
+                                                            class="mx-3 btn btn-sm d-inline-flex align-items-center text-white ">
+                                                            <i class="fas fa-share"></i>
+                                                        </a>
+                                                    </div>
+                                                <?php endif; ?>
                                                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Show Meeting')): ?>
                                                     <div class="action-btn bg-warning ms-2">
                                                         <a href="#" data-size="md"
