@@ -110,15 +110,6 @@
         </div>
     </div>
     
-    <!-- <div class="col-6">
-        <div class="form-group">
-        <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
-
-        <?php echo Form::select('function',$function, null,array('class' => 'form-control','required'=>'required')); ?>
-
-        </div>
-    </div> -->
-
     <div class="col-6">
         <div class="form-group">
             <?php echo e(Form::label('function', __('Function'), ['class' => 'form-label'])); ?>
@@ -167,9 +158,9 @@
     </div>
     <div class="col-6">
         <div class="form-group">
-            <?php echo e(Form::label('special_requirements',__('Any Special Requirements'),['class'=>'form-label'])); ?>
+            <?php echo e(Form::label('spcl_req',__('Any Special Requirements'),['class'=>'form-label'])); ?>
 
-            <?php echo e(Form::textarea('special_requirements',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))); ?>
+            <?php echo e(Form::textarea('spcl_req',null,array('class'=>'form-control','rows'=>2,'placeholder'=>__('Enter Any Special Requirements')))); ?>
 
         </div>
     </div>

@@ -33,14 +33,14 @@
                     <dt class="col-md-5"><span class="h6 text-md mb-0">{{__('Event Type')}}</span></dt>
                     <dd class="col-md-5"><span class="text-md">{{$meeting->type}}</span></dd>
 
-                    <dt class="col-md-5"><span class="h6 text-md mb-0">{{__('Attendees Lead')}}</span></dt>
+                    <dt class="col-md-5"><span class="h6 text-md mb-0">{{__('Lead')}}</span></dt>
                     <dd class="col-md-5"><span class="text-md">{{ !empty($meeting->attendees_leads->name)?$meeting->attendees_leads->name:'--' }}</span></dd>
 
                     <dt class="col-sm-5"><span class="h6 text-sm mb-0">{{__('Assigned User')}}</span></dt>
-                    <dd class="col-sm-7"><span class="text-sm">{{ !empty($meeting->assign_user)?$meeting->assign_user->name:''}}</span></dd>
+                    <dd class="col-sm-7"><span class="text-md">{{ !empty($meeting->assign_user)?$meeting->assign_user->name:''}}</span></dd>
 
                     <dt class="col-sm-5"><span class="h6 text-sm mb-0">{{__('Created')}}</span></dt>
-                    <dd class="col-sm-7"><span class="text-sm">{{\Auth::user()->dateFormat($meeting->created_at)}}</span></dd>
+                    <dd class="col-sm-7"><span class="text-md">{{\Auth::user()->dateFormat($meeting->created_at)}}</span></dd>
                 </dl>
             </div>
 

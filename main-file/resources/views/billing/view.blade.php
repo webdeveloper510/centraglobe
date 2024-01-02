@@ -9,11 +9,11 @@
 <body>
     <div class="row">
         <div class="col-md-12">
-        <span style="text-center">The Bond 1786</span><br>
+        <span>The Bond 1786</span><br>
+        <span>Billing Summary</span>
         <span>Venue Rental & Banquet Event - Estimate</span>
         </div>
     </div>
-    <?php print_r($data['deposit']) ?>
     <div class="row">
         <div class="col-lg-12">
             <div>
@@ -23,9 +23,7 @@
                             <th>Name : {{App\Models\User::where('id',$data['billingdetails'])->pluck('name')->first()}}</th>
                             <th colspan = "2"></th>
                             <th colspan = "3">Date:<?php echo date("d/m/Y"); ?> </th>
-                            <!-- <th></th> -->
-                            <th colspan = "2">Event: {{$data['type']}}</th>
-                            <!-- <th></th> -->
+                            <th >Event: {{$data['type']}}</th>
                         </tr>
                         <tr>
                             <th>Description</th>

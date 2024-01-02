@@ -12,7 +12,6 @@
     <li class="breadcrumb-item"><?php echo e(__('Event')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('action-btn'); ?>
-
     <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Meeting')): ?>
         <div class="col-12 text-end mt-3">
             <a href="<?php echo e(route('meeting.create',['meeting',0])); ?>"> 

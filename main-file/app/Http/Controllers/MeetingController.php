@@ -81,7 +81,7 @@ class MeetingController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {       
+    {   
         $start_date = $_REQUEST['start_date'];
         $end_date = $_REQUEST['end_date'];
 
@@ -161,6 +161,8 @@ class MeetingController extends Controller
             $meeting['phone']               = $request->phone;
             $meeting['start_time']          = $request->start_time;
             $meeting['end_time']            = $request->end_time;
+            $meeting['ad_opts']             = $request->add_opts;
+            $meeting['floor_plan']          = $request->uploadedImage;
             $meeting['created_by']        = \Auth::user()->creatorId();
             $meeting->save();
             $Assign_user_phone = User::where('id', $request->user)->first();
@@ -275,21 +277,15 @@ class MeetingController extends Controller
      */
     public function update(Request $request, Meeting $meeting)
     {      
-        // echo "<pre>";
-        // print_r($meeting);
-        // die;
         $break_package = $lunch_package = $dinner_package = $wedding_package = '';
         if(isset($_REQUEST['venue'])){
             $venue = implode(',',$_REQUEST['venue']);
-            // print_r($venue);
         }
         if(isset($_REQUEST['function'])){
             $function = implode(',',$_REQUEST['function']);
-            // print_r($function);
         }
         if(isset($_REQUEST['meal'])){
             $meal = implode(',',$_REQUEST['meal']);
-            // print_r($function);
         }
 
         if (isset($_REQUEST['break_package']))
@@ -308,9 +304,8 @@ class MeetingController extends Controller
         {
             $wedding_package = implode(',', $_REQUEST['wedding_package']);
         }        
-            $packagesArray = implode(',', array($break_package, $lunch_package, $dinner_package, $wedding_package));
-            // print_r($packagesArray);
-        // die;            
+        $packagesArray = implode(',', array($break_package, $lunch_package, $dinner_package, $wedding_package));
+        
             
         if (\Auth::user()->can('Edit Meeting')) {
             $validator = \Validator::make(
@@ -334,6 +329,7 @@ class MeetingController extends Controller
 
                 return redirect()->back()->with('error', $messages->first());
             }
+
             
             $meeting['user_id']           = $meeting->user_id;
             $meeting['name']              = $request->name;
@@ -362,6 +358,8 @@ class MeetingController extends Controller
             $meeting['phone']               = $request->phone;
             $meeting['start_time']        = $request->start_time;
             $meeting['end_time']       = $request->end_time;
+            $meeting['ad_opts']             = $request->add_opts;
+            $meeting['floor_plan']          = $request->uploadedImage;
             $meeting['created_by']        = \Auth::user()->creatorId();
             $meeting->update();
             // Stream::create(
@@ -529,21 +527,12 @@ class MeetingController extends Controller
     }
     public function get_event_info(Request $request){
         $email = $request->email;
-        $event = Meeting::where('email', $email)->first();
-        echo "<pre>";print_r($event);
-        // $billing = Billing::first();
-        // $labels = [ 'venue_rental' => 'Venue Rental',
-        //             'hotel_rooms'=>'Hotel Rooms',
-        //             'equipment'=>'Requirements',
-        //             'setup' =>'Setup',
-        //             'gold_2hrs'=>'Bar Package',
-        //             'special_req' =>'Special Request /Other',
-        //             'classic_brunch'=>'Brunch/Lunch/Dinner Package',
-        //  ];
-        // $to = $request->email;
-        $to = "sonali@codenomad.net"; 
-        $from = 'harjot@codenomad.net'; 
-    //     $fromName = 'Developer'; 
+       
+       $mail= explode(',',$email);
+        foreach($mail as $m){
+            $event = Meeting::where('email', $m)->first();
+            $to =  $m; 
+        $from = 'test@gmail.com'; 
         $subject = "Event Details";
         $message = '';
         $message .= "<strong>Centraverse</strong>";
@@ -553,7 +542,7 @@ class MeetingController extends Controller
             <div class='card'>
                 <div class='card-body table-border-style'>
                     <div class='table-responsive overflow_hidden'>
-                        <table class='table datatable align-items-center'>
+                        <table class='table align-items-center' style='border: 1px;'>
                             <thead class='thead-light'>
                                 <tr>
                                     <th scope='col' >Description</th>
@@ -562,32 +551,38 @@ class MeetingController extends Controller
                             </thead>
                             <tbody>";
                             $message .=  "<tr>
-                                <td><label class='ischeck'>Event name:</label>{$event->name}</td>
-                                <td><label class='ischeck'>Start Date:</label>{$event->start_date}</td>
-                                <td><label class='ischeck'>End Date:</label>{$event->end_date}</td>
-                                <td><label class='ischeck'>Guest Count:</label>{$event->guest_count}</td>
-                                <td><label class='ischeck'>Function:</label>{$event->function}</td>
-                                <td><label class='ischeck'>Venue:</label>{$event->venue_selection}</td>
-                                <td><label class='ischeck'>Special Requests:</label>{$event->spcl_request}</td>
+                                <td><label class='ischeck'>Event name:</label></td><td>{$event->name}</td></tr>
+                                <tr><td><label class='ischeck'>Start Date:</label></td><td>{$event->start_date}</td></tr>
+                                <tr><td><label class='ischeck'>End Date:</label></td><td>{$event->end_date}</td></tr>
+                                <tr><td><label class='ischeck'>Guest Count:</label></td><td>{$event->guest_count}</td></tr>
+                                <tr><td><label class='ischeck'>Function:</label></td><td>{$event->function}</td></tr>
+                                <tr><td><label class='ischeck'>Venue:</label></td><td>{$event->venue_selection}</td></tr>
+                                <tr><td><label class='ischeck'>Special Requests:</label></td><td>{$event->spcl_request}</td></tr>
                             </tr>";
                             $message .= "</tbody>
                         </table>
                     </div>
                 </div>
             </div>
+        </div>";
+        $message .= "<div class='row'>
+        <div class='col-sm-12'>
+        <div class='card'>
+            <img src='".$event->floor_plan."'>
         </div>
-    </div>"; 
-        // Set content-type header for sending HTML email 
+        </div>"; 
         $headers = "MIME-Version: 1.0" . "\r\n"; 
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
-        // $headers .= 'From: '.$fromName.'<'.$from.'>' . "\r\n"; 
         $headers .= 'Cc: welcome@example.com' . "\r\n"; 
         $headers .= 'Bcc: welcome2@example.com' . "\r\n"; 
-        // Send email 
-        if(@mail($to, $subject, $message, $headers)){ 
-            return redirect()->back()->with('success', 'Email Sent successfully');
-        }else{ 
-            return redirect()->back()->with('success', 'Email Sent successfully');
+        $mail = @mail($to, $subject, $message, $headers);
+        }
+        
+        if($mail){
+                return redirect()->back()->with('success', 'Email Sent Successfully');
+        }
+        else{
+                return redirect()->back()->with('error', 'Email Not Sent');
         }
     }
 }

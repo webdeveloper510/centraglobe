@@ -41,13 +41,24 @@
     margin-top: -16px;
     padding: 10px;
     }
-    .upcmg{
-    margin-left: 256px;
-    margin-top: -201px;
-    }
     .cmplt{
     margin-left: 539px;
     margin-top: -206px;
+    cursor: pointer;
+    }
+    #toggleDiv{
+        cursor: pointer;
+    }
+    .totallead{
+        cursor: pointer;
+    }
+    .upcmg{
+    margin-left: 256px;
+    margin-top: -201px;
+    cursor: pointer;    
+    }
+    .totallead{
+    cursor: pointer;    
     }
     /* #popup-form {
       display: none;
@@ -81,20 +92,20 @@
             <div class="col-xxl-12">
                     <div class="row">
                         
-                                <div class="col-lg-3 col-6">
-                                    <div class="card">
-                                        <div class="card-body">
-                                            <div class="theme-avtar bg-info">
-                                                <i class="fas fa-address-card"></i>
-                                            </div>
-                                            <p class="text-muted text-sm mt-4 mb-2"></p>
-                                            <h6 class="mb-3"><?php echo e(__('Total Lead')); ?></h6>
-                                            <h3 class="mb-0"><?php echo e($data['totalLead']); ?></h3>
-                                        </div>
-                                    </div>
-                                </div>
-
-<div class="col-lg-3 col-6" id="toggleDiv">
+   <div class="col-lg-3 col-6 totallead">
+       <div class="card">
+           <div class="card-body" onclick="leads();">
+               <div class="theme-avtar bg-info">
+                   <i class="fas fa-address-card"></i>
+               </div>
+               <p class="text-muted text-sm mt-4 mb-2"></p>
+               <h6 class="mb-3"><?php echo e(__('Total Lead')); ?></h6>
+               <h3 class="mb-0"><?php echo e($data['totalLead']); ?></h3>
+           </div>
+       </div>
+   </div>
+    
+   <div class="col-lg-3 col-6" id="toggleDiv">
     <div class="card">
         <div class="card-body" onclick="toggleOptions()">
             <div class="theme-avtar bg-warning">
@@ -102,7 +113,7 @@
             </div>
             <p class="text-muted text-sm mt-4 mb-2"></p>
             <h6 class="mb-3"><?php echo e(__('Total Events')); ?></h6>
-            <h3 class="mb-0"><?php echo e($data['totalUser']); ?> </h3>
+            <h3 class="mb-0"><?php echo e(@$totalevent); ?> </h3>
         </div>
     </div>
 </div>
@@ -112,7 +123,7 @@
         <h6 class="mb-3"><?php echo e(__('Upcoming Events')); ?></h6>
     </div> -->
     <div class="col-lg-3 col-6 upcmg">
-        <div class="card option" onclick="showUpcoming()">
+        <div class="card option" onclick="showUpcoming()" style="height: 182px;">
             <div class="card-body">
                     <div class="theme-avtar bg-info">
                         <i class="fas fa-address-card"></i>
@@ -127,7 +138,7 @@
         <h6 class="mb-3"><?php echo e(__('Completed Events')); ?></h6>
     </div> -->
     <div class="col-lg-3 col-6 cmplt">
-    <div class="card option" onclick="showCompleted()">
+    <div class="card option" onclick="showCompleted()" style="height: 182px;">
             <div class="card-body">
                     <div class="theme-avtar bg-info">
                         <i class="fas fa-address-card"></i>
@@ -138,7 +149,7 @@
                 </div>
             </div>
         </div>
-</div>    
+</div>  
 <!-- <div id="optionsContainer" style="display: none;">
     <button onclick="showUpcoming()">Upcoming</button>
     <button onclick="showCompleted()">Completed</button>
@@ -420,8 +431,7 @@
                 <?php
                 $setting = App\Models\Utility::settings();
                 ?> 
-                  <div class="row"> 
-                    <!-- [sample-page] start -->
+                  <!-- <div class="row"> 
                    <div class="col-lg-12">
                         <div class="card">
                             <div class="card-header">
@@ -441,8 +451,7 @@
                             </div>
                         </div>
                     </div>  
-                     <!-- [ sample-page ] end -->
-                </div>
+                </div> -->
             </div>
             <!-- [ sample-page ] end -->
         </div>
@@ -918,6 +927,9 @@
 
     function showCompleted() {
         window.location.href = "<?php echo e(url('/meeting-completed')); ?>";
+    }
+    function leads() {
+        window.location.href = "<?php echo e(url('/lead')); ?>";
     }
 </script>
 <?php $__env->stopPush(); ?>

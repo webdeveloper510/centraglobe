@@ -32,7 +32,7 @@ $labels =
             <div class="form-group">
                 <label class="form-label">Select User</label>
                 <select class="form-select" id = "userinfo" name = "user" required>
-                    <option value = "-1" selected disabled>Select user</option>
+                    <option value= '-1' disabled selected>Select user</option>
                     @foreach($assigned_user as $user)
                         <option value="{{$user->user_id}}">{{App\Models\User::where('id',$user->user_id)->pluck('name')->first()}}</option>
                     @endforeach

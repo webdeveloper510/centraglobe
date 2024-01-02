@@ -26,6 +26,35 @@
     <li class="breadcrumb-item"><?php echo e(__('Edit')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('content'); ?>
+<style>
+    .floorimages{
+        height: 183px;
+        width: 256px;
+        margin: 26px;
+    }
+
+    .selected-image {
+        border: 2px solid #3498db; 
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); 
+        transition: border-color 0.3s, box-shadow 0.3s; 
+    }
+
+    .selected-image:hover {
+        border-color: #2980b9; 
+        box-shadow: 0 0 15px rgba(41, 128, 185, 0.8);
+    }
+
+    .zoom {
+    background-color: none;
+    transition: transform .2s;
+    }
+
+    .zoom:hover {
+    -ms-transform: scale(1.5); 
+    -webkit-transform: scale(1.5); 
+    transform: scale(1.2); 
+    }
+</style>
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
@@ -357,7 +386,22 @@
                                                 <?php echo e(Form::text('add_opts',null,array('class'=>'form-control','placeholder'=>__('Any Additional Optionas')))); ?>
 
                                             </div>
-                                        </div>                                  
+                                        </div> 
+                                        <div class="col-12">
+                                        <div class="row">
+                                            <label><b>Setup</b></label>
+                                            <?php $__currentLoopData = File::files(public_path('floor_images')); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $image): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                            <div class="col-6">    
+                                                    <input type="radio" id="image_<?php echo e($loop->index); ?>" name="uploadedImage" class="form-check-input " value="<?php echo e(asset('/public/floor_images/' . basename($image))); ?>" style="display:none;">
+                                                    <label for="image_<?php echo e($loop->index); ?>" class="form-check-label">
+                                                        <img src="<?php echo e(URL::asset('/floor_images/'. basename($image))); ?>" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
+                                                        <!-- <i class="ti ti-trash" data-image="<?php echo e(basename($image)); ?>" onclick="deleteImage(this)"></i> -->
+                                                    </label>
+                                                </div>
+                                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                        </div>
+                                    </div>
+                                                                     
                                     </div>
                                 </div>
                             </div>
@@ -570,6 +614,18 @@
         });
     });
 </script>
+<script>
+        $(document).ready(function () {
+            $('input[name="uploadedImage"]').change(function () {
+                $('.floorimages').removeClass('selected-image');
+                
+                if ($(this).is(':checked')) {
+                    var imageId = $(this).attr('id');
+                    $('label[for="' + imageId + '"] img').addClass('selected-image');
+                }
+            });
+        });
+    </script>
 
 
 <?php $__env->stopPush(); ?>

@@ -24,6 +24,35 @@
     <li class="breadcrumb-item">{{ __('Edit') }}</li>
 @endsection
 @section('content')
+<style>
+    .floorimages{
+        height: 183px;
+        width: 256px;
+        margin: 26px;
+    }
+
+    .selected-image {
+        border: 2px solid #3498db; 
+        box-shadow: 0 0 10px rgba(52, 152, 219, 0.5); 
+        transition: border-color 0.3s, box-shadow 0.3s; 
+    }
+
+    .selected-image:hover {
+        border-color: #2980b9; 
+        box-shadow: 0 0 15px rgba(41, 128, 185, 0.8);
+    }
+
+    .zoom {
+    background-color: none;
+    transition: transform .2s;
+    }
+
+    .zoom:hover {
+    -ms-transform: scale(1.5); 
+    -webkit-transform: scale(1.5); 
+    transform: scale(1.2); 
+    }
+</style>
     <div class="row">
         <div class="col-sm-12">
             <div class="row">
@@ -298,7 +327,22 @@
                                             <div class="form-group">
                                                 {{Form::text('add_opts',null,array('class'=>'form-control','placeholder'=>__('Any Additional Optionas')))}}
                                             </div>
-                                        </div>                                  
+                                        </div> 
+                                        <div class="col-12">
+                                        <div class="row">
+                                            <label><b>Setup</b></label>
+                                            @foreach(File::files(public_path('floor_images')) as $image)
+                                            <div class="col-6">    
+                                                    <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input " value="{{ asset('/public/floor_images/' . basename($image)) }}" style="display:none;">
+                                                    <label for="image_{{ $loop->index }}" class="form-check-label">
+                                                        <img src="{{URL::asset('/floor_images/'. basename($image))}}" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
+                                                        <!-- <i class="ti ti-trash" data-image="{{ basename($image) }}" onclick="deleteImage(this)"></i> -->
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                                                     
                                     </div>
                                 </div>
                             </div>
@@ -486,6 +530,18 @@
         });
     });
 </script>
+<script>
+        $(document).ready(function () {
+            $('input[name="uploadedImage"]').change(function () {
+                $('.floorimages').removeClass('selected-image');
+                
+                if ($(this).is(':checked')) {
+                    var imageId = $(this).attr('id');
+                    $('label[for="' + imageId + '"] img').addClass('selected-image');
+                }
+            });
+        });
+    </script>
 
 
 @endpush

@@ -35,7 +35,7 @@ $labels =
             <div class="form-group">
                 <label class="form-label">Select User</label>
                 <select class="form-select" id = "userinfo" name = "user" required>
-                    <option value = "-1" selected disabled>Select user</option>
+                    <option value= '-1' disabled selected>Select user</option>
                     <?php $__currentLoopData = $assigned_user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <option value="<?php echo e($user->user_id); ?>"><?php echo e(App\Models\User::where('id',$user->user_id)->pluck('name')->first()); ?></option>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

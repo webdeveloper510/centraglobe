@@ -17,7 +17,6 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
     <div class="navbar-wrapper">
         <div class="m-header main-logo">
             <a href="{{ route('dashboard') }}" class="b-brand">
-                <!-- ========   change your logo hear   ============ -->
                 {{-- <img src="{{ asset(Storage::url('logo/'.$logo)) }}" alt="{{ env('APP_NAME') }}" class="logo logo-lg" />
                     <img src="{{ asset(Storage::url('logo/'.$logo)) }}" alt="{{ env('APP_NAME') }}" class="logo logo-sm" /> --}}
                     {{--<img src="{{ $logo . '/' . (isset($company_logo) && !empty($company_logo) ? $company_logo : 'logo.png') .'?'.time()}}"
@@ -193,7 +192,6 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 @endcan
-                
                 <!-- @can('Manage Call')
                     <li class="dash-item {{ \Request::route()->getName() == 'call' || \Request::route()->getName() == 'call.show' || \Request::route()->getName() == 'call.edit' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('call')) ? route(\Auth::user()->getDefualtViewRouteByModule('call')) : route('call.index') }}" class="dash-link">
@@ -210,18 +208,18 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <a href="{{route('contract.index')}}" class="dash-link"><span class="dash-micon"><i class="ti ti-device-floppy"></i></span><span class="dash-mtext">{{__('Contracts')}}</span></a>
                         </li>
                     @endcan
-                @endcan
-                @can('Manage Document')
+                @endcan-->
+                <!-- @can('Manage Document')
                     <li class="dash-item {{ \Request::route()->getName() == 'document' || \Request::route()->getName() == 'document.show' || \Request::route()->getName() == 'document.edit' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('document')) ? route(\Auth::user()->getDefualtViewRouteByModule('document')) : route('document.index') }}" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-file-analytics"></i></span><span class="dash-mtext">{{ __('Document') }}</span>
                         </a> --}}
                         <a href="{{ array_key_exists('document',$defaultView) ? route($defaultView['document']) : route('document.index') }}" class="dash-link">
-                            <span class="dash-micon"><i class="ti ti-file-analytics"></i></span><span class="dash-mtext">{{ __('Document') }}</span>
+                            <span class="dash-micon"><i class="ti ti-file-analytics"></i></span><span class="dash-mtext">{{ __('Proposal') }}</span>
                         </a>
                     </li>
-                @endcan
-                @can('Manage Campaign')
+                @endcan -->
+                <!--@can('Manage Campaign')
                     <li class="dash-item {{ \Request::route()->getName() == 'campaign' || \Request::route()->getName() == 'campaign.show' || \Request::route()->getName() == 'campaign.edit' ? ' active' : '' }}">
                         {{-- <a href="{{ !empty(\Auth::user()->getDefualtViewRouteByModule('campaign')) ? route(\Auth::user()->getDefualtViewRouteByModule('campaign')) : route('campaign.index') }}" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-chart-line"></i></span><span class="dash-mtext">{{ __('Campaigns') }}</span>

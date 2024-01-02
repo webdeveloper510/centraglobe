@@ -17,7 +17,6 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
     <div class="navbar-wrapper">
         <div class="m-header main-logo">
             <a href="<?php echo e(route('dashboard')); ?>" class="b-brand">
-                <!-- ========   change your logo hear   ============ -->
                 
                     
                     <img src="http://127.0.0.1/main-file/storage/uploads/logo/logo.png"
@@ -187,16 +186,16 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                             <a href="<?php echo e(route('contract.index')); ?>" class="dash-link"><span class="dash-micon"><i class="ti ti-device-floppy"></i></span><span class="dash-mtext"><?php echo e(__('Contracts')); ?></span></a>
                         </li>
                     <?php endif; ?>
-                <?php endif; ?>
+                <?php endif; ?>-->
                 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Document')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'document' || \Request::route()->getName() == 'document.show' || \Request::route()->getName() == 'document.edit' ? ' active' : ''); ?>">
                         
                         <a href="<?php echo e(array_key_exists('document',$defaultView) ? route($defaultView['document']) : route('document.index')); ?>" class="dash-link">
-                            <span class="dash-micon"><i class="ti ti-file-analytics"></i></span><span class="dash-mtext"><?php echo e(__('Document')); ?></span>
+                            <span class="dash-micon"><i class="ti ti-file-analytics"></i></span><span class="dash-mtext"><?php echo e(__('Proposal')); ?></span>
                         </a>
                     </li>
                 <?php endif; ?>
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Campaign')): ?>
+                <!--<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Campaign')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'campaign' || \Request::route()->getName() == 'campaign.show' || \Request::route()->getName() == 'campaign.edit' ? ' active' : ''); ?>">
                         
                         <a href="<?php echo e(array_key_exists('campaign',$defaultView) ? route($defaultView['campaign']) : route('campaign.index')); ?>" class="dash-link">

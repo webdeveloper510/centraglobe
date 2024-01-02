@@ -17,8 +17,6 @@
                 </dl>
             <?php echo e(Form::submit(__('Share'),array('class'=>'btn btn-primary'))); ?>
 
-            <?php echo e(Form::close()); ?>
-
             </div>
 
     </div>

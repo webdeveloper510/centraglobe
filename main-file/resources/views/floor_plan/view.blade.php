@@ -15,7 +15,6 @@
 
                 </dl>
             {{Form::submit(__('Share'),array('class'=>'btn btn-primary'))}}
-            {{ Form::close() }}
             </div>
 
     </div>
