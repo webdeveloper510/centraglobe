@@ -75,7 +75,7 @@
             url: urls ,
             method:"POST",
             data: {"_token": "{{ csrf_token() }}",'calender_type':calender_type},
-            success: function(data) {                
+            success: function(data) {             
                 (function() {
                     var etitle;
                     var etype;
@@ -109,45 +109,42 @@
                         events: data,
                         select: function(info) {
                             var startDate = info.startStr;
-                            // var endDate =  info.endStr+'T12:30:00';
                             var endDate =  info.endStr;
                             console.log(endDate)
                             openPopupForm(startDate,endDate);
                         },       
-                    eventContent: function(arg) {
-                        return {
-                            html: arg.event.title,
-                        };
-                    },
+                        eventContent: function(arg) {
+                            return {
+                                html: arg.event.title,
+                            };
+                        },
 
-                    eventMouseEnter: function(arg) {
-                        if (arg.event.extendedProps.blocked_by) {
-                            arg.el.innerHTML += '<div class="blocked-by-tooltip">' + 'By:' + arg.event.extendedProps.blocked_by + '</div>';
-                        }
-                    },
+                        eventMouseEnter: function(arg) {
+                            if (arg.event.extendedProps.blocked_by) {
+                                arg.el.innerHTML += '<div class="blocked-by-tooltip">' + 'By:' + arg.event.extendedProps.blocked_by + '</div>';
+                            }
+                        },
 
-                    eventMouseLeave: function(arg) {
-                        var tooltip = arg.el.querySelector('.blocked-by-tooltip');
-                        if (tooltip) {
-                            tooltip.remove();
-                        }
-                    },
+                        eventMouseLeave: function(arg) {
+                            var tooltip = arg.el.querySelector('.blocked-by-tooltip');
+                            if (tooltip) {
+                                tooltip.remove();
+                            }
+                        },
                             });
-                            calendar.render();s
+                            calendar.render();
                         })();
                     }
                 });
     $('#close-popup').on('click', function() {
         closePopupForm();
     });
+
     function openPopupForm(start,end) {
         $("#block").show();
         $("#unblock").hide();
         $( ".blockd_dates input" ).each(function( index ) {
-            // console.log(`here: ${index}`);
-            // console.log(`this value: ${$(this).val()}`);
-            // console.log(`start | end: ${start} | ${end}`);
-            if($(this).val() == start || $(this).val() == end){
+            if($(this).val() == start){
                 $("#unblock").show();
                 $("#block").hide();
             }
@@ -158,6 +155,8 @@
         $('#popup-form').show();
         $('#overlay').show();
     }
+
+
     function closePopupForm() {
       $('#popup-form').hide();
       $('#overlay').hide();

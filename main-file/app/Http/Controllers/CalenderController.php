@@ -8,6 +8,8 @@ use App\Models\Task;
 use App\Models\Utility;
 use App\Models\Blockdate;
 use App\Models\User;
+use DateTime;
+use DateInterval;
 
 use Illuminate\Http\Request;
 
@@ -194,7 +196,7 @@ class CalenderController extends Controller
     //             return $arrayJson;
     // }
     public function get_data(Request $request){
-
+    
         $arrMeeting = [];
         $arrTask    = [];
         $arrCall    = [];
@@ -259,15 +261,12 @@ class CalenderController extends Controller
                     "className" => $val->color,
                     "textColor" => '#000',
                     "allDay" => true,
-                    "display" =>'background',
+                    "display" => 'background',
                     "blocked_by" => $blockingUserName, 
                 ];
             }                
-            
             $arrayJson = array_merge($arrMeeting, $arrblock);
-        }               
-          
-    
+        } 
         return $arrayJson;
     }
     
