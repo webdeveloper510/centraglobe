@@ -33,7 +33,7 @@ $labels =
     <div class= "row">
         <div class = "col-md-12">
             <div class="form-group">
-                <label class="form-label">Select User</label>
+                <label class="form-label">Select Customer :</label>
                 <select class="form-select" id = "userinfo" name = "user" required>
                     <option value= '-1' disabled selected>Select user</option>
                     <?php $__currentLoopData = $assigned_user; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>

@@ -171,7 +171,6 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </a>
                     </li>
                 <?php endif; ?>
-                
                 <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Call')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'call' || \Request::route()->getName() == 'call.show' || \Request::route()->getName() == 'call.edit' ? ' active' : ''); ?>">
                         
@@ -187,14 +186,14 @@ $defaultView = App\Models\UserDefualtView::select('module','route')->where('user
                         </li>
                     <?php endif; ?>
                 <?php endif; ?>-->
-                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Document')): ?>
+                <!-- <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Document')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'document' || \Request::route()->getName() == 'document.show' || \Request::route()->getName() == 'document.edit' ? ' active' : ''); ?>">
                         
                         <a href="<?php echo e(array_key_exists('document',$defaultView) ? route($defaultView['document']) : route('document.index')); ?>" class="dash-link">
                             <span class="dash-micon"><i class="ti ti-file-analytics"></i></span><span class="dash-mtext"><?php echo e(__('Proposal')); ?></span>
                         </a>
                     </li>
-                <?php endif; ?>
+                <?php endif; ?> -->
                 <!--<?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Manage Campaign')): ?>
                     <li class="dash-item <?php echo e(\Request::route()->getName() == 'campaign' || \Request::route()->getName() == 'campaign.show' || \Request::route()->getName() == 'campaign.edit' ? ' active' : ''); ?>">
                         

@@ -84,7 +84,6 @@ class BillingController extends Controller
         );
         if ($validator->fails()) {
             $messages = $validator->getMessageBag();
-
             return redirect()->back()->with('error', $messages->first());
         }
         $event_id = Meeting::where('user_id',$request->user)->first();
@@ -110,7 +109,7 @@ class BillingController extends Controller
             'special_req' => unserialize($billingdetails->special_req),
             'food' => unserialize($billingdetails->food),
             'deposit'=>$request->deposits,
-                'type'=>$event_id->type
+            'type'=>$event_id->type
         ];
         
         $view = view('billing.view',$data);
@@ -120,33 +119,34 @@ class BillingController extends Controller
         $destinationFolder = public_path('/assets/billing_pdf/');
         $filePath = $destinationFolder . $filename;
         $mpdf->Output($filePath , \Mpdf\Output\Destination::FILE);
-        $to = 'developerweb6@gmail.com';
-        $subject = 'Billing Summary';
-        $message = 'These are the billing details:';
+        return $mpdf->Output();
+        // $to = 'developerweb6@gmail.com';
+        // $subject = 'Billing Summary';
+        // $message = 'These are the billing details:';
         
-        // File to be attached
-        $fileContent = file_get_contents($filePath);
-        $encodedContent = chunk_split(base64_encode($fileContent));
+        // // File to be attached
+        // $fileContent = file_get_contents($filePath);
+        // $encodedContent = chunk_split(base64_encode($fileContent));
         
-        $headers = "From: test@gmail.com\r\n";
-        $headers .= "MIME-Version: 1.0\r\n";
-        $headers .= "Content-Type: multipart/mixed; boundary=\"boundary\"\r\n";
+        // $headers = "From: test@gmail.com\r\n";
+        // $headers .= "MIME-Version: 1.0\r\n";
+        // $headers .= "Content-Type: multipart/mixed; boundary=\"boundary\"\r\n";
         
-        $body = "--boundary\r\n";
-        $body .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
-        $body .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
-        $body .= "{$message}\r\n\r\n";
-        $body .= "--boundary\r\n";
-        $body .= "Content-Type: application/pdf; name=\"{$filename}\"\r\n";
-        $body .= "Content-Disposition: attachment; filename=\"{$filename}\"\r\n";
-        $body .= "Content-Transfer-Encoding: base64\r\n\r\n";
-        $body .= "{$encodedContent}\r\n--boundary--";
-        $mail = @mail($to,'Billing Details', $body, $headers);
-        if($mail){
-             return redirect()->back()->with('success', 'Email Sent Successfully');
-        }
-        else{
-              return redirect()->back()->with('error', 'Email Not Sent');
-        }
+        // $body = "--boundary\r\n";
+        // $body .= "Content-Type: text/plain; charset=\"utf-8\"\r\n";
+        // $body .= "Content-Transfer-Encoding: 7bit\r\n\r\n";
+        // $body .= "{$message}\r\n\r\n";
+        // $body .= "--boundary\r\n";
+        // $body .= "Content-Type: application/pdf; name=\"{$filename}\"\r\n";
+        // $body .= "Content-Disposition: attachment; filename=\"{$filename}\"\r\n";
+        // $body .= "Content-Transfer-Encoding: base64\r\n\r\n";
+        // $body .= "{$encodedContent}\r\n--boundary--";
+        // $mail = mail($to,'Billing Details', $body, $headers);
+        // if($mail){
+        //      return redirect()->back()->with('success', 'Email Sent Successfully');
+        // }
+        // else{
+        //       return redirect()->back()->with('error', 'Email Not Sent');
+        // }
     }
 }

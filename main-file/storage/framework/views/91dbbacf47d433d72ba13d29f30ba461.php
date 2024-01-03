@@ -10,6 +10,7 @@
     <div class="row">
         <div class="col-md-12">
         <span>The Bond 1786</span><br>
+        <span>Billing Summary</span>
         <span>Venue Rental & Banquet Event - Estimate</span>
         </div>
     </div>

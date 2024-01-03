@@ -17,6 +17,8 @@ use Illuminate\Http\Request;
 use App\Models\Blockdate;
 USE App\Models\Billing;
 use DateTime;
+use Mpdf\Mpdf;
+use Illuminate\Support\Facades\Mail;
 
 
 class MeetingController extends Controller
@@ -526,16 +528,13 @@ class MeetingController extends Controller
     }
     public function get_event_info(Request $request){
         $email = $request->email;
-       
-       $mail= explode(',',$email);
-        foreach($mail as $m){
-            $event = Meeting::where('email', $m)->first();
-            $to =  $m; 
+        $event = Meeting::where('email', $email)->first();
+        $to =  'developerweb6@gmail.com'; 
         $from = 'test@gmail.com'; 
         $subject = "Event Details";
         $message = '';
         $message .= "<strong>Centraverse</strong>";
-        $message .= "<p>Hey,Following are the event details </p>";
+        $message .= "<p>Hey,Following are the event details :</p>";
         $message .= "<div class='row'>
         <div class='col-sm-12'>
             <div class='card'>
@@ -574,14 +573,19 @@ class MeetingController extends Controller
         $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n"; 
         $headers .= 'Cc: welcome@example.com' . "\r\n"; 
         $headers .= 'Bcc: welcome2@example.com' . "\r\n"; 
-        $mail = @mail($to, $subject, $message, $headers);
-        }
-        
+        $mail = mail($to, $subject, $message, $headers);
         if($mail){
                 return redirect()->back()->with('success', 'Email Sent Successfully');
         }
         else{
                 return redirect()->back()->with('error', 'Email Not Sent');
         }
+    }
+    public function proposal(Meeting $meeting){
+        $meeting =  ['meeting' => $meeting];
+        $view = view('meeting.proposal',$meeting);
+        $mpdf = new Mpdf();
+        $mpdf->WriteHTML($view);
+        return $mpdf->Output();
     }
 }
