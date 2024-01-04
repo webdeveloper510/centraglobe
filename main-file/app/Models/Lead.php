@@ -30,8 +30,8 @@ class Lead extends Model
         'campaign_name',
     ];
     public static $status = [
-        'New',
-        'Assigned'
+        'Active',
+        'Inactive'
     ];
     public static  $function = [
         'Breakfast',

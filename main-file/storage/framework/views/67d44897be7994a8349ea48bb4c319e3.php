@@ -66,7 +66,7 @@
         <div class="form-group">
             <?php echo e(Form::label('type',__('Event Type'),['class'=>'form-label'])); ?>
 
-            <?php echo Form::select('type', isset($type_arr) ? $type_arr : '', null,array('class' => 'form-control')); ?>
+            <?php echo Form::select('type', isset($type_arr) ? $type_arr : '', null,array('class' => 'form-control','required'=>'required')); ?>
 
         </div>
     </div>
@@ -138,10 +138,14 @@
     </div> 
     <div class="col-6">
         <div class="form-group">
-            <?php echo e(Form::label('Assign User',__('Assign User'),['class'=>'form-label'])); ?>
+            <?php echo e(Form::label('Assign Staff',__('Assign Staff'),['class'=>'form-label'])); ?>
 
-            <?php echo Form::select('user', $user, null,array('class' => 'form-control')); ?>
-
+            <select class="form-control" name= 'user'>
+                <option class= "form-control" selected disabled >Select Staff</option>
+                <?php $__currentLoopData = $users; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+               <option class= "form-control" value= "<?php echo e($user->id); ?>"><?php echo e($user->name); ?> (<?php echo e($user->type); ?>)</option>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </select>
         </div>
     </div>
     <div class="col-12  p-0 modaltitle pb-3 mb-3">

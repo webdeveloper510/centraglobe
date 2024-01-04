@@ -6,16 +6,15 @@
         <div class="page-header-title">
             {{__('Lead')}}
         </div>
-
 @endsection
 @section('breadcrumb')
     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">{{__('Home')}}</a></li>
     <li class="breadcrumb-item">{{__('Lead')}}</li>
 @endsection
 @section('action-btn')
-<!--  <a href="{{ route('lead.grid') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="{{ __('Kanban View') }}">
+ <a href="{{ route('lead.grid') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="{{ __('Kanban View') }}">
     <i class="ti ti-layout-kanban"></i>
-</a>-->
+</a>
 @can('Create Lead')
     <a href="#" data-url="{{ route('lead.create',['lead',0]) }}" data-size="lg" data-ajax-popup="true" data-bs-toggle="tooltip" data-title="{{__('Create New Lead')}}"title="{{__('Create')}}" class="btn btn-sm btn-primary btn-icon m-1">
         <i class="ti ti-plus"></i>
@@ -38,7 +37,7 @@
                                 <!-- <th scope="col" class="sort" data-sort="completion">{{__('Account')}}</th> -->
                                 <th scope="col" class="sort" data-sort="budget">{{__('Email')}}</th>
                                 <th scope="col" class="sort" data-sort="status">{{__('Phone')}}</th>
-                                <th scope="col" class="sort" data-sort="status">{{__('Assign user')}}</th>
+                                <th scope="col" class="sort" data-sort="status">{{__('Assigned Staff')}}</th>
                                 @if(Gate::check('Show Lead') || Gate::check('Edit Lead') || Gate::check('Delete Lead'))
                                     <th scope="col" class="text-end">{{__('Action')}}</th>
                                 @endif
@@ -52,9 +51,6 @@
                                         {{ ucfirst($lead->name) }}
                                     </a>
                                 </td>
-                                <!-- <td>
-                                    <span class="budget">{{ ucfirst(!empty($lead->accounts)?$lead->accounts->name:'--')}}</span>
-                                </td> -->
                                 <td>
                                     <span class="budget">{{ $lead->email }}</a></span>
                                 </td>
@@ -64,7 +60,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="col-sm-12"><span class="text-sm">{{ ucfirst(!empty($lead->assign_user)?$lead->assign_user->name:'')}}</span></span>
+                                    <span class="col-sm-12"><span class="text-sm">{{ ucfirst(!empty($lead->assign_user)?$lead->assign_user->name:'')}} ({{$lead->assign_user->type}})</span></span>
                                 </td>
                                 @if(Gate::check('Show Lead') || Gate::check('Edit Lead') || Gate::check('Delete Lead'))
                                     <td class="text-end">
@@ -106,5 +102,4 @@
         </div>
     </div>
 </div>
-
 @endsection

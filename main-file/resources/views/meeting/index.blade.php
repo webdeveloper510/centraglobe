@@ -31,11 +31,12 @@
                         <table id="datatable" class="table datatable align-items-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col" class="sort" data-sort="name">{{ __('Name') }}</th>
+                                    <th scope="col" class="sort" data-sort="name">{{ __('Lead') }}</th>
                                     <!-- <th scope="col" class="sort" data-sort="budget">{{ __('Parent') }}</th> -->
                                     <th scope="col" class="sort" data-sort="status">{{ __('Status') }}</th>
                                     <th scope="col" class="sort" data-sort="completion">{{ __('Date Start') }}</th>
-                                    <th scope="col" class="sort" data-sort="completion">{{ __('Assigned User') }}</th>
+                                    <th scope="col" class="sort" data-sort="completion">{{ __('Event') }}</th>
+                                    <th scope="col" class="sort" data-sort="completion">{{ __('Assigned Staff') }}</th>
                                     @if (Gate::check('Show Meeting') || Gate::check('Edit Meeting') || Gate::check('Delete Meeting'))
                                         <th scope="col" class="text-end">{{ __('Action') }}</th>
                                     @endif
@@ -63,12 +64,18 @@
                                             @endif
                                         </td>
                                         <td>
-                                            <span
-                                                class="budget">{{ \Auth::user()->dateFormat($meeting->start_date) }}</span>
+                                            <span class="budget">{{ \Auth::user()->dateFormat($meeting->start_date) }}</span>
                                         </td>
                                         <td>
+                                            <span class="budget">{{ $meeting->type }}</span>
+                                        </td>
+                                        <!-- <td>
                                             <span
                                                 class="budget">{{ ucfirst(!empty($meeting->assign_user) ? $meeting->assign_user->name : '') }}</span>
+                                        </td> -->
+                                        <td>
+                                            <span
+                                                class="budget">{{ App\Models\User::where('id',$meeting->user_id)->pluck('name')->first() }}</span>
                                         </td>
                                         @if (Gate::check('Show Meeting') || Gate::check('Edit Meeting') || Gate::check('Delete Meeting'))
                                             <td class="text-end">

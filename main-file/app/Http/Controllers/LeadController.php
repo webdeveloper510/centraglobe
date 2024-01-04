@@ -57,12 +57,12 @@ class LeadController extends Controller
      */
     public function create($type, $id)
     {
-        if (\Auth::user()->can('Create Lead')) {
-            $user       = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $user->prepend('Select user', 0);
+        if (\Auth::user()->can('Create Lead')){
+            $users       = User::where('created_by', \Auth::user()->creatorId())->get();
+            // $users->prepend('Select Staff','');
             $status     = Lead::$status;
             $function = Lead::$function;
-            return view('lead.create', compact('status', 'user', 'function', 'id'));
+            return view('lead.create', compact('status', 'users', 'function', 'id','type'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -87,7 +87,8 @@ class LeadController extends Controller
                     'status' => 'required',
                     'start_date'=>'required',
                     'end_date'=>'required',
-                    'function' => 'required'
+                    'function' => 'required',
+                    'user'=>'required'
                 ]
             );
             if ($validator->fails()) {
@@ -135,7 +136,6 @@ class LeadController extends Controller
             $uArr = [
                 'lead_name' => $lead->name,
                 'lead_email' => $lead->email,
-
             ];
             $resp = Utility::sendEmailTemplate('lead_assign', [$lead->id => $lead->email], $uArr);
 
@@ -210,23 +210,12 @@ class LeadController extends Controller
         if (\Auth::user()->can('Edit Lead')) {
             $status   = Lead::$status;
             // $source   = LeadSource::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            $user     = User::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');             
-            $user->prepend('Select User', 0);
-            // $account  = Account::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            // $account->prepend('--', 0);
-            // $industry = AccountIndustry::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
-            // $parent   = 'lead';
-            // $tasks    = Task::where('parent', $parent)->where('parent_id', $lead->id)->get();
-            // $log_type = 'lead comment';
-            // $streams  = Stream::where('log_type', $log_type)->get();
+            $users     = User::where('created_by', \Auth::user()->creatorId())->get();             
+           
             // $campaign = Campaign::where('created_by', \Auth::user()->creatorId())->get()->pluck('name', 'id');
             // $campaign->prepend('--', 0);
-            // get previous user id
-            // $previous = Lead::where('id', '<', $lead->id)->max('id');
-            // // get next user id
-            // $next = Lead::where('id', '>', $lead->id)->min('id');
             $function = Lead::$function;
-            return view('lead.edit', compact('venue_function','function_package','lead','user', 'status', 'function'));
+            return view('lead.edit', compact('venue_function','function_package','lead','users', 'status', 'function'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }

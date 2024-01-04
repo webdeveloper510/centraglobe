@@ -88,8 +88,16 @@
                                     </div>
                                     <div class="col-6">
                                         <div class="form-group">
-                                            {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}
-                                            {!! Form::select('user', $user, null,array('class' => 'form-control','required'=>'required')) !!}
+                                            {{Form::label('Assigned Staff',__('Assigned Staff'),['class'=>'form-label']) }}
+                                            @foreach($users as $user)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="user[]" value="{{ $user->id }}" id="user_{{ $user->id }}">
+                                                    <label class="form-check-label" for="user_{{ $user->id }}">
+                                                        {{ $user->name }} ({{ $user->type }})
+                                                    </label>
+                                                </div>
+                                            @endforeach
+
                                         </div>
                                     </div>
                                     <div class="col-6">
@@ -496,7 +504,7 @@
                     "venue": venu,
                     "_token": "{{ csrf_token() }}",
                 },
-                success: function(data) {
+                success: function(data) {console.log(data);
                     venue_str = data.venue_selection;
                     venue_arr = venue_str.split(",");
                     func_str = data.function;
@@ -510,7 +518,8 @@
                     $('input[name ="email"]').val(data.email);
                     $('input[name ="lead_address"]').val(data.lead_address);
                     $("select[name='type'] option[value='"+data.type+"']").prop("selected", true);
-                    $("select[name='user'] option[value='"+data.assigned_user+"']").prop("selected", true);
+                    // $("select[name='user'] option[value='"+data.assigned_user+"']").prop("selected", true);
+                    $("input[name='user[]'][value='" + data.assigned_user + "']").prop('checked', true);
                     $.each(venue_arr, function(i, val){
                         $("input[name='venue[]'][value='" + val + "']").prop('checked', true);
                     });

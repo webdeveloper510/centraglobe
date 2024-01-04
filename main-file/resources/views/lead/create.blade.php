@@ -52,7 +52,7 @@
     <div class="col-6">
         <div class="form-group">
             {{Form::label('type',__('Event Type'),['class'=>'form-label']) }}
-            {!! Form::select('type', isset($type_arr) ? $type_arr : '', null,array('class' => 'form-control')) !!}
+            {!! Form::select('type', isset($type_arr) ? $type_arr : '', null,array('class' => 'form-control','required'=>'required')) !!}
         </div>
     </div>
     <div class="col-6">
@@ -109,8 +109,13 @@
     </div> 
     <div class="col-6">
         <div class="form-group">
-            {{Form::label('Assign User',__('Assign User'),['class'=>'form-label']) }}
-            {!! Form::select('user', $user, null,array('class' => 'form-control')) !!}
+            {{Form::label('Assign Staff',__('Assign Staff'),['class'=>'form-label']) }}
+            <select class="form-control" name= 'user'>
+                <option class= "form-control" selected disabled >Select Staff</option>
+                @foreach($users as $user)
+               <option class= "form-control" value= "{{$user->id}}">{{$user->name}} ({{$user->type}})</option>
+                @endforeach
+            </select>
         </div>
     </div>
     <div class="col-12  p-0 modaltitle pb-3 mb-3">

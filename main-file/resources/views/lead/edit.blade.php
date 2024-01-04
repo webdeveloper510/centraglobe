@@ -140,13 +140,13 @@
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
-            {!! Form::date('start_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::date('start_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
     </div>
     <div class="col-6">
         <div class="form-group">
             {{ Form::label('end_date', __('End Date'), ['class' => 'form-label']) }}
-            {!! Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
+            {!! Form::date('end_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
         </div>
     </div>
     
@@ -180,8 +180,12 @@
     </div> 
     <div class="col-6">
         <div class="form-group">
-            {{ Form::label('Assign User', __('Assign User'), ['class' => 'form-label']) }}
-            {!! Form::select('user', $user,$lead->assigned_user, ['class' => 'form-control']) !!}
+            {{Form::label('Assign Staff',__('Assign Staff'),['class'=>'form-label']) }}
+            <select class="form-control" name= 'user'>
+                @foreach($users as $user)
+               <option class= "form-control" value= "{{$user->id}}" {{ $user->id == $lead->assigned_user ? 'selected' : '' }}>{{$user->name}}  - {{$user->type}}</option>
+                @endforeach
+            </select>
         </div>
     </div>
 

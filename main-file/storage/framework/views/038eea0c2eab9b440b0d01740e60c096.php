@@ -33,11 +33,12 @@
                         <table id="datatable" class="table datatable align-items-center">
                             <thead class="thead-light">
                                 <tr>
-                                    <th scope="col" class="sort" data-sort="name"><?php echo e(__('Name')); ?></th>
+                                    <th scope="col" class="sort" data-sort="name"><?php echo e(__('Lead')); ?></th>
                                     <!-- <th scope="col" class="sort" data-sort="budget"><?php echo e(__('Parent')); ?></th> -->
                                     <th scope="col" class="sort" data-sort="status"><?php echo e(__('Status')); ?></th>
                                     <th scope="col" class="sort" data-sort="completion"><?php echo e(__('Date Start')); ?></th>
-                                    <th scope="col" class="sort" data-sort="completion"><?php echo e(__('Assigned User')); ?></th>
+                                    <th scope="col" class="sort" data-sort="completion"><?php echo e(__('Event')); ?></th>
+                                    <th scope="col" class="sort" data-sort="completion"><?php echo e(__('Assigned Staff')); ?></th>
                                     <?php if(Gate::check('Show Meeting') || Gate::check('Edit Meeting') || Gate::check('Delete Meeting')): ?>
                                         <th scope="col" class="text-end"><?php echo e(__('Action')); ?></th>
                                     <?php endif; ?>
@@ -66,12 +67,18 @@
                                             <?php endif; ?>
                                         </td>
                                         <td>
-                                            <span
-                                                class="budget"><?php echo e(\Auth::user()->dateFormat($meeting->start_date)); ?></span>
+                                            <span class="budget"><?php echo e(\Auth::user()->dateFormat($meeting->start_date)); ?></span>
                                         </td>
                                         <td>
+                                            <span class="budget"><?php echo e($meeting->type); ?></span>
+                                        </td>
+                                        <!-- <td>
                                             <span
                                                 class="budget"><?php echo e(ucfirst(!empty($meeting->assign_user) ? $meeting->assign_user->name : '')); ?></span>
+                                        </td> -->
+                                        <td>
+                                            <span
+                                                class="budget"><?php echo e(App\Models\User::where('id',$meeting->user_id)->pluck('name')->first()); ?></span>
                                         </td>
                                         <?php if(Gate::check('Show Meeting') || Gate::check('Edit Meeting') || Gate::check('Delete Meeting')): ?>
                                             <td class="text-end">

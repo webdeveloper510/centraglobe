@@ -8,16 +8,15 @@
             <?php echo e(__('Lead')); ?>
 
         </div>
-
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('breadcrumb'); ?>
     <li class="breadcrumb-item"><a href="<?php echo e(route('dashboard')); ?>"><?php echo e(__('Home')); ?></a></li>
     <li class="breadcrumb-item"><?php echo e(__('Lead')); ?></li>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('action-btn'); ?>
-<!--  <a href="<?php echo e(route('lead.grid')); ?>" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="<?php echo e(__('Kanban View')); ?>">
+ <a href="<?php echo e(route('lead.grid')); ?>" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="<?php echo e(__('Kanban View')); ?>">
     <i class="ti ti-layout-kanban"></i>
-</a>-->
+</a>
 <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('Create Lead')): ?>
     <a href="#" data-url="<?php echo e(route('lead.create',['lead',0])); ?>" data-size="lg" data-ajax-popup="true" data-bs-toggle="tooltip" data-title="<?php echo e(__('Create New Lead')); ?>"title="<?php echo e(__('Create')); ?>" class="btn btn-sm btn-primary btn-icon m-1">
         <i class="ti ti-plus"></i>
@@ -40,7 +39,7 @@
                                 <!-- <th scope="col" class="sort" data-sort="completion"><?php echo e(__('Account')); ?></th> -->
                                 <th scope="col" class="sort" data-sort="budget"><?php echo e(__('Email')); ?></th>
                                 <th scope="col" class="sort" data-sort="status"><?php echo e(__('Phone')); ?></th>
-                                <th scope="col" class="sort" data-sort="status"><?php echo e(__('Assign user')); ?></th>
+                                <th scope="col" class="sort" data-sort="status"><?php echo e(__('Assigned Staff')); ?></th>
                                 <?php if(Gate::check('Show Lead') || Gate::check('Edit Lead') || Gate::check('Delete Lead')): ?>
                                     <th scope="col" class="text-end"><?php echo e(__('Action')); ?></th>
                                 <?php endif; ?>
@@ -55,9 +54,6 @@
 
                                     </a>
                                 </td>
-                                <!-- <td>
-                                    <span class="budget"><?php echo e(ucfirst(!empty($lead->accounts)?$lead->accounts->name:'--')); ?></span>
-                                </td> -->
                                 <td>
                                     <span class="budget"><?php echo e($lead->email); ?></a></span>
                                 </td>
@@ -68,7 +64,7 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <span class="col-sm-12"><span class="text-sm"><?php echo e(ucfirst(!empty($lead->assign_user)?$lead->assign_user->name:'')); ?></span></span>
+                                    <span class="col-sm-12"><span class="text-sm"><?php echo e(ucfirst(!empty($lead->assign_user)?$lead->assign_user->name:'')); ?> (<?php echo e($lead->assign_user->type); ?>)</span></span>
                                 </td>
                                 <?php if(Gate::check('Show Lead') || Gate::check('Edit Lead') || Gate::check('Delete Lead')): ?>
                                     <td class="text-end">
@@ -108,7 +104,6 @@
         </div>
     </div>
 </div>
-
 <?php $__env->stopSection(); ?>
 
 <?php echo $__env->make('layouts.admin', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\centra\centraglobe\main-file\resources\views/lead/index.blade.php ENDPATH**/ ?>

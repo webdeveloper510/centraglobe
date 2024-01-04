@@ -91,11 +91,19 @@
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <div class="form-group">
-                                                {{ Form::label('Assign User', __('Assign User'), ['class' => 'form-label']) }}
-                                                {!! Form::text('user_text', isset($users[$user_id]) ? $users[$user_id] : '', ['class' => 'form-control', 'disabled' => 'disabled']) !!}
-                                            </div>
+                                        <div class="form-group">
+                                            {{Form::label('Assigned Staff',__('Assigned Staff'),['class'=>'form-label']) }}
+                                            @foreach($users as $user)
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" name="user[]" value="{{ $user->id }}" id="user_{{ $user->id }}"{{ in_array($user->id, $user_id) ? 'checked' : '' }}>
+                                                    <label class="form-check-label" for="user_{{ $user->id }}">
+                                                        {{ $user->name }} ({{ $user->type }})
+                                                    </label>
+                                                </div>
+                                            @endforeach
+
                                         </div>
+                                    </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 {{Form::label('company_name',__('Company Name'),['class'=>'form-label']) }}
@@ -232,13 +240,13 @@
                                         <div class="col-6">
                                             <div class="form-group">
                                                 {{ Form::label('start_date', __('Start Date'), ['class' => 'form-label']) }}
-                                                {!! Form::date('start_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
+                                                {!! Form::date('start_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                             </div>
                                         </div>
                                         <div class="col-6">
                                             <div class="form-group">
                                                 {{ Form::label('end_date', __('End Date'), ['class' => 'form-label']) }}
-                                                {!! Form::date('end_date', date('Y-m-d'), ['class' => 'form-control', 'required' => 'required']) !!}
+                                                {!! Form::date('end_date', null, ['class' => 'form-control', 'required' => 'required']) !!}
                                             </div>
                                         </div>
                                         <div class="col-6">
@@ -336,13 +344,11 @@
                                                     <input type="radio" id="image_{{ $loop->index }}" name="uploadedImage" class="form-check-input " value="{{ asset('/public/floor_images/' . basename($image)) }}" style="display:none;">
                                                     <label for="image_{{ $loop->index }}" class="form-check-label">
                                                         <img src="{{URL::asset('/floor_images/'. basename($image))}}" alt="Uploaded Image" class="img-thumbnail floorimages zoom">
-                                                        <!-- <i class="ti ti-trash" data-image="{{ basename($image) }}" onclick="deleteImage(this)"></i> -->
                                                     </label>
                                                 </div>
                                             @endforeach
                                         </div>
-                                    </div>
-                                                                     
+                                    </div>                                    
                                     </div>
                                 </div>
                             </div>
@@ -480,14 +486,15 @@
         })
         $(document).ready(function() {
         var selectedValue = $('input[name="bar"]:checked').val();
-        if(selectedValue == 'option3'){
+        // alert(selectedValue);
+        if(selectedValue == 'Package Choice'){
                     $('#package').show();
         }    
     });
         $('input[type=radio][name=bar]').change(function() {
             $('#package').hide();
                 var val = $(this).val();
-                if(val == 'option3'){
+                if(val == 'Package Choice'){
                     $('#package').show();
                 }
         });
