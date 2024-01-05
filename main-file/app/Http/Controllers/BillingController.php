@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Billing;
 use App\Models\Meeting;
+use App\Models\Lead;
 use App\Models\Billingdetail;
 use Mpdf\Mpdf;
 use Illuminate\Support\Facades\Mail;
@@ -19,9 +20,8 @@ class BillingController extends Controller
     public function index()
     {
         if(\Auth::user()->type == 'owner'){
-            $assigned_user = Meeting::all();
-            $billing = Billing::first();
-            return view('billing.index',compact('billing','assigned_user'));
+            $billing = Billingdetail::all();
+            return view('billing.index',compact('billing'));
         }   
     }
 
@@ -30,7 +30,12 @@ class BillingController extends Controller
      */
     public function create()
     {
-        //
+        if(\Auth::user()->type == 'owner'){
+            //  $meetings = Meeting::with('assign_user')->where('created_by', \Auth::user()->creatorId())->get();
+            $assigned_user = Lead::all();
+            $billing = Billing::first();
+            return view('billing.create',compact('billing','assigned_user'));
+        }   
     }
 
     /**
@@ -52,11 +57,11 @@ class BillingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Billingdetail $billing)
     {
-        //
+            $assigned_user = Lead::all();
+            return view('billing.edit',compact('billing','assigned_user'));
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -69,7 +74,9 @@ class BillingController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $billing = Billingdetail::find($id);
+        $billing->delete();
+        return redirect()->back()->with('success', 'Bill Deleted!');
     }
     public function get_user_info(Request $request){
         $event_info = Meeting::where('user_id',$request->user)->get();
@@ -84,12 +91,11 @@ class BillingController extends Controller
         );
         if ($validator->fails()) {
             $messages = $validator->getMessageBag();
+
             return redirect()->back()->with('error', $messages->first());
         }
-        $event_id = Meeting::where('user_id',$request->user)->first();
         $billingdetails = new Billingdetail();
         $billingdetails['user_id'] = $request->user;
-        $billingdetails['event_id'] = $event_id->id;
         $billingdetails['venue_rental'] = serialize($request->billing['venue_rental']);
         $billingdetails['hotel_rooms'] = serialize($request->billing['hotel_rooms']);
         $billingdetails['equipment'] = serialize($request->billing['equipment']);
@@ -109,7 +115,6 @@ class BillingController extends Controller
             'special_req' => unserialize($billingdetails->special_req),
             'food' => unserialize($billingdetails->food),
             'deposit'=>$request->deposits,
-            'type'=>$event_id->type
         ];
         
         $view = view('billing.view',$data);
@@ -120,7 +125,6 @@ class BillingController extends Controller
         $filePath = $destinationFolder . $filename;
         $mpdf->Output($filePath , \Mpdf\Output\Destination::FILE);
         return $mpdf->Output();
-        // $to = 'developerweb6@gmail.com';
         // $subject = 'Billing Summary';
         // $message = 'These are the billing details:';
         
@@ -148,5 +152,9 @@ class BillingController extends Controller
         // else{
         //       return redirect()->back()->with('error', 'Email Not Sent');
         // }
+      
+
+// Clean up: Delete the temporary PDF file after sending
+// unlink($filePath);
     }
 }
