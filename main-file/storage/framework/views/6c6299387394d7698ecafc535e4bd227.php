@@ -18,6 +18,9 @@
 
             </a>
     <?php endif; ?>
+    <div class="checkbox"><b>COMPLETED EVENTS</b></div>
+  <div class="checkbox1"><b>UPCOMING EVENTS</b></div>
+  <div class="checkbox2"><b>BLOCKED DATES</b></div>
 <?php $__env->stopSection(); ?>
 <?php $__env->startSection('filter'); ?>
 
@@ -34,6 +37,67 @@
     border-radius: 5px;
     z-index: 1000; 
 }
+/* CHECKBOX 1 COMPLETED */
+    .checkbox {
+        width: -1px;
+        height: 20px;
+        float: left;
+        margin-right: 10px;
+        margin-left: 130px;
+        margin-bottom: 14px;
+        position: relative;
+    }
+    .checkbox:after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background-color: red;
+        top: 0px;
+        left: -22px;
+    }
+/* CHECKBOX 1 UPCOMING */
+.checkbox1 {
+    /* width: 26px; */
+    height: 20px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 14px;
+    position: relative;
+    margin-top: 23px;
+    margin-left: -147px;
+}
+.checkbox1:after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: green;
+    top: 0px;
+    left: -22px;
+}
+/* CHECKBOX 1 BLOCKED */
+
+.checkbox2 {
+    /* width: 26px; */
+    height: 20px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: 14px;
+    margin-top: 47px;
+    position: relative;
+    margin-left: -147px;
+}
+.checkbox2:after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: Gray;
+    top: 0px;
+    left: -22px;
+}
+
 
 </style>
 <script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "dc4641f860664c6e824b093274f50291"}'></script>
@@ -215,7 +279,7 @@ $setting = App\Models\Utility::settings();
             <div class="card">
                 <div class="card-body">
                     <h4 class="mb-4">Next events</h4>
-                    <ul class="event-cards list-group list-group-flush mt-3 w-100">
+                    <!-- <ul class="event-cards list-group list-group-flush mt-3 w-100">
                         <?php
                             $date = Carbon\Carbon::now()->format('m');
                             $this_month_meeting = App\Models\meeting::get();
@@ -241,6 +305,38 @@ $setting = App\Models\Utility::settings();
                                                 <div class="ms-3">
                                                 <h6 class="m-0"><?php echo e($meeting->name); ?></h6>
                                                 <small class="text-muted"><?php echo e($meeting ->start_date); ?> to <?php echo e($meeting->end_date); ?></small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            <?php endif; ?>
+                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </ul> -->
+                    <ul class="event-cards list-group list-group-flush mt-3 w-100">
+                        <?php
+                            $now = Carbon\Carbon::now();
+                            $this_month_meeting = \Auth::user()->type == 'owner'
+                                ? App\Models\meeting::where('created_by', \Auth::user()->creatorId())->get()
+                                : App\Models\meeting::where('user_id', \Auth::user()->id)->get();
+                        ?>
+
+                        <?php $__currentLoopData = $this_month_meeting; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $meeting): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <?php
+                                $start_date = Carbon\Carbon::parse($meeting->start_date);
+                            ?>
+
+                            <?php if($start_date >= $now): ?>
+                                <li class="list-group-item card mb-3">
+                                    <div class="row align-items-center justify-content-between">
+                                        <div class="col-auto mb-3 mb-sm-0">
+                                            <div class="d-flex align-items-center">
+                                                <div class="theme-avtar bg-info">
+                                                    <i class="ti ti-calendar-event"></i>
+                                                </div>
+                                                <div class="ms-3">
+                                                    <h6 class="m-0"><?php echo e($meeting->name); ?></h6>
+                                                    <small class="text-muted"><?php echo e($meeting->start_date); ?> to <?php echo e($meeting->end_date); ?></small>
                                                 </div>
                                             </div>
                                         </div>
