@@ -34,7 +34,7 @@
                         <th style="text-align:left; font-size:13px;text-align:left; padding:5px 5px; margin-left:5px;">Name : {{App\Models\User::where('id',$data['billingdetails'])->pluck('name')->first()}}</th>
                         <th colspan = "2" style="padding:5px 0px;margin-left 5px;font-size:13px"></th>
                         <th colspan = "3"  style="text-align:left;text-align:left; padding:5px 5px; margin-left:5px;">Date:<?php echo date("d/m/Y"); ?> </th>
-                        <th  style="text-align:left; font-size:13px;padding:5px 5px; margin-left:5px;">Event: {{$data['type']}}</th>
+                        <th  style="text-align:left; font-size:13px;padding:5px 5px; margin-left:5px;">Event: </th>
                     </tr>
                     <tr style="background-color:#063806;">
                         <th style="color:#ffffff; font-size:13px;text-align:left; padding:5px 5px; margin-left:5px;">Description</th>

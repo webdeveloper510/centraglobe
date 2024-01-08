@@ -79,13 +79,6 @@
                                         </td>
                                         @if (Gate::check('Show Meeting') || Gate::check('Edit Meeting') || Gate::check('Delete Meeting'))
                                             <td class="text-end">
-                                                <div class="action-btn bg-success ms-2">
-                                                    <a href="{{ route('meeting.proposal', $meeting->id) }}" 
-                                                        data-title="{{__('Proposal')}}"title="{{__('Create Proposal')}}" 
-                                                        class="mx-3 btn btn-sm d-inline-flex align-items-center text-white">
-                                                        <i class="ti ti-plus"></i>
-                                                    </a>
-                                                </div>
                                                 @can('Manage Meeting')
                                                     <div class="action-btn bg-success ms-2">
                                                         <a href="#" data-size="md"

@@ -31,7 +31,6 @@ class BillingController extends Controller
     public function create()
     {
         if(\Auth::user()->type == 'owner'){
-            //  $meetings = Meeting::with('assign_user')->where('created_by', \Auth::user()->creatorId())->get();
             $assigned_user = Lead::all();
             $billing = Billing::first();
             return view('billing.create',compact('billing','assigned_user'));

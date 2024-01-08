@@ -16,8 +16,10 @@ use App\Models\UserDefualtView;
 use Illuminate\Http\Request;
 use App\Models\Blockdate;
 USE App\Models\Billing;
+USE App\Models\Billingdetail;
 use DateTime;
 use Mpdf\Mpdf;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
 
 
@@ -208,7 +210,7 @@ class MeetingController extends Controller
                 }
             }
             if (\Auth::user()) {
-                return redirect()->back()->with('success', __('Meeting successfully created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
+                return redirect()->back()->with('success', __('Event successfully created!') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
             } else {
                 return redirect()->back()->with('error', __('Webhook call failed.') . ((isset($msg) ? '<br> <span class="text-danger">' . $msg . '</span>' : '')));
             }
@@ -372,7 +374,7 @@ class MeetingController extends Controller
             //         ),
             //     ]
             // );
-            return redirect()->back()->with('success', __('Meeting  Updated.'));
+            return redirect()->back()->with('success', __('Event  Updated.'));
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -390,7 +392,7 @@ class MeetingController extends Controller
         if (\Auth::user()->can('Delete Meeting')) {
             $meeting->delete();
 
-            return redirect()->back()->with('success', 'Meeting ' . $meeting->name . ' Deleted!');
+            return redirect()->back()->with('success', 'Event ' . $meeting->name . ' Deleted!');
         } else {
             return redirect()->back()->with('error', 'permission Denied');
         }
@@ -578,10 +580,35 @@ class MeetingController extends Controller
         }
     }
     public function proposal(Meeting $meeting){
-        $meeting =  ['meeting' => $meeting];
-        $view = view('meeting.proposal',$meeting);
-        $mpdf = new Mpdf();
-        $mpdf->WriteHTML($view);
-        return $mpdf->Output();
+        $billingdetail = Billingdetail::where('user_id',$meeting->attendees_lead)->first();
+        return view('meeting.proposal',compact('meeting','billingdetail'));
+    }
+    public function proposalpdf(Request $request){
+     
+        $meeting = Meeting::where('id',$request->event)->first();
+        $billingdetail = Billingdetail::where('user_id',$meeting->attendees_lead)->first();
+        $data['image'] = $this->uploadSignature($request->signed);
+        $data['billingdetail'] = $billingdetail ;
+        $data['meeting'] = $meeting ;
+        $pdf = Pdf::loadView('meeting.signed_proposal', $data);
+        return $pdf->download('signature.pdf');
+    }
+    public function uploadSignature($signed)
+    {
+        $folderPath = public_path('upload/');
+          
+        $image_parts = explode(";base64,", $signed);
+               
+        $image_type_aux = explode("image/", $image_parts[0]);
+            
+        $image_type = $image_type_aux[1];
+            
+        $image_base64 = base64_decode($image_parts[1]);
+            
+        $file = $folderPath . uniqid() . '.'.$image_type;
+ 
+        file_put_contents($file, $image_base64);
+ 
+        return $file;
     }
 }

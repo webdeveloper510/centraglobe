@@ -12,9 +12,9 @@
     <li class="breadcrumb-item">{{__('Lead')}}</li>
 @endsection
 @section('action-btn')
- <a href="{{ route('lead.grid') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="{{ __('Kanban View') }}">
-    <i class="ti ti-layout-kanban"></i>
-</a>
+<!-- <a href="{{ route('lead.grid') }}" class="btn btn-sm btn-primary btn-icon m-1" data-bs-toggle="tooltip" title="{{ __('Grid View') }}">-->
+<!--    <i class="ti ti-layout-kanban"></i>-->
+<!--</a>-->
 @can('Create Lead')
     <a href="#" data-url="{{ route('lead.create',['lead',0]) }}" data-size="lg" data-ajax-popup="true" data-bs-toggle="tooltip" data-title="{{__('Create New Lead')}}"title="{{__('Create')}}" class="btn btn-sm btn-primary btn-icon m-1">
         <i class="ti ti-plus"></i>
@@ -64,6 +64,13 @@
                                 </td>
                                 @if(Gate::check('Show Lead') || Gate::check('Edit Lead') || Gate::check('Delete Lead'))
                                     <td class="text-end">
+                                        <div class="action-btn bg-success ms-2">
+                                            <a href="{{ route('meeting.proposal', $lead->id) }}" 
+                                                data-title="{{__('Proposal')}}"title="{{__('Create Proposal')}}" 
+                                                class="mx-3 btn btn-sm d-inline-flex align-items-center text-white">
+                                                <i class="ti ti-plus"></i>
+                                            </a>
+                                        </div>
                                         @can('Show Lead')
                                         <div class="action-btn bg-warning ms-2">
                                             <a href="#" data-size="md" data-url="{{ route('lead.show',$lead->id) }}" data-bs-toggle="tooltip" title="{{__('Quick View')}}" data-ajax-popup="true" data-title="{{__('Lead Details')}}" class="mx-3 btn btn-sm d-inline-flex align-items-center text-white ">
@@ -84,12 +91,6 @@
                                         </a>
                                         {!! Form::close() !!}
                                     </div>
-
-                                            {{-- <a href="#" class="btn  btn-icon btn-danger px-1  " data-toggle="tooltip" data-original-title="{{__('Delete')}}" data-confirm="{{__('Are You Sure?').' | '.__('This action can not be undone. Do you want to continue?')}}" data-confirm-yes="document.getElementById('delete-form-{{$lead->id}}').submit();">
-                                                <i class="ti ti-trash"></i>
-                                            </a>
-                                        {!! Form::open(['method' => 'DELETE', 'route' => ['lead.destroy', $lead->id],'id'=>'delete-form-'.$lead ->id]) !!}
-                                        {!! Form::close() !!} --}}
                                         @endcan
                                     </td>
                                 @endif
