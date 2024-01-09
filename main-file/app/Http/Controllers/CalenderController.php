@@ -227,22 +227,45 @@ class CalenderController extends Controller
             $meetings = Meeting::all();
             $blockeddate = Blockdate::all();
     
-            foreach($meetings as $val) {                   
-                $end_date=date_create($val->end_date);
+            // foreach($meetings as $val) {                   
+            //     $end_date=date_create($val->end_date);
 
+            //     $blockingUser = $val->user ?? null;
+            //     $blockingUserName = $blockingUser ? $blockingUser->name : 'Unknown User';
+
+            //     $arrMeeting[] = [
+            //         "id"=> $val->id,
+            //         "title" => $val->name,
+            //         "start" => $val->start_date,
+            //         "end" => date_format($end_date,"Y-m-d"),
+            //         "className" => $val->color,
+            //         "textColor" => '#fff',
+            //         "url" => route('meeting.show', $val['id']),
+            //         "allDay" => true,
+            //         "blocked_by" => $blockingUserName, 
+            //     ];
+            // }
+            foreach ($meetings as $val) {                   
+                $end_date = date_create($val->end_date);
+            
                 $blockingUser = $val->user ?? null;
                 $blockingUserName = $blockingUser ? $blockingUser->name : 'Unknown User';
+            
+                $now = new DateTime(); 
+            
+                $backgroundColor = ($end_date > $now) ? 'green' : 'red'; 
 
                 $arrMeeting[] = [
-                    "id"=> $val->id,
+                    "id" => $val->id,
                     "title" => $val->name,
                     "start" => $val->start_date,
-                    "end" => date_format($end_date,"Y-m-d"),
+                    "end" => date_format($end_date, "Y-m-d"),
                     "className" => $val->color,
                     "textColor" => '#fff',
                     "url" => route('meeting.show', $val['id']),
                     "allDay" => true,
                     "blocked_by" => $blockingUserName, 
+                    "backgroundColor" => $backgroundColor,
                 ];
             }
     
